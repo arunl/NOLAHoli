@@ -223,6 +223,7 @@ function nolaholi_custom_post_types() {
     ));
     
     // Gallery Post Type
+    // Note: has_archive set to false to avoid conflict with /gallery/ page
     register_post_type('gallery', array(
         'labels' => array(
             'name'               => __('Gallery', 'nolaholi'),
@@ -237,7 +238,7 @@ function nolaholi_custom_post_types() {
             'not_found_in_trash' => __('No gallery items found in trash', 'nolaholi'),
         ),
         'public'        => true,
-        'has_archive'   => true,
+        'has_archive'   => false,  // Changed to false to allow /gallery/ page
         'menu_icon'     => 'dashicons-format-gallery',
         'supports'      => array('title', 'editor', 'thumbnail'),
         'show_in_rest'  => true,
