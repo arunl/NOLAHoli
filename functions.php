@@ -522,6 +522,68 @@ function nolaholi_customize_register($wp_customize) {
         'section' => 'nolaholi_social',
         'type'    => 'url',
     ));
+    
+    // Gallery Section
+    $wp_customize->add_section('nolaholi_gallery', array(
+        'title'    => __('Photo Gallery', 'nolaholi'),
+        'priority' => 32,
+        'description' => __('Add Google Photos album URLs for each year. Get shareable link from Google Photos album.', 'nolaholi'),
+    ));
+    
+    // Gallery Display Style
+    $wp_customize->add_setting('nolaholi_gallery_style', array(
+        'default'           => 'grid',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    
+    $wp_customize->add_control('nolaholi_gallery_style', array(
+        'label'   => __('Gallery Display Style', 'nolaholi'),
+        'section' => 'nolaholi_gallery',
+        'type'    => 'select',
+        'choices' => array(
+            'grid'     => __('Grid View', 'nolaholi'),
+            'carousel' => __('Carousel Slider', 'nolaholi'),
+        ),
+    ));
+    
+    // 2026 Gallery URL
+    $wp_customize->add_setting('nolaholi_gallery_2026', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    
+    $wp_customize->add_control('nolaholi_gallery_2026', array(
+        'label'       => __('2026 Google Photos Album URL', 'nolaholi'),
+        'section'     => 'nolaholi_gallery',
+        'type'        => 'url',
+        'description' => __('Paste the shareable link from Google Photos', 'nolaholi'),
+    ));
+    
+    // 2025 Gallery URL
+    $wp_customize->add_setting('nolaholi_gallery_2025', array(
+        'default'           => 'https://photos.app.goo.gl/A7k1H1NdwU7wUvjLA',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    
+    $wp_customize->add_control('nolaholi_gallery_2025', array(
+        'label'       => __('2025 Google Photos Album URL', 'nolaholi'),
+        'section'     => 'nolaholi_gallery',
+        'type'        => 'url',
+        'description' => __('Paste the shareable link from Google Photos', 'nolaholi'),
+    ));
+    
+    // 2024 Gallery URL
+    $wp_customize->add_setting('nolaholi_gallery_2024', array(
+        'default'           => 'https://photos.google.com/share/AF1QipMXoU__flN42f4HOvc_3Ue8HkTyXWUEHWSLuJulorUazYVGVsRzijEKD6GjA48MGA/memory/AF1QipPlfUZfOStBcDVTINx3OhPsgfCN77FIL4qBkiLIfzo63FJca7L1jE2KRHHm492t_g?key=MHgwV0xhLU9tYzdhMmNfR2FNbTN0eDdCWE9nRkF3&pli=1',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    
+    $wp_customize->add_control('nolaholi_gallery_2024', array(
+        'label'       => __('2024 Google Photos Album URL', 'nolaholi'),
+        'section'     => 'nolaholi_gallery',
+        'type'        => 'url',
+        'description' => __('Paste the shareable link from Google Photos', 'nolaholi'),
+    ));
 }
 add_action('customize_register', 'nolaholi_customize_register');
 
