@@ -81,27 +81,30 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_PORT: ${{ secrets.SSH_PORT || 22 }}
-          THEME_PATH: ${{ steps.path.outputs.theme_path }}
-          DEPLOY_BRANCH: ${{ steps.path.outputs.deploy_branch }}
         run: |
+          # Set variables
+          THEME_PATH="${{ steps.path.outputs.theme_path }}"
+          DEPLOY_BRANCH="${{ steps.path.outputs.deploy_branch }}"
+          SITE_NAME="${{ steps.path.outputs.site_name }}"
+          
           # Deploy to server using git pull
           ssh -i ~/.ssh/deploy_key -p $SSH_PORT $SSH_USER@$SSH_HOST << ENDSSH
             set -e
             
             echo "============================================"
-            echo "Deploying to: ${{ steps.path.outputs.site_name }}"
-            echo "Theme path: \${THEME_PATH}"
-            echo "Branch: \${DEPLOY_BRANCH}"
+            echo "Deploying to: ${SITE_NAME}"
+            echo "Theme path: ${THEME_PATH}"
+            echo "Branch: ${DEPLOY_BRANCH}"
             echo "============================================"
             
             # Navigate to theme directory
-            cd "\${THEME_PATH}"
+            cd "${THEME_PATH}"
             
             # Check if it's a git repository
             if [ ! -d ".git" ]; then
               echo "ERROR: Not a git repository!"
               echo "Please clone the repository first:"
-              echo "  cd \$(dirname \${THEME_PATH})"
+              echo "  cd \$(dirname ${THEME_PATH})"
               echo "  git clone git@github.com:arunl/NOLAHoli.git"
               exit 1
             fi
@@ -118,11 +121,11 @@ jobs:
             git fetch origin
             
             # Checkout and pull the target branch
-            echo "Checking out branch: \${DEPLOY_BRANCH}"
-            git checkout \${DEPLOY_BRANCH}
+            echo "Checking out branch: ${DEPLOY_BRANCH}"
+            git checkout ${DEPLOY_BRANCH}
             
             echo "Pulling latest changes..."
-            git pull origin \${DEPLOY_BRANCH}
+            git pull origin ${DEPLOY_BRANCH}
             
             # Apply stashed changes if any
             if git stash list | grep -q "Auto-stash"; then
