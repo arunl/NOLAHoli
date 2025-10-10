@@ -273,7 +273,7 @@ $google_photos = new NOLA_Holi_Google_Photos();
         <button class="lightbox-next" aria-label="Next">›</button>
         <div class="lightbox-media-container">
             <img id="lightbox-image" src="" alt="" style="display: none;">
-            <video id="lightbox-video" controls style="display: none; max-width: 100%; max-height: 80vh; border-radius: 10px;">
+            <video id="lightbox-video" controls playsinline preload="metadata" style="display: none; max-width: 100%; max-height: 80vh; border-radius: 10px;">
                 <source src="" type="video/mp4">
                 Your browser does not support the video tag.
             </video>

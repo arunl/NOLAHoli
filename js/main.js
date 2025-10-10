@@ -393,11 +393,21 @@
         var minSwipeDistance = 50; // Minimum swipe distance in pixels
 
         $('.lightbox-media-container').on('touchstart', function(e) {
+            // Don't intercept touches on video controls
+            if ($(e.target).is('video') || $(e.target).closest('video').length > 0) {
+                return;
+            }
+            
             touchStartX = e.changedTouches[0].screenX;
             touchStartY = e.changedTouches[0].screenY;
         });
 
         $('.lightbox-media-container').on('touchend', function(e) {
+            // Don't intercept touches on video controls
+            if ($(e.target).is('video') || $(e.target).closest('video').length > 0) {
+                return;
+            }
+            
             if (!$lightbox.hasClass('hidden')) {
                 touchEndX = e.changedTouches[0].screenX;
                 touchEndY = e.changedTouches[0].screenY;
@@ -433,17 +443,36 @@
             }
             
             if (media.type === 'video' && media.videoUrl) {
+                console.log('Loading video:', media.videoUrl);
+                
                 // Show video, hide image
                 $lightboxImage.hide();
                 $lightboxVideo.show();
+                
+                // Set video source with proper type
                 $lightboxVideo.find('source').attr('src', media.videoUrl);
+                $lightboxVideo.find('source').attr('type', 'video/mp4');
                 $lightboxVideo[0].load();
                 
-                // Auto-play video
+                // Add error handler
+                $lightboxVideo[0].onerror = function(e) {
+                    console.error('Video load error:', e);
+                    console.error('Video error details:', $lightboxVideo[0].error);
+                    alert('Unable to play this video. The video format may not be supported or the URL is invalid.');
+                };
+                
+                // Try to play video (with user interaction fallback)
                 setTimeout(function() {
-                    $lightboxVideo[0].play().catch(function(error) {
-                        console.log('Auto-play prevented:', error);
-                    });
+                    var playPromise = $lightboxVideo[0].play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise.then(function() {
+                            console.log('Video playing successfully');
+                        }).catch(function(error) {
+                            console.log('Auto-play prevented:', error.message);
+                            console.log('Click the play button to start video');
+                        });
+                    }
                 }, 100);
                 
                 $lightboxDownload.attr('href', media.videoUrl);

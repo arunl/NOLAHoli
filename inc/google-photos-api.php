@@ -338,7 +338,7 @@ class NOLA_Holi_Google_Photos {
                         'medium' => $base_url . '=w1200-h1200',
                         'full' => $base_url . '=w2400-h2400',
                         'original' => $base_url,
-                        'video_url' => $is_video_thumb ? $base_url . '=m18' : null, // m18 for video
+                        'video_url' => $is_video_thumb ? $base_url . '=dv' : null, // dv for video playback
                         'is_video_thumb' => $is_video_thumb
                     );
                 }
@@ -363,7 +363,7 @@ class NOLA_Holi_Google_Photos {
                         'medium' => $base_url . '=w1200-h1200',
                         'full' => $base_url . '=w2400-h2400',
                         'original' => $base_url,
-                        'video_url' => $base_url . '=m37', // m37 for higher quality video
+                        'video_url' => $base_url . '=dv', // dv for video playback
                         'is_video_thumb' => true
                     );
                 }
