@@ -40,4 +40,12 @@ vendor/
 *.bak
 *.backup
 
-.git*/
+# GitHub Actions deployment keys (NEVER commit these!)
+.github-action-keys/
+*.pem
+*.key
+*_rsa
+*_ed25519
+
+# Allow .github directory for GitHub Actions
+!.github/

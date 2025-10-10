@@ -1,0 +1,165 @@
+name: Deploy WordPress Theme
+
+on:
+  # Automatic deployment on push
+  push:
+    branches:
+      - main              # Deploy to public
+      - '**'              # Deploy to staging (all other branches)
+    paths-ignore:
+      - '**.md'           # Ignore markdown file changes
+      - '.gitignore'
+      
+  # Manual deployment workflow
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        type: choice
+        options:
+          - staging
+          - public
+        default: 'staging'
+      branch:
+        description: 'Branch to deploy (leave empty for current branch)'
+        required: false
+        default: ''
+
+jobs:
+  deploy:
+    name: Deploy to WordPress
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch || github.ref }}
+      
+      - name: Determine deployment environment
+        id: env
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            # Manual deployment - use selected environment
+            echo "environment=${{ github.event.inputs.environment }}" >> $GITHUB_OUTPUT
+            echo "Manually deploying to: ${{ github.event.inputs.environment }}"
+          elif [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            # Merge to main - deploy to public
+            echo "environment=public" >> $GITHUB_OUTPUT
+            echo "Auto-deploying main branch to: public"
+          else
+            # Commit to other branch - deploy to staging
+            echo "environment=staging" >> $GITHUB_OUTPUT
+            echo "Auto-deploying feature branch to: staging"
+          fi
+      
+      - name: Setup SSH key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+      
+      - name: Set deployment path and branch
+        id: path
+        run: |
+          if [ "${{ steps.env.outputs.environment }}" == "public" ]; then
+            echo "theme_path=${{ secrets.PUBLIC_THEME_PATH }}" >> $GITHUB_OUTPUT
+            echo "site_name=public" >> $GITHUB_OUTPUT
+            echo "deploy_branch=main" >> $GITHUB_OUTPUT
+          else
+            echo "theme_path=${{ secrets.STAGING_THEME_PATH }}" >> $GITHUB_OUTPUT
+            echo "site_name=staging" >> $GITHUB_OUTPUT
+            echo "deploy_branch=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Deploy via Git Pull
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ secrets.SSH_PORT || 22 }}
+          THEME_PATH: ${{ steps.path.outputs.theme_path }}
+          DEPLOY_BRANCH: ${{ steps.path.outputs.deploy_branch }}
+        run: |
+          # Deploy to server using git pull
+          ssh -i ~/.ssh/deploy_key -p $SSH_PORT $SSH_USER@$SSH_HOST << ENDSSH
+            set -e
+            
+            echo "============================================"
+            echo "Deploying to: ${{ steps.path.outputs.site_name }}"
+            echo "Theme path: \${THEME_PATH}"
+            echo "Branch: \${DEPLOY_BRANCH}"
+            echo "============================================"
+            
+            # Navigate to theme directory
+            cd "\${THEME_PATH}"
+            
+            # Check if it's a git repository
+            if [ ! -d ".git" ]; then
+              echo "ERROR: Not a git repository!"
+              echo "Please clone the repository first:"
+              echo "  cd \$(dirname \${THEME_PATH})"
+              echo "  git clone git@github.com:arunl/NOLAHoli.git"
+              exit 1
+            fi
+            
+            # Store any local changes (in case of dashboard edits)
+            echo "Checking for local changes..."
+            if ! git diff-index --quiet HEAD --; then
+              echo "Local changes detected - stashing them"
+              git stash save "Auto-stash before deployment at \$(date '+%Y-%m-%d %H:%M:%S')"
+            fi
+            
+            # Fetch latest changes
+            echo "Fetching latest changes from GitHub..."
+            git fetch origin
+            
+            # Checkout and pull the target branch
+            echo "Checking out branch: \${DEPLOY_BRANCH}"
+            git checkout \${DEPLOY_BRANCH}
+            
+            echo "Pulling latest changes..."
+            git pull origin \${DEPLOY_BRANCH}
+            
+            # Apply stashed changes if any
+            if git stash list | grep -q "Auto-stash"; then
+              echo "Applying stashed local changes..."
+              git stash pop || {
+                echo "WARNING: Conflict detected when applying stashed changes"
+                echo "Please resolve manually on the server"
+              }
+            fi
+            
+            # Set proper permissions
+            echo "Setting file permissions..."
+            find . -type f -exec chmod 644 {} \\;
+            find . -type d -exec chmod 755 {} \\;
+            
+            # Show deployment info
+            echo "============================================"
+            echo "Deployment completed successfully!"
+            echo "Current commit: \$(git rev-parse --short HEAD)"
+            echo "Current branch: \$(git branch --show-current)"
+            echo "Last commit: \$(git log -1 --pretty=format:'%h - %s (%ar)')"
+            echo "============================================"
+          ENDSSH
+      
+      - name: Cleanup
+        if: always()
+        run: |
+          rm -f ~/.ssh/deploy_key
+      
+      - name: Deployment summary
+        run: |
+          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Environment:** ${{ steps.path.outputs.site_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Triggered by:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Theme deployed successfully!" >> $GITHUB_STEP_SUMMARY
+
