@@ -299,6 +299,223 @@
     }
 
     /**
+     * Photo/Video Lightbox
+     */
+    function initPhotoLightbox() {
+        var currentIndex = 0;
+        var currentGallery = [];
+        var $lightbox = $('#photo-lightbox');
+        var $lightboxImage = $('#lightbox-image');
+        var $lightboxVideo = $('#lightbox-video');
+        var $lightboxCounter = $('#lightbox-counter');
+        var $lightboxDownload = $('#lightbox-download');
+
+        // Open lightbox when clicking a media item
+        $(document).on('click', '.photo-item', function() {
+            var $gallery = $(this).closest('.photo-gallery');
+            var $allItems = $gallery.find('.photo-item');
+            
+            currentIndex = $(this).data('index');
+            currentGallery = [];
+            
+            // Build gallery array
+            $allItems.each(function() {
+                var $img = $(this).find('img');
+                var type = $(this).data('type') || 'photo';
+                var videoUrl = $(this).data('video-url') || '';
+                
+                currentGallery.push({
+                    type: type,
+                    full: $img.data('full'),
+                    original: $img.data('original'),
+                    videoUrl: videoUrl,
+                    alt: $img.attr('alt')
+                });
+            });
+            
+            showMedia(currentIndex);
+            $lightbox.removeClass('hidden');
+            $('body').css('overflow', 'hidden');
+        });
+
+        // Close lightbox
+        function closeLightbox() {
+            // Pause video if playing
+            if ($lightboxVideo[0]) {
+                $lightboxVideo[0].pause();
+            }
+            $lightbox.addClass('hidden');
+            $('body').css('overflow', '');
+        }
+
+        $('.lightbox-close, .lightbox-overlay').on('click', closeLightbox);
+
+        // Navigate media
+        $('.lightbox-prev').on('click', function(e) {
+            e.stopPropagation();
+            currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+            showMedia(currentIndex);
+        });
+
+        $('.lightbox-next').on('click', function(e) {
+            e.stopPropagation();
+            currentIndex = (currentIndex + 1) % currentGallery.length;
+            showMedia(currentIndex);
+        });
+
+        // Keyboard navigation
+        $(document).on('keydown', function(e) {
+            if (!$lightbox.hasClass('hidden')) {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    $('.lightbox-prev').click();
+                } else if (e.key === 'ArrowRight') {
+                    $('.lightbox-next').click();
+                } else if (e.key === ' ' && currentGallery[currentIndex].type === 'video') {
+                    // Space bar to play/pause video
+                    e.preventDefault();
+                    var video = $lightboxVideo[0];
+                    if (video.paused) {
+                        video.play();
+                    } else {
+                        video.pause();
+                    }
+                }
+            }
+        });
+
+        // Touch/Swipe navigation for mobile devices
+        var touchStartX = 0;
+        var touchEndX = 0;
+        var touchStartY = 0;
+        var touchEndY = 0;
+        var minSwipeDistance = 50; // Minimum swipe distance in pixels
+
+        $('.lightbox-media-container').on('touchstart', function(e) {
+            // Don't intercept touches on video controls
+            if ($(e.target).is('video') || $(e.target).closest('video').length > 0) {
+                return;
+            }
+            
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        });
+
+        $('.lightbox-media-container').on('touchend', function(e) {
+            // Don't intercept touches on video controls
+            if ($(e.target).is('video') || $(e.target).closest('video').length > 0) {
+                return;
+            }
+            
+            if (!$lightbox.hasClass('hidden')) {
+                touchEndX = e.changedTouches[0].screenX;
+                touchEndY = e.changedTouches[0].screenY;
+                handleSwipeGesture();
+            }
+        });
+
+        function handleSwipeGesture() {
+            var horizontalDistance = touchEndX - touchStartX;
+            var verticalDistance = Math.abs(touchEndY - touchStartY);
+            
+            // Only trigger if horizontal swipe is more significant than vertical
+            if (Math.abs(horizontalDistance) > minSwipeDistance && Math.abs(horizontalDistance) > verticalDistance) {
+                if (horizontalDistance > 0) {
+                    // Swipe right - show previous
+                    $('.lightbox-prev').click();
+                } else {
+                    // Swipe left - show next
+                    $('.lightbox-next').click();
+                }
+            }
+        }
+
+        // Show media (photo or video)
+        function showMedia(index) {
+            if (currentGallery.length === 0) return;
+            
+            var media = currentGallery[index];
+            
+            // Stop any playing video
+            if ($lightboxVideo[0]) {
+                $lightboxVideo[0].pause();
+            }
+            
+            if (media.type === 'video' && media.videoUrl) {
+                console.log('Loading video:', media.videoUrl);
+                
+                // Show video, hide image
+                $lightboxImage.hide();
+                $lightboxVideo.show();
+                
+                // Set video source with proper type
+                $lightboxVideo.find('source').attr('src', media.videoUrl);
+                $lightboxVideo.find('source').attr('type', 'video/mp4');
+                $lightboxVideo[0].load();
+                
+                // Add error handler
+                $lightboxVideo[0].onerror = function(e) {
+                    console.error('Video load error:', e);
+                    console.error('Video error details:', $lightboxVideo[0].error);
+                    alert('Unable to play this video. The video format may not be supported or the URL is invalid.');
+                };
+                
+                // Try to play video (with user interaction fallback)
+                setTimeout(function() {
+                    var playPromise = $lightboxVideo[0].play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise.then(function() {
+                            console.log('Video playing successfully');
+                        }).catch(function(error) {
+                            console.log('Auto-play prevented:', error.message);
+                            console.log('Click the play button to start video');
+                        });
+                    }
+                }, 100);
+                
+                $lightboxDownload.attr('href', media.videoUrl);
+            } else {
+                // Show image, hide video
+                $lightboxVideo.hide();
+                $lightboxImage.show();
+                $lightboxImage.attr('src', media.full);
+                $lightboxImage.attr('alt', media.alt);
+                $lightboxDownload.attr('href', media.original);
+            }
+            
+            $lightboxCounter.text((index + 1) + ' / ' + currentGallery.length);
+        }
+
+        // Prevent lightbox content from closing when clicked
+        $('.lightbox-content').on('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+
+    /**
+     * View Toggle (Grid/Carousel)
+     */
+    function initViewToggle() {
+        $('.view-btn').on('click', function() {
+            var view = $(this).data('view');
+            
+            // Update button states
+            $('.view-btn').removeClass('active');
+            $(this).addClass('active');
+            
+            // Update gallery view
+            $('.photo-gallery').removeClass('grid carousel').addClass(view);
+            
+            // If switching to carousel, scroll to start
+            if (view === 'carousel') {
+                $('.photo-gallery').scrollLeft(0);
+            }
+        });
+    }
+
+    /**
      * Initialize all functions when document is ready
      */
     $(document).ready(function() {
@@ -306,6 +523,8 @@
         initSmoothScroll();
         initStickyHeader();
         initGalleryTabs();
+        initPhotoLightbox();
+        initViewToggle();
         initLazyLoading();
         initFormValidation();
         initBackToTop();

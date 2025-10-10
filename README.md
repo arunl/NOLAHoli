@@ -5,7 +5,7 @@ A vibrant, custom WordPress theme designed for the NOLA Holi Festival celebratin
 ## Theme Information
 
 - **Theme Name:** NOLA Holi
-- **Version:** 1.0.0
+- **Version:** 1.1.0
 - **Author:** NOLA Holi Team
 - **License:** GPL v2 or later
 - **Description:** A modern, responsive WordPress theme featuring Mardi Gras colors (purple, green, gold) designed specifically for the NOLA Holi Festival website
@@ -48,16 +48,31 @@ A vibrant, custom WordPress theme designed for the NOLA Holi Festival celebratin
 - Event Time
 - Event Location
 - Social Media Links (Facebook, Instagram, Twitter)
+- Photo Gallery Settings (Display style, Album URLs for 2024-2026)
 
 ### JavaScript Features
 - Mobile menu toggle
 - Smooth scrolling for anchor links
 - Sticky header on scroll
 - Gallery year tabs
+- Photo lightbox viewer with keyboard navigation
 - Form validation
 - Back to top button
 - Scroll animations
 - Active menu item highlighting
+
+### Google Photos Integration (NEW in v1.1.0)
+- **Automatic Photo Fetching** - Photos automatically fetched from Google Photos shared albums
+- **Multiple Display Modes** - Grid view or carousel slider
+- **Intelligent Caching** - 24-hour cache for optimal performance
+- **Full-Featured Lightbox** - View photos in full-screen with navigation
+- **Keyboard Navigation** - Arrow keys to navigate photos
+- **Download Support** - Users can download original photos
+- **Lazy Loading** - Images load as needed for better performance
+- **No API Key Required** - Works immediately with public share URLs
+- **Optional Advanced Setup** - Full Google Photos API integration available
+
+See [GOOGLE-PHOTOS-API-SETUP.md](GOOGLE-PHOTOS-API-SETUP.md) for detailed configuration instructions.
 
 ## Installation
 
@@ -178,15 +193,17 @@ A vibrant, custom WordPress theme designed for the NOLA Holi Festival celebratin
 
 ```
 nolaholi/
-├── style.css                 # Main stylesheet with theme info
-├── functions.php             # Theme functions and features
-├── header.php               # Site header template
-├── footer.php               # Site footer template
-├── index.php                # Default blog template
-├── front-page.php           # Home page template
-├── page.php                 # Default page template
-├── single.php               # Single post template
-├── page-templates/          # Custom page templates
+├── style.css                         # Main stylesheet with theme info
+├── functions.php                     # Theme functions and features
+├── header.php                        # Site header template
+├── footer.php                        # Site footer template
+├── index.php                         # Default blog template
+├── front-page.php                    # Home page template
+├── page.php                          # Default page template
+├── single.php                        # Single post template
+├── inc/                              # Additional functionality
+│   └── google-photos-api.php        # Google Photos API integration
+├── page-templates/                   # Custom page templates
 │   ├── template-about-holi.php
 │   ├── template-about-nola-holi.php
 │   ├── template-parade.php
@@ -195,11 +212,13 @@ nolaholi/
 │   ├── template-vendors.php
 │   ├── template-volunteers.php
 │   ├── template-organizers.php
-│   ├── template-gallery.php
+│   ├── template-gallery.php         # Gallery with Google Photos integration
 │   └── template-contact.php
 ├── js/
-│   └── main.js              # JavaScript for interactive elements
-└── README.md                # This file
+│   └── main.js                       # JavaScript (incl. lightbox functionality)
+├── README.md                         # This file
+├── GOOGLE-PHOTOS-API-SETUP.md        # Google Photos setup guide
+└── DEVELOPMENT-LOG.md                # Development history and decisions
 ```
 
 ## Customization
@@ -341,6 +360,18 @@ GNU General Public License for more details.
 ```
 
 ## Changelog
+
+### Version 1.1.0 (October 10, 2025)
+- ✅ **NEW**: Google Photos API integration for automatic photo fetching
+- ✅ **NEW**: Full-featured photo lightbox with keyboard navigation
+- ✅ **NEW**: Multiple gallery display modes (Grid/Carousel)
+- ✅ **NEW**: Intelligent caching system for performance optimization
+- ✅ **NEW**: Download original photos feature
+- ✅ **NEW**: Lazy loading for gallery images
+- ✅ **IMPROVED**: Gallery template completely redesigned
+- ✅ **ADDED**: Google Photos API settings page in WordPress admin
+- ✅ **ADDED**: Comprehensive Google Photos setup documentation
+- ✅ **FIXED**: Gallery page slug conflict with custom post type
 
 ### Version 1.0.0
 - Initial release
