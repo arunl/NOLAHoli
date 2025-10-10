@@ -299,58 +299,68 @@
     }
 
     /**
-     * Photo Lightbox
+     * Photo/Video Lightbox
      */
     function initPhotoLightbox() {
         var currentIndex = 0;
         var currentGallery = [];
         var $lightbox = $('#photo-lightbox');
         var $lightboxImage = $('#lightbox-image');
+        var $lightboxVideo = $('#lightbox-video');
         var $lightboxCounter = $('#lightbox-counter');
         var $lightboxDownload = $('#lightbox-download');
 
-        // Open lightbox when clicking a photo
+        // Open lightbox when clicking a media item
         $(document).on('click', '.photo-item', function() {
             var $gallery = $(this).closest('.photo-gallery');
-            var $allPhotos = $gallery.find('.photo-item');
+            var $allItems = $gallery.find('.photo-item');
             
             currentIndex = $(this).data('index');
             currentGallery = [];
             
             // Build gallery array
-            $allPhotos.each(function() {
+            $allItems.each(function() {
                 var $img = $(this).find('img');
+                var type = $(this).data('type') || 'photo';
+                var videoUrl = $(this).data('video-url') || '';
+                
                 currentGallery.push({
+                    type: type,
                     full: $img.data('full'),
                     original: $img.data('original'),
+                    videoUrl: videoUrl,
                     alt: $img.attr('alt')
                 });
             });
             
-            showPhoto(currentIndex);
+            showMedia(currentIndex);
             $lightbox.removeClass('hidden');
             $('body').css('overflow', 'hidden');
         });
 
         // Close lightbox
         function closeLightbox() {
+            // Pause video if playing
+            if ($lightboxVideo[0]) {
+                $lightboxVideo[0].pause();
+            }
             $lightbox.addClass('hidden');
             $('body').css('overflow', '');
         }
 
         $('.lightbox-close, .lightbox-overlay').on('click', closeLightbox);
 
-        // Navigate photos
+        // Navigate media
         $('.lightbox-prev').on('click', function(e) {
             e.stopPropagation();
             currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
-            showPhoto(currentIndex);
+            showMedia(currentIndex);
         });
 
         $('.lightbox-next').on('click', function(e) {
             e.stopPropagation();
             currentIndex = (currentIndex + 1) % currentGallery.length;
-            showPhoto(currentIndex);
+            showMedia(currentIndex);
         });
 
         // Keyboard navigation
@@ -362,24 +372,81 @@
                     $('.lightbox-prev').click();
                 } else if (e.key === 'ArrowRight') {
                     $('.lightbox-next').click();
+                } else if (e.key === ' ' && currentGallery[currentIndex].type === 'video') {
+                    // Space bar to play/pause video
+                    e.preventDefault();
+                    var video = $lightboxVideo[0];
+                    if (video.paused) {
+                        video.play();
+                    } else {
+                        video.pause();
+                    }
                 }
             }
         });
 
-        // Show photo
-        function showPhoto(index) {
+        // Show media (photo or video)
+        function showMedia(index) {
             if (currentGallery.length === 0) return;
             
-            var photo = currentGallery[index];
-            $lightboxImage.attr('src', photo.full);
-            $lightboxImage.attr('alt', photo.alt);
-            $lightboxDownload.attr('href', photo.original);
+            var media = currentGallery[index];
+            
+            // Stop any playing video
+            if ($lightboxVideo[0]) {
+                $lightboxVideo[0].pause();
+            }
+            
+            if (media.type === 'video' && media.videoUrl) {
+                // Show video, hide image
+                $lightboxImage.hide();
+                $lightboxVideo.show();
+                $lightboxVideo.find('source').attr('src', media.videoUrl);
+                $lightboxVideo[0].load();
+                
+                // Auto-play video
+                setTimeout(function() {
+                    $lightboxVideo[0].play().catch(function(error) {
+                        console.log('Auto-play prevented:', error);
+                    });
+                }, 100);
+                
+                $lightboxDownload.attr('href', media.videoUrl);
+            } else {
+                // Show image, hide video
+                $lightboxVideo.hide();
+                $lightboxImage.show();
+                $lightboxImage.attr('src', media.full);
+                $lightboxImage.attr('alt', media.alt);
+                $lightboxDownload.attr('href', media.original);
+            }
+            
             $lightboxCounter.text((index + 1) + ' / ' + currentGallery.length);
         }
 
         // Prevent lightbox content from closing when clicked
         $('.lightbox-content').on('click', function(e) {
             e.stopPropagation();
+        });
+    }
+
+    /**
+     * View Toggle (Grid/Carousel)
+     */
+    function initViewToggle() {
+        $('.view-btn').on('click', function() {
+            var view = $(this).data('view');
+            
+            // Update button states
+            $('.view-btn').removeClass('active');
+            $(this).addClass('active');
+            
+            // Update gallery view
+            $('.photo-gallery').removeClass('grid carousel').addClass(view);
+            
+            // If switching to carousel, scroll to start
+            if (view === 'carousel') {
+                $('.photo-gallery').scrollLeft(0);
+            }
         });
     }
 
@@ -392,6 +459,7 @@
         initStickyHeader();
         initGalleryTabs();
         initPhotoLightbox();
+        initViewToggle();
         initLazyLoading();
         initFormValidation();
         initBackToTop();

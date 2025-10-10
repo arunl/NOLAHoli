@@ -282,7 +282,7 @@ class NOLA_Holi_Google_Photos {
     
     /**
      * Alternative method: Scrape shared album
-     * This uses the public share URL to extract photo information
+     * This uses the public share URL to extract photo and video information
      */
     private function scrape_shared_album($album_url) {
         $response = wp_remote_get($album_url, array(
@@ -298,41 +298,103 @@ class NOLA_Holi_Google_Photos {
         
         // Extract photo URLs from the page
         // Google Photos embeds data in JavaScript variables
-        preg_match_all('/\["(https:\/\/lh3\.googleusercontent\.com\/[^"]+)"/i', $body, $matches);
+        preg_match_all('/\["(https:\/\/lh3\.googleusercontent\.com\/[^"]+)"/i', $body, $photo_matches);
         
-        if (empty($matches[1])) {
-            return false;
-        }
+        // Extract video URLs - look for video patterns
+        preg_match_all('/\["(https:\/\/video\.googleusercontent\.com\/[^"]+)"/i', $body, $video_matches);
+        preg_match_all('/\["(https:\/\/redirector\.googlevideo\.com\/[^"]+)"/i', $body, $video_matches2);
         
-        $photos = array();
+        $media = array();
         $seen = array();
         
-        foreach ($matches[1] as $url) {
-            // Clean up the URL
-            $url = html_entity_decode($url);
-            
-            // Remove size parameters to get base URL
-            $base_url = preg_replace('/=w\d+-h\d+(-[a-z]+)?$/', '', $url);
-            
-            // Avoid duplicates
-            if (in_array($base_url, $seen)) {
-                continue;
-            }
-            $seen[] = $base_url;
-            
-            // Only include actual photo URLs (not icons, etc.)
-            if (strpos($url, 'googleusercontent.com') !== false && 
-                strlen($base_url) > 100) {
-                $photos[] = array(
-                    'thumbnail' => $base_url . '=w400-h400',
-                    'medium' => $base_url . '=w1200-h1200',
-                    'full' => $base_url . '=w2400-h2400',
-                    'original' => $base_url
-                );
+        // Process photos
+        if (!empty($photo_matches[1])) {
+            foreach ($photo_matches[1] as $url) {
+                // Clean up the URL
+                $url = html_entity_decode($url);
+                
+                // Remove size parameters to get base URL
+                $base_url = preg_replace('/=w\d+-h\d+(-[a-z]+)?$/', '', $url);
+                
+                // Avoid duplicates
+                if (in_array($base_url, $seen)) {
+                    continue;
+                }
+                $seen[] = $base_url;
+                
+                // Only include actual photo URLs (not icons, etc.)
+                if (strpos($url, 'googleusercontent.com') !== false && 
+                    strlen($base_url) > 100) {
+                    
+                    // Check if this might be a video thumbnail
+                    $is_video_thumb = false;
+                    if (strpos($base_url, '-rw') !== false || strpos($base_url, '-no') !== false) {
+                        $is_video_thumb = true;
+                    }
+                    
+                    $media[] = array(
+                        'type' => $is_video_thumb ? 'video' : 'photo',
+                        'thumbnail' => $base_url . '=w400-h400',
+                        'medium' => $base_url . '=w1200-h1200',
+                        'full' => $base_url . '=w2400-h2400',
+                        'original' => $base_url,
+                        'video_url' => $is_video_thumb ? $base_url . '=m18' : null, // m18 for video
+                        'is_video_thumb' => $is_video_thumb
+                    );
+                }
             }
         }
         
-        return array_slice($photos, 0, 100); // Limit to 100 photos
+        // Process videos
+        if (!empty($video_matches[1])) {
+            foreach ($video_matches[1] as $url) {
+                $url = html_entity_decode($url);
+                $base_url = preg_replace('/=.*$/', '', $url);
+                
+                if (in_array($base_url, $seen)) {
+                    continue;
+                }
+                $seen[] = $base_url;
+                
+                if (strlen($base_url) > 100) {
+                    $media[] = array(
+                        'type' => 'video',
+                        'thumbnail' => $base_url . '=w400-h400', // Video poster
+                        'medium' => $base_url . '=w1200-h1200',
+                        'full' => $base_url . '=w2400-h2400',
+                        'original' => $base_url,
+                        'video_url' => $base_url . '=m37', // m37 for higher quality video
+                        'is_video_thumb' => true
+                    );
+                }
+            }
+        }
+        
+        // Process alternative video URLs
+        if (!empty($video_matches2[1])) {
+            foreach ($video_matches2[1] as $url) {
+                $url = html_entity_decode($url);
+                
+                if (in_array($url, $seen)) {
+                    continue;
+                }
+                $seen[] = $url;
+                
+                if (strlen($url) > 100) {
+                    $media[] = array(
+                        'type' => 'video',
+                        'thumbnail' => null, // No thumbnail for these
+                        'medium' => null,
+                        'full' => null,
+                        'original' => $url,
+                        'video_url' => $url,
+                        'is_video_thumb' => true
+                    );
+                }
+            }
+        }
+        
+        return array_slice($media, 0, 100); // Limit to 100 items
     }
     
     /**
