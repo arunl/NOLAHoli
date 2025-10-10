@@ -385,6 +385,42 @@
             }
         });
 
+        // Touch/Swipe navigation for mobile devices
+        var touchStartX = 0;
+        var touchEndX = 0;
+        var touchStartY = 0;
+        var touchEndY = 0;
+        var minSwipeDistance = 50; // Minimum swipe distance in pixels
+
+        $('.lightbox-media-container').on('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        });
+
+        $('.lightbox-media-container').on('touchend', function(e) {
+            if (!$lightbox.hasClass('hidden')) {
+                touchEndX = e.changedTouches[0].screenX;
+                touchEndY = e.changedTouches[0].screenY;
+                handleSwipeGesture();
+            }
+        });
+
+        function handleSwipeGesture() {
+            var horizontalDistance = touchEndX - touchStartX;
+            var verticalDistance = Math.abs(touchEndY - touchStartY);
+            
+            // Only trigger if horizontal swipe is more significant than vertical
+            if (Math.abs(horizontalDistance) > minSwipeDistance && Math.abs(horizontalDistance) > verticalDistance) {
+                if (horizontalDistance > 0) {
+                    // Swipe right - show previous
+                    $('.lightbox-prev').click();
+                } else {
+                    // Swipe left - show next
+                    $('.lightbox-next').click();
+                }
+            }
+        }
+
         // Show media (photo or video)
         function showMedia(index) {
             if (currentGallery.length === 0) return;

@@ -40,3 +40,4 @@ vendor/
 *.bak
 *.backup
 
+.git*/

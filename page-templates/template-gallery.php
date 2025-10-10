@@ -503,21 +503,25 @@ $google_photos = new NOLA_Holi_Google_Photos();
 .lightbox-prev,
 .lightbox-next {
     position: absolute;
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
+    background: rgba(0, 0, 0, 0.7);
+    border: 3px solid rgba(255, 255, 255, 0.9);
     color: white;
     font-size: 3rem;
     cursor: pointer;
     padding: 10px 20px;
     border-radius: 50%;
-    transition: background 0.3s ease;
+    transition: all 0.3s ease;
     z-index: 10002;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
 .lightbox-close:hover,
 .lightbox-prev:hover,
 .lightbox-next:hover {
-    background: rgba(255, 255, 255, 0.4);
+    background: var(--mardi-gras-purple);
+    border-color: var(--mardi-gras-gold);
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
 }
 
 .lightbox-close {
@@ -531,10 +535,18 @@ $google_photos = new NOLA_Holi_Google_Photos();
     transform: translateY(-50%);
 }
 
+.lightbox-prev:hover {
+    transform: translateY(-50%) scale(1.1);
+}
+
 .lightbox-next {
     right: 20px;
     top: 50%;
     transform: translateY(-50%);
+}
+
+.lightbox-next:hover {
+    transform: translateY(-50%) scale(1.1);
 }
 
 .lightbox-info {
@@ -579,7 +591,22 @@ $google_photos = new NOLA_Holi_Google_Photos();
     .lightbox-prev,
     .lightbox-next {
         font-size: 2rem;
-        padding: 5px 15px;
+        padding: 8px 15px;
+        background: rgba(0, 0, 0, 0.8);
+        border-width: 2px;
+    }
+    
+    .lightbox-prev {
+        left: 10px;
+    }
+    
+    .lightbox-next {
+        right: 10px;
+    }
+    
+    .lightbox-close {
+        top: 10px;
+        right: 10px;
     }
 }
 </style>
