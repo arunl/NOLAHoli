@@ -4,17 +4,34 @@ This guide explains how to set up automated deployment of the NOLA Holi WordPres
 
 ## Overview
 
-The GitHub Actions workflow automatically deploys your theme to WordPress sites:
+The GitHub Actions workflow automatically deploys your theme to WordPress sites using **git pull**:
 
 - **Merge to `main`** → Deploys to **public** site (www.nolaholi.org)
 - **Push to other branches** → Deploys to **staging** site (staging2.nolaholi.com)
 - **Manual trigger** → Deploy any branch to any site
+
+### Deployment Method
+
+The workflow uses **git-based deployment**:
+1. SSH into your server
+2. Navigate to theme directory
+3. Pull latest changes from GitHub
+4. Automatically stashes any local changes (from WP dashboard edits)
+5. Applies stashed changes back after pull
+
+**Benefits:**
+- ✅ Bidirectional sync (push dashboard changes back to GitHub)
+- ✅ Cleaner than tar/upload approach
+- ✅ Preserves git history on server
+- ✅ Easier rollbacks with git
 
 ## Prerequisites
 
 1. GitHub repository with the theme
 2. SSH access to your Dreamhost server
 3. WordPress installed at both staging and public sites
+4. Git repository cloned in WordPress themes directory on server
+5. Server SSH key registered with GitHub (for pulling code)
 
 ## Setup Instructions
 
@@ -56,21 +73,63 @@ cat ~/.ssh/github_deploy_key.pub
    ssh -i ~/.ssh/github_deploy_key your_username@your_server.dreamhost.com
    ```
 
-### Step 3: Get Your WordPress Paths
+### Step 3: Setup Git Repository on Server
 
-On your Dreamhost server, find the full paths to your WordPress installations:
+SSH into your Dreamhost server and clone the repository into your WordPress themes directory:
 
 ```bash
-# Public site
-pwd  # When in public site directory
-# Example: /home/username/nolaholi.org
+# SSH to your server
+ssh your_username@your_server.dreamhost.com
 
-# Staging site
-pwd  # When in staging directory
-# Example: /home/username/staging2.nolaholi.com
+# Navigate to public site themes directory
+cd ~/nolaholi.org/wp-content/themes
+
+# Clone the repository (if not already cloned)
+git clone git@github.com:arunl/NOLAHoli.git
+
+# Repeat for staging site
+cd ~/staging2.nolaholi.com/wp-content/themes
+git clone git@github.com:arunl/NOLAHoli.git
 ```
 
-### Step 4: Configure GitHub Secrets
+**Get the full theme paths:**
+```bash
+# Public site theme path
+cd ~/nolaholi.org/wp-content/themes/NOLAHoli && pwd
+# Example: /home/username/nolaholi.org/wp-content/themes/NOLAHoli
+
+# Staging site theme path
+cd ~/staging2.nolaholi.com/wp-content/themes/NOLAHoli && pwd
+# Example: /home/username/staging2.nolaholi.com/wp-content/themes/NOLAHoli
+```
+
+### Step 4: Register Server SSH Key with GitHub
+
+The server needs to pull from GitHub, so add its SSH key to your GitHub account:
+
+```bash
+# On your Dreamhost server, generate SSH key (if not exists)
+ssh-keygen -t ed25519 -C "dreamhost-server" -f ~/.ssh/id_ed25519 -N ""
+
+# Display the public key
+cat ~/.ssh/id_ed25519.pub
+```
+
+**Add to GitHub:**
+1. Copy the public key output
+2. Go to **GitHub.com** → **Settings** → **SSH and GPG keys**
+3. Click **New SSH key**
+4. Title: "Dreamhost Server - NOLA Holi"
+5. Paste the public key
+6. Click **Add SSH key**
+
+**Test the connection:**
+```bash
+ssh -T git@github.com
+# Should see: "Hi arunl! You've successfully authenticated..."
+```
+
+### Step 5: Configure GitHub Secrets
 
 1. **Go to your GitHub repository**
 2. Click **Settings** → **Secrets and variables** → **Actions**
@@ -83,8 +142,8 @@ pwd  # When in staging directory
 | `SSH_HOST` | Dreamhost server hostname | `yourdomain.dreamhost.com` |
 | `SSH_USER` | Your Dreamhost username | `your_username` |
 | `SSH_PORT` | SSH port (usually 22) | `22` |
-| `PUBLIC_SITE_PATH` | Full path to public WordPress | `/home/username/nolaholi.org` |
-| `STAGING_SITE_PATH` | Full path to staging WordPress | `/home/username/staging2.nolaholi.com` |
+| `PUBLIC_THEME_PATH` | Full path to public theme | `/home/username/nolaholi.org/wp-content/themes/NOLAHoli` |
+| `STAGING_THEME_PATH` | Full path to staging theme | `/home/username/staging2.nolaholi.com/wp-content/themes/NOLAHoli` |
 
 #### How to Add Each Secret:
 
@@ -94,7 +153,7 @@ pwd  # When in staging directory
 4. Click **Add secret**
 5. Repeat for all secrets
 
-### Step 5: Test the Workflow
+### Step 6: Test the Workflow
 
 #### Test Automatic Deployment (Feature Branch → Staging)
 
@@ -140,48 +199,91 @@ This should deploy to **public** site.
 │  Git Push       │
 └────────┬────────┘
          │
-         ├─ main branch? ──── YES ──→ Deploy to PUBLIC
+         ├─ main branch? ──── YES ──→ Deploy to PUBLIC (git pull main)
          │
-         └─ other branch? ─── YES ──→ Deploy to STAGING
+         └─ other branch? ─── YES ──→ Deploy to STAGING (git pull branch)
 ```
 
 ### Deployment Process
 
-1. **Checkout code** from specified branch
-2. **Determine environment** (staging or public)
-3. **Create package** (remove .git, .github, docs)
-4. **Upload to server** via SSH/SCP
-5. **Backup existing theme** (keeps last 3 backups)
-6. **Deploy new theme**
-7. **Set permissions** (755)
-8. **Cleanup** temporary files
+1. **Trigger:** Push to GitHub or manual workflow dispatch
+2. **SSH to server:** Connect to Dreamhost server
+3. **Navigate:** Go to theme directory
+4. **Stash changes:** Save any local edits (from WP dashboard)
+5. **Fetch & Pull:** Get latest code from GitHub
+6. **Apply stash:** Reapply local changes if any
+7. **Set permissions:** Fix file/directory permissions
+8. **Verify:** Display deployment info
 
-### Backups
+### Handling Local Changes
 
-The workflow automatically creates timestamped backups:
-- Location: `wp-content/themes/NOLAHoli-backup-YYYYMMDD-HHMMSS`
-- Keeps: Last 3 backups
-- Auto-cleanup: Older backups deleted automatically
+If you edit files via WordPress dashboard, the workflow:
+1. **Auto-stashes** changes before pulling
+2. **Pulls** latest code from GitHub
+3. **Attempts to reapply** stashed changes
+4. **Warns** if conflicts occur (manual resolution needed)
+
+## Pushing Changes from Server to GitHub
+
+One of the benefits of git-based deployment is the ability to push changes made on the server back to GitHub:
+
+### Scenario: You edit theme files via WordPress dashboard
+
+```bash
+# SSH to your server
+ssh your_username@your_server.dreamhost.com
+
+# Navigate to theme directory
+cd ~/your_site/wp-content/themes/NOLAHoli
+
+# Check what changed
+git status
+git diff
+
+# Stage your changes
+git add .
+
+# Commit with descriptive message
+git commit -m "Fix: Update theme color via WP Customizer"
+
+# Push to GitHub (creates a new branch for review)
+git checkout -b dashboard-edits-$(date +%Y%m%d)
+git push origin dashboard-edits-$(date +%Y%m%d)
+```
+
+**Then:** Create a Pull Request on GitHub to merge into main or your feature branch.
+
+### Best Practice
+
+Always commit dashboard changes to a new branch and review via PR before merging to main. This ensures:
+- ✅ Changes are reviewed
+- ✅ No accidental overwrites
+- ✅ Full audit trail
 
 ## Rollback Instructions
 
 If something goes wrong, you can quickly rollback:
 
-### Method 1: Via SSH
+### Method 1: Via Git (Recommended)
 
 ```bash
 # SSH into your server
 ssh your_username@your_server.dreamhost.com
 
-# Go to themes directory
-cd ~/your_site/wp-content/themes
+# Go to theme directory
+cd ~/your_site/wp-content/themes/NOLAHoli
 
-# List backups
-ls -l NOLAHoli-backup-*
+# See recent commits
+git log --oneline -10
 
-# Restore a backup
-mv NOLAHoli NOLAHoli-broken
-mv NOLAHoli-backup-YYYYMMDD-HHMMSS NOLAHoli
+# Rollback to specific commit
+git reset --hard COMMIT_SHA
+
+# Or go back one commit
+git reset --hard HEAD~1
+
+# Force push if needed (be careful!)
+# git push --force origin main
 ```
 
 ### Method 2: Via Manual Deployment
@@ -190,7 +292,7 @@ mv NOLAHoli-backup-YYYYMMDD-HHMMSS NOLAHoli
 2. Find a working commit
 3. Run workflow manually
 4. Select correct environment
-5. Enter commit SHA or branch name
+5. Deployment will pull that commit
 
 ## Troubleshooting
 
@@ -203,15 +305,39 @@ mv NOLAHoli-backup-YYYYMMDD-HHMMSS NOLAHoli
 2. Ensure public key is in `~/.ssh/authorized_keys` on server
 3. Check SSH key format (should start with `-----BEGIN OPENSSH PRIVATE KEY-----`)
 
+### Workflow Fails: "Not a git repository"
+
+**Problem:** Theme directory hasn't been cloned from GitHub
+
+**Solution:**
+```bash
+ssh user@host
+cd ~/your_site/wp-content/themes
+git clone git@github.com:arunl/NOLAHoli.git
+```
+
 ### Workflow Fails: "No such file or directory"
 
-**Problem:** Incorrect WordPress path
+**Problem:** Incorrect theme path
 
 **Solution:**
 1. SSH into server: `ssh user@host`
-2. Navigate to WordPress root: `cd ~/your_site`
+2. Navigate to theme: `cd ~/your_site/wp-content/themes/NOLAHoli`
 3. Run: `pwd` to get full path
-4. Update `PUBLIC_SITE_PATH` or `STAGING_SITE_PATH` secret
+4. Update `PUBLIC_THEME_PATH` or `STAGING_THEME_PATH` secret
+
+### Server Can't Pull from GitHub
+
+**Problem:** Server SSH key not registered with GitHub
+
+**Solution:**
+1. SSH to server
+2. Run: `ssh -T git@github.com`
+3. If it fails, add server's public key to GitHub:
+   ```bash
+   cat ~/.ssh/id_ed25519.pub
+   ```
+4. Add to: GitHub.com → Settings → SSH and GPG keys
 
 ### Theme Not Updating on Site
 

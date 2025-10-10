@@ -22,13 +22,19 @@ Quick reference for NOLA Holi theme deployment via GitHub Actions.
 ## 🔑 Required GitHub Secrets
 
 ```
-SSH_PRIVATE_KEY      = Your SSH private key
+SSH_PRIVATE_KEY      = Your SSH private key (for GitHub Actions → Server)
 SSH_HOST             = your_server.dreamhost.com
 SSH_USER             = your_username
 SSH_PORT             = 22
-PUBLIC_SITE_PATH     = /home/username/nolaholi.org
-STAGING_SITE_PATH    = /home/username/staging2.nolaholi.com
+PUBLIC_THEME_PATH    = /home/username/nolaholi.org/wp-content/themes/NOLAHoli
+STAGING_THEME_PATH   = /home/username/staging2.nolaholi.com/wp-content/themes/NOLAHoli
 ```
+
+## 📋 Server Setup Requirements
+
+- [ ] Git repository cloned in WordPress themes directory
+- [ ] Server SSH key added to GitHub (Settings → SSH and GPG keys)
+- [ ] Test: `ssh -T git@github.com` should succeed on server
 
 ## ✅ Deployment Checklist
 
@@ -42,9 +48,34 @@ STAGING_SITE_PATH    = /home/username/staging2.nolaholi.com
 
 ```bash
 ssh user@host
-cd ~/your_site/wp-content/themes
-mv NOLAHoli NOLAHoli-broken
-mv NOLAHoli-backup-YYYYMMDD-HHMMSS NOLAHoli
+cd ~/your_site/wp-content/themes/NOLAHoli
+
+# See recent commits
+git log --oneline -10
+
+# Rollback to specific commit
+git reset --hard COMMIT_SHA
+
+# Or revert to manual workflow with specific branch/commit
+```
+
+## 🔀 Push Changes from Server
+
+```bash
+ssh user@host
+cd ~/your_site/wp-content/themes/NOLAHoli
+
+# Check changes
+git status
+git diff
+
+# Commit and push to new branch
+git add .
+git commit -m "Fix: Your changes"
+git checkout -b dashboard-edits-$(date +%Y%m%d)
+git push origin dashboard-edits-$(date +%Y%m%d)
+
+# Then create PR on GitHub
 ```
 
 ## 📊 Monitor Deployments

@@ -63,67 +63,88 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
       
-      - name: Set deployment path
+      - name: Set deployment path and branch
         id: path
         run: |
           if [ "${{ steps.env.outputs.environment }}" == "public" ]; then
-            echo "site_path=${{ secrets.PUBLIC_SITE_PATH }}" >> $GITHUB_OUTPUT
+            echo "theme_path=${{ secrets.PUBLIC_THEME_PATH }}" >> $GITHUB_OUTPUT
             echo "site_name=public" >> $GITHUB_OUTPUT
+            echo "deploy_branch=main" >> $GITHUB_OUTPUT
           else
-            echo "site_path=${{ secrets.STAGING_SITE_PATH }}" >> $GITHUB_OUTPUT
+            echo "theme_path=${{ secrets.STAGING_THEME_PATH }}" >> $GITHUB_OUTPUT
             echo "site_name=staging" >> $GITHUB_OUTPUT
+            echo "deploy_branch=${{ github.ref_name }}" >> $GITHUB_OUTPUT
           fi
       
-      - name: Create deployment package
-        run: |
-          # Remove files that shouldn't be deployed
-          rm -rf .git .github .gitignore *.md
-          
-          # Create archive
-          cd ..
-          tar -czf NOLAHoli.tar.gz NOLAHoli/
-          mv NOLAHoli.tar.gz NOLAHoli/
-      
-      - name: Deploy to WordPress site
+      - name: Deploy via Git Pull
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_PORT: ${{ secrets.SSH_PORT || 22 }}
-          SITE_PATH: ${{ steps.path.outputs.site_path }}
+          THEME_PATH: ${{ steps.path.outputs.theme_path }}
+          DEPLOY_BRANCH: ${{ steps.path.outputs.deploy_branch }}
         run: |
-          # Upload theme archive
-          scp -i ~/.ssh/deploy_key -P $SSH_PORT NOLAHoli.tar.gz $SSH_USER@$SSH_HOST:~/
-          
-          # Extract and deploy on server
-          ssh -i ~/.ssh/deploy_key -p $SSH_PORT $SSH_USER@$SSH_HOST << 'ENDSSH'
+          # Deploy to server using git pull
+          ssh -i ~/.ssh/deploy_key -p $SSH_PORT $SSH_USER@$SSH_HOST << ENDSSH
             set -e
             
-            # Extract archive
-            cd ~
-            tar -xzf NOLAHoli.tar.gz
+            echo "============================================"
+            echo "Deploying to: ${{ steps.path.outputs.site_name }}"
+            echo "Theme path: \${THEME_PATH}"
+            echo "Branch: \${DEPLOY_BRANCH}"
+            echo "============================================"
             
-            # Backup existing theme
-            BACKUP_DIR="${SITE_PATH}/wp-content/themes/NOLAHoli-backup-$(date +%Y%m%d-%H%M%S)"
-            if [ -d "${SITE_PATH}/wp-content/themes/NOLAHoli" ]; then
-              echo "Creating backup at: $BACKUP_DIR"
-              mv "${SITE_PATH}/wp-content/themes/NOLAHoli" "$BACKUP_DIR"
+            # Navigate to theme directory
+            cd "\${THEME_PATH}"
+            
+            # Check if it's a git repository
+            if [ ! -d ".git" ]; then
+              echo "ERROR: Not a git repository!"
+              echo "Please clone the repository first:"
+              echo "  cd \$(dirname \${THEME_PATH})"
+              echo "  git clone git@github.com:arunl/NOLAHoli.git"
+              exit 1
             fi
             
-            # Deploy new theme
-            echo "Deploying theme to: ${SITE_PATH}/wp-content/themes/NOLAHoli"
-            mv ~/NOLAHoli "${SITE_PATH}/wp-content/themes/"
+            # Store any local changes (in case of dashboard edits)
+            echo "Checking for local changes..."
+            if ! git diff-index --quiet HEAD --; then
+              echo "Local changes detected - stashing them"
+              git stash save "Auto-stash before deployment at \$(date '+%Y-%m-%d %H:%M:%S')"
+            fi
+            
+            # Fetch latest changes
+            echo "Fetching latest changes from GitHub..."
+            git fetch origin
+            
+            # Checkout and pull the target branch
+            echo "Checking out branch: \${DEPLOY_BRANCH}"
+            git checkout \${DEPLOY_BRANCH}
+            
+            echo "Pulling latest changes..."
+            git pull origin \${DEPLOY_BRANCH}
+            
+            # Apply stashed changes if any
+            if git stash list | grep -q "Auto-stash"; then
+              echo "Applying stashed local changes..."
+              git stash pop || {
+                echo "WARNING: Conflict detected when applying stashed changes"
+                echo "Please resolve manually on the server"
+              }
+            fi
             
             # Set proper permissions
-            chmod -R 755 "${SITE_PATH}/wp-content/themes/NOLAHoli"
+            echo "Setting file permissions..."
+            find . -type f -exec chmod 644 {} \\;
+            find . -type d -exec chmod 755 {} \\;
             
-            # Cleanup
-            rm ~/NOLAHoli.tar.gz
-            
-            # Keep only last 3 backups
-            cd "${SITE_PATH}/wp-content/themes"
-            ls -dt NOLAHoli-backup-* 2>/dev/null | tail -n +4 | xargs rm -rf 2>/dev/null || true
-            
+            # Show deployment info
+            echo "============================================"
             echo "Deployment completed successfully!"
+            echo "Current commit: \$(git rev-parse --short HEAD)"
+            echo "Current branch: \$(git branch --show-current)"
+            echo "Last commit: \$(git log -1 --pretty=format:'%h - %s (%ar)')"
+            echo "============================================"
           ENDSSH
       
       - name: Cleanup
