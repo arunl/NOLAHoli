@@ -40,4 +40,5 @@ vendor/
 *.bak
 *.backup
 
-.git*/
+# Allow .github directory for GitHub Actions
+!.github/

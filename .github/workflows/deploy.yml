@@ -1,0 +1,144 @@
+name: Deploy WordPress Theme
+
+on:
+  # Automatic deployment on push
+  push:
+    branches:
+      - main              # Deploy to public
+      - '**'              # Deploy to staging (all other branches)
+    paths-ignore:
+      - '**.md'           # Ignore markdown file changes
+      - '.gitignore'
+      
+  # Manual deployment workflow
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        type: choice
+        options:
+          - staging
+          - public
+        default: 'staging'
+      branch:
+        description: 'Branch to deploy (leave empty for current branch)'
+        required: false
+        default: ''
+
+jobs:
+  deploy:
+    name: Deploy to WordPress
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch || github.ref }}
+      
+      - name: Determine deployment environment
+        id: env
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            # Manual deployment - use selected environment
+            echo "environment=${{ github.event.inputs.environment }}" >> $GITHUB_OUTPUT
+            echo "Manually deploying to: ${{ github.event.inputs.environment }}"
+          elif [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            # Merge to main - deploy to public
+            echo "environment=public" >> $GITHUB_OUTPUT
+            echo "Auto-deploying main branch to: public"
+          else
+            # Commit to other branch - deploy to staging
+            echo "environment=staging" >> $GITHUB_OUTPUT
+            echo "Auto-deploying feature branch to: staging"
+          fi
+      
+      - name: Setup SSH key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+      
+      - name: Set deployment path
+        id: path
+        run: |
+          if [ "${{ steps.env.outputs.environment }}" == "public" ]; then
+            echo "site_path=${{ secrets.PUBLIC_SITE_PATH }}" >> $GITHUB_OUTPUT
+            echo "site_name=public" >> $GITHUB_OUTPUT
+          else
+            echo "site_path=${{ secrets.STAGING_SITE_PATH }}" >> $GITHUB_OUTPUT
+            echo "site_name=staging" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Create deployment package
+        run: |
+          # Remove files that shouldn't be deployed
+          rm -rf .git .github .gitignore *.md
+          
+          # Create archive
+          cd ..
+          tar -czf NOLAHoli.tar.gz NOLAHoli/
+          mv NOLAHoli.tar.gz NOLAHoli/
+      
+      - name: Deploy to WordPress site
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ secrets.SSH_PORT || 22 }}
+          SITE_PATH: ${{ steps.path.outputs.site_path }}
+        run: |
+          # Upload theme archive
+          scp -i ~/.ssh/deploy_key -P $SSH_PORT NOLAHoli.tar.gz $SSH_USER@$SSH_HOST:~/
+          
+          # Extract and deploy on server
+          ssh -i ~/.ssh/deploy_key -p $SSH_PORT $SSH_USER@$SSH_HOST << 'ENDSSH'
+            set -e
+            
+            # Extract archive
+            cd ~
+            tar -xzf NOLAHoli.tar.gz
+            
+            # Backup existing theme
+            BACKUP_DIR="${SITE_PATH}/wp-content/themes/NOLAHoli-backup-$(date +%Y%m%d-%H%M%S)"
+            if [ -d "${SITE_PATH}/wp-content/themes/NOLAHoli" ]; then
+              echo "Creating backup at: $BACKUP_DIR"
+              mv "${SITE_PATH}/wp-content/themes/NOLAHoli" "$BACKUP_DIR"
+            fi
+            
+            # Deploy new theme
+            echo "Deploying theme to: ${SITE_PATH}/wp-content/themes/NOLAHoli"
+            mv ~/NOLAHoli "${SITE_PATH}/wp-content/themes/"
+            
+            # Set proper permissions
+            chmod -R 755 "${SITE_PATH}/wp-content/themes/NOLAHoli"
+            
+            # Cleanup
+            rm ~/NOLAHoli.tar.gz
+            
+            # Keep only last 3 backups
+            cd "${SITE_PATH}/wp-content/themes"
+            ls -dt NOLAHoli-backup-* 2>/dev/null | tail -n +4 | xargs rm -rf 2>/dev/null || true
+            
+            echo "Deployment completed successfully!"
+          ENDSSH
+      
+      - name: Cleanup
+        if: always()
+        run: |
+          rm -f ~/.ssh/deploy_key
+      
+      - name: Deployment summary
+        run: |
+          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Environment:** ${{ steps.path.outputs.site_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Triggered by:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Theme deployed successfully!" >> $GITHUB_STEP_SUMMARY
+
