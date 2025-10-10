@@ -1,7 +1,7 @@
 <?php
 /**
  * Template Name: Gallery
- * Template for the Photo/Video Gallery page with Google Photos integration
+ * Template for the Photo/Video Gallery page with Google Photos API integration
  * 
  * @package NOLAHoli
  */
@@ -13,6 +13,9 @@ $gallery_style = get_theme_mod('nolaholi_gallery_style', 'grid');
 $gallery_2026 = get_theme_mod('nolaholi_gallery_2026', '');
 $gallery_2025 = get_theme_mod('nolaholi_gallery_2025', 'https://photos.app.goo.gl/A7k1H1NdwU7wUvjLA');
 $gallery_2024 = get_theme_mod('nolaholi_gallery_2024', 'https://photos.google.com/share/AF1QipMXoU__flN42f4HOvc_3Ue8HkTyXWUEHWSLuJulorUazYVGVsRzijEKD6GjA48MGA/memory/AF1QipPlfUZfOStBcDVTINx3OhPsgfCN77FIL4qBkiLIfzo63FJca7L1jE2KRHHm492t_g?key=MHgwV0xhLU9tYzdhMmNfR2FNbTN0eDdCWE9nRkF3&pli=1');
+
+// Initialize the Google Photos API handler
+$google_photos = new NOLA_Holi_Google_Photos();
 
 ?>
 
@@ -48,157 +51,430 @@ $gallery_2024 = get_theme_mod('nolaholi_gallery_2024', 'https://photos.google.co
             <div style="text-align: center; margin-bottom: 40px;">
                 <div style="display: inline-flex; gap: 15px; background: var(--white); padding: 10px; border-radius: 50px; box-shadow: var(--shadow-sm); flex-wrap: wrap; justify-content: center;">
                     <?php if ($gallery_2026) : ?>
-                        <a href="#gallery-2026" class="gallery-year-tab active" data-year="2026" style="padding: 12px 30px; border-radius: 50px; background: var(--mardi-gras-purple); color: white; font-weight: 600; text-decoration: none;">2026</a>
+                        <a href="#gallery-2026" class="gallery-year-tab active" data-year="2026">2026</a>
                     <?php endif; ?>
                     <?php if ($gallery_2025) : ?>
-                        <a href="#gallery-2025" class="gallery-year-tab <?php echo !$gallery_2026 ? 'active' : ''; ?>" data-year="2025" style="padding: 12px 30px; border-radius: 50px; <?php echo !$gallery_2026 ? 'background: var(--mardi-gras-purple); color: white;' : 'color: var(--text-dark);'; ?> font-weight: 600; text-decoration: none;">2025</a>
+                        <a href="#gallery-2025" class="gallery-year-tab <?php echo !$gallery_2026 ? 'active' : ''; ?>" data-year="2025">2025</a>
                     <?php endif; ?>
                     <?php if ($gallery_2024) : ?>
-                        <a href="#gallery-2024" class="gallery-year-tab <?php echo !$gallery_2026 && !$gallery_2025 ? 'active' : ''; ?>" data-year="2024" style="padding: 12px 30px; border-radius: 50px; <?php echo !$gallery_2026 && !$gallery_2025 ? 'background: var(--mardi-gras-purple); color: white;' : 'color: var(--text-dark);'; ?> font-weight: 600; text-decoration: none;">2024</a>
+                        <a href="#gallery-2024" class="gallery-year-tab <?php echo !$gallery_2026 && !$gallery_2025 ? 'active' : ''; ?>" data-year="2024">2024</a>
                     <?php endif; ?>
                 </div>
             </div>
             
             <!-- 2026 Gallery -->
-            <?php if ($gallery_2026) : ?>
+            <?php if ($gallery_2026) : 
+                $photos_2026 = $google_photos->fetch_album_photos($gallery_2026);
+            ?>
             <div id="gallery-2026" class="gallery-year-section">
                 <h2 class="section-title text-center">NOLA Holi 2026</h2>
                 <div class="section-divider"></div>
                 
-                <div style="text-align: center; margin: 40px 0;">
-                    <div style="background: var(--white); padding: 40px; border-radius: 15px; max-width: 700px; margin: 0 auto; box-shadow: var(--shadow-md);">
-                        <div style="font-size: 3rem; margin-bottom: 20px;">📸</div>
-                        <h3 style="color: var(--mardi-gras-purple); margin-bottom: 15px; font-size: 1.8rem;">
-                            View Our 2026 Photo Album
-                        </h3>
-                        <p style="color: var(--text-light); line-height: 1.8; margin-bottom: 25px;">
-                            Browse photos from NOLA Holi 2026 in our Google Photos album. 
-                            Feel free to download and share your favorites!
-                        </p>
-                        <a href="<?php echo esc_url($gallery_2026); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-                            Open 2026 Gallery
-                        </a>
+                <?php if ($photos_2026 && !empty($photos_2026)) : ?>
+                    <div class="photo-gallery <?php echo esc_attr($gallery_style); ?>">
+                        <?php foreach ($photos_2026 as $index => $photo) : ?>
+                            <div class="photo-item" data-index="<?php echo $index; ?>">
+                                <img src="<?php echo esc_url($photo['thumbnail']); ?>" 
+                                     alt="NOLA Holi 2026 Photo <?php echo $index + 1; ?>"
+                                     data-full="<?php echo esc_url($photo['full']); ?>"
+                                     data-original="<?php echo esc_url($photo['original']); ?>"
+                                     loading="lazy">
+                                <div class="photo-overlay">
+                                    <span class="view-icon">🔍</span>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                </div>
-                
+                <?php else : ?>
+                    <div style="text-align: center; margin: 40px 0;">
+                        <div style="background: var(--white); padding: 40px; border-radius: 15px; max-width: 700px; margin: 0 auto; box-shadow: var(--shadow-md);">
+                            <div style="font-size: 3rem; margin-bottom: 20px;">📸</div>
+                            <h3 style="color: var(--mardi-gras-purple); margin-bottom: 15px; font-size: 1.8rem;">
+                                View Our 2026 Photo Album
+                            </h3>
+                            <p style="color: var(--text-light); line-height: 1.8; margin-bottom: 25px;">
+                                Browse photos from NOLA Holi 2026 in our Google Photos album. 
+                                Feel free to download and share your favorites!
+                            </p>
+                            <a href="<?php echo esc_url($gallery_2026); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                                Open 2026 Gallery
+                            </a>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
             <?php endif; ?>
             
             <!-- 2025 Gallery -->
-            <?php if ($gallery_2025) : ?>
-            <div id="gallery-2025" class="gallery-year-section" style="<?php echo $gallery_2026 ? 'display: none;' : ''; ?>">
+            <?php if ($gallery_2025) : 
+                $photos_2025 = $google_photos->fetch_album_photos($gallery_2025);
+            ?>
+            <div id="gallery-2025" class="gallery-year-section <?php echo $gallery_2026 ? 'hidden' : ''; ?>">
                 <h2 class="section-title text-center">NOLA Holi 2025</h2>
                 <div class="section-divider"></div>
                 
-                <div style="text-align: center; margin: 40px 0;">
-                    <div style="background: var(--white); padding: 40px; border-radius: 15px; max-width: 700px; margin: 0 auto; box-shadow: var(--shadow-md);">
-                        <div style="font-size: 3rem; margin-bottom: 20px;">📸</div>
-                        <h3 style="color: var(--mardi-gras-green); margin-bottom: 15px; font-size: 1.8rem;">
-                            View Our 2025 Photo Album
-                        </h3>
-                        <p style="color: var(--text-light); line-height: 1.8; margin-bottom: 25px;">
-                            Browse hundreds of photos from NOLA Holi 2025 in our Google Photos album. 
-                            Feel free to download and share your favorites!
-                        </p>
-                        <a href="<?php echo esc_url($gallery_2025); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-                            Open 2025 Gallery
-                        </a>
+                <?php if ($photos_2025 && !empty($photos_2025)) : ?>
+                    <div class="photo-gallery <?php echo esc_attr($gallery_style); ?>">
+                        <?php foreach ($photos_2025 as $index => $photo) : ?>
+                            <div class="photo-item" data-index="<?php echo $index; ?>">
+                                <img src="<?php echo esc_url($photo['thumbnail']); ?>" 
+                                     alt="NOLA Holi 2025 Photo <?php echo $index + 1; ?>"
+                                     data-full="<?php echo esc_url($photo['full']); ?>"
+                                     data-original="<?php echo esc_url($photo['original']); ?>"
+                                     loading="lazy">
+                                <div class="photo-overlay">
+                                    <span class="view-icon">🔍</span>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                </div>
-                
+                <?php else : ?>
+                    <div style="text-align: center; margin: 40px 0;">
+                        <div style="background: var(--white); padding: 40px; border-radius: 15px; max-width: 700px; margin: 0 auto; box-shadow: var(--shadow-md);">
+                            <div style="font-size: 3rem; margin-bottom: 20px;">📸</div>
+                            <h3 style="color: var(--mardi-gras-purple); margin-bottom: 15px; font-size: 1.8rem;">
+                                View Our 2025 Photo Album
+                            </h3>
+                            <p style="color: var(--text-light); line-height: 1.8; margin-bottom: 25px;">
+                                Browse photos from NOLA Holi 2025 in our Google Photos album. 
+                                Feel free to download and share your favorites!
+                            </p>
+                            <a href="<?php echo esc_url($gallery_2025); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                                Open 2025 Gallery
+                            </a>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
             <?php endif; ?>
             
             <!-- 2024 Gallery -->
-            <?php if ($gallery_2024) : ?>
-            <div id="gallery-2024" class="gallery-year-section" style="<?php echo $gallery_2026 || $gallery_2025 ? 'display: none;' : ''; ?>">
-                <h2 class="section-title text-center">NOLA Holi 2024</h2>
+            <?php if ($gallery_2024) : 
+                $photos_2024 = $google_photos->fetch_album_photos($gallery_2024);
+            ?>
+            <div id="gallery-2024" class="gallery-year-section <?php echo $gallery_2026 || $gallery_2025 ? 'hidden' : ''; ?>">
+                <h2 class="section-title text-center">NOLA Holi 2024 - Where It All Began</h2>
                 <div class="section-divider"></div>
-                <p style="text-align: center; color: var(--text-light); margin-bottom: 40px; font-size: 1.1rem;">
-                    The inaugural NOLA Holi Festival – where it all began!
-                </p>
                 
-                <div style="text-align: center; margin: 40px 0;">
-                    <div style="background: var(--white); padding: 40px; border-radius: 15px; max-width: 700px; margin: 0 auto; box-shadow: var(--shadow-md);">
-                        <div style="font-size: 3rem; margin-bottom: 20px;">📷</div>
-                        <h3 style="color: var(--mardi-gras-gold); margin-bottom: 15px; font-size: 1.8rem;">
-                            View Our 2024 Photo Album
-                        </h3>
-                        <p style="color: var(--text-light); line-height: 1.8; margin-bottom: 25px;">
-                            Relive the magic of our first-ever NOLA Holi celebration! Browse photos from 
-                            the inaugural festival dedicated to Michelle Lakhotia's memory.
-                        </p>
-                        <a href="<?php echo esc_url($gallery_2024); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-                            Open 2024 Gallery
-                        </a>
+                <?php if ($photos_2024 && !empty($photos_2024)) : ?>
+                    <div class="photo-gallery <?php echo esc_attr($gallery_style); ?>">
+                        <?php foreach ($photos_2024 as $index => $photo) : ?>
+                            <div class="photo-item" data-index="<?php echo $index; ?>">
+                                <img src="<?php echo esc_url($photo['thumbnail']); ?>" 
+                                     alt="NOLA Holi 2024 Photo <?php echo $index + 1; ?>"
+                                     data-full="<?php echo esc_url($photo['full']); ?>"
+                                     data-original="<?php echo esc_url($photo['original']); ?>"
+                                     loading="lazy">
+                                <div class="photo-overlay">
+                                    <span class="view-icon">🔍</span>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                </div>
-                
+                <?php else : ?>
+                    <div style="text-align: center; margin: 40px 0;">
+                        <div style="background: var(--white); padding: 40px; border-radius: 15px; max-width: 700px; margin: 0 auto; box-shadow: var(--shadow-md);">
+                            <div style="font-size: 3rem; margin-bottom: 20px;">📸</div>
+                            <h3 style="color: var(--mardi-gras-purple); margin-bottom: 15px; font-size: 1.8rem;">
+                                View Our 2024 Photo Album
+                            </h3>
+                            <p style="color: var(--text-light); line-height: 1.8; margin-bottom: 25px;">
+                                Browse photos from our inaugural NOLA Holi 2024 celebration in our Google Photos album. 
+                                This is where the magic began!
+                            </p>
+                            <a href="<?php echo esc_url($gallery_2024); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                                Open 2024 Gallery
+                            </a>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
             <?php endif; ?>
             
-            <?php if (!$gallery_2026 && !$gallery_2025 && !$gallery_2024) : ?>
-            <!-- No Albums Set -->
-            <div style="text-align: center; padding: 80px 20px;">
-                <div style="font-size: 4rem; margin-bottom: 20px;">📸</div>
-                <h3 style="color: var(--mardi-gras-purple); margin-bottom: 15px;">Gallery Coming Soon!</h3>
-                <p style="color: var(--text-light); font-size: 1.1rem; max-width: 600px; margin: 0 auto 30px;">
-                    Photo galleries will be added here after each festival. Check back soon!
-                </p>
-                <p style="color: var(--text-light); font-size: 0.95rem;">
-                    <em>Site administrators: Add Google Photos album URLs in Appearance → Customize → Photo Gallery</em>
-                </p>
-            </div>
-            <?php endif; ?>
         </div>
     </section>
     
-    <!-- Share Your Photos -->
-    <section class="content-section bg-purple">
-        <div class="container">
-            <div style="text-align: center; max-width: 700px; margin: 0 auto;">
-                <h2 class="section-title" style="color: white;">Share Your Holi Memories</h2>
-                <div class="section-divider"></div>
-                <p style="font-size: 1.1rem; color: var(--off-white); line-height: 1.8; margin-bottom: 30px;">
-                    Did you take amazing photos or videos at NOLA Holi? We'd love to feature them in our gallery! 
-                    Share your colorful memories with us and help tell the story of our festival.
-                </p>
-                <div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 10px; margin-bottom: 30px;">
-                    <h4 style="color: var(--mardi-gras-gold); margin-bottom: 15px; font-size: 1.3rem;">How to Share:</h4>
-                    <div style="color: var(--off-white); line-height: 2; text-align: left; max-width: 500px; margin: 0 auto;">
-                        <p>✓ Tag us on social media with <strong>#NOLAHoli</strong></p>
-                        <p>✓ Email photos to <strong>photos@nolaholi.org</strong></p>
-                        <p>✓ Share directly to our Google Photos albums</p>
-                        <p>✓ DM us on Instagram or Facebook</p>
-                    </div>
-                </div>
-                <a href="<?php echo esc_url(home_url('/contact/')); ?>" class="btn btn-gold">Contact Us</a>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Looking Forward -->
-    <section class="content-section bg-light">
-        <div class="container">
-            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
-                <h2 class="section-title">See You at NOLA Holi 2026!</h2>
-                <div class="section-divider"></div>
-                <p style="font-size: 1.1rem; color: var(--text-light); line-height: 1.8; margin-bottom: 30px;">
-                    Can't wait to add more colorful memories to this gallery? Mark your calendar for 
-                    <strong style="color: var(--mardi-gras-purple);">
-                        <?php echo esc_html(get_theme_mod('nolaholi_event_date', 'March 7, 2026')); ?>
-                    </strong> 
-                    and join us for another unforgettable celebration!
-                </p>
-                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-                    <a href="<?php echo esc_url(home_url('/')); ?>" class="btn btn-primary">Festival Info</a>
-                    <a href="<?php echo esc_url(home_url('/volunteers/')); ?>" class="btn btn-secondary">Volunteer</a>
-                </div>
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2 style="margin-bottom: 20px; font-size: 2.5rem; color: white;">Share Your Photos!</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 30px; color: white; opacity: 0.95;">
+                Captured great moments at NOLA Holi? We'd love to see them!<br>
+                Share your photos with us on social media using <strong>#NOLAHoli</strong>
+            </p>
+            <div class="cta-buttons">
+                <?php 
+                $facebook = get_theme_mod('nolaholi_facebook');
+                $instagram = get_theme_mod('nolaholi_instagram');
+                $twitter = get_theme_mod('nolaholi_twitter');
+                ?>
+                <?php if ($facebook) : ?>
+                    <a href="<?php echo esc_url($facebook); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-white">
+                        Facebook
+                    </a>
+                <?php endif; ?>
+                <?php if ($instagram) : ?>
+                    <a href="<?php echo esc_url($instagram); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-white">
+                        Instagram
+                    </a>
+                <?php endif; ?>
+                <?php if ($twitter) : ?>
+                    <a href="<?php echo esc_url($twitter); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-white">
+                        Twitter
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
     </section>
 </main>
 
+<!-- Lightbox Modal -->
+<div id="photo-lightbox" class="photo-lightbox hidden">
+    <div class="lightbox-overlay"></div>
+    <div class="lightbox-content">
+        <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
+        <button class="lightbox-prev" aria-label="Previous photo">‹</button>
+        <button class="lightbox-next" aria-label="Next photo">›</button>
+        <div class="lightbox-image-container">
+            <img id="lightbox-image" src="" alt="">
+        </div>
+        <div class="lightbox-info">
+            <span id="lightbox-counter"></span>
+            <a id="lightbox-download" href="" download target="_blank" rel="noopener noreferrer" class="btn-small">
+                Download Original
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Gallery Styles */
+.gallery-year-tab {
+    padding: 12px 30px;
+    border-radius: 50px;
+    color: var(--text-dark);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.gallery-year-tab:hover {
+    background: var(--mardi-gras-green) !important;
+    color: white !important;
+}
+
+.gallery-year-tab.active {
+    background: var(--mardi-gras-purple) !important;
+    color: white !important;
+}
+
+.gallery-year-section {
+    animation: fadeIn 0.5s ease;
+}
+
+.gallery-year-section.hidden {
+    display: none;
+}
+
+.photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 40px 0;
+}
+
+.photo-gallery.carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.photo-gallery.carousel .photo-item {
+    flex: 0 0 350px;
+    scroll-snap-align: start;
+}
+
+.photo-item {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease;
+}
+
+.photo-item:hover {
+    transform: scale(1.05);
+}
+
+.photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.photo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.photo-item:hover .photo-overlay {
+    opacity: 1;
+}
+
+.view-icon {
+    font-size: 3rem;
+}
+
+/* Lightbox Styles */
+.photo-lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.photo-lightbox.hidden {
+    display: none;
+}
+
+.lightbox-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.95);
+}
+
+.lightbox-content {
+    position: relative;
+    z-index: 10001;
+    max-width: 95vw;
+    max-height: 95vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lightbox-image-container {
+    max-width: 90vw;
+    max-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-image-container img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 3rem;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 50%;
+    transition: background 0.3s ease;
+    z-index: 10002;
+}
+
+.lightbox-close:hover,
+.lightbox-prev:hover,
+.lightbox-next:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.lightbox-close {
+    top: 20px;
+    right: 20px;
+}
+
+.lightbox-prev {
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.lightbox-next {
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.lightbox-info {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    color: white;
+    font-size: 1.1rem;
+}
+
+.btn-small {
+    padding: 8px 20px;
+    background: var(--mardi-gras-purple);
+    color: white;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.btn-small:hover {
+    background: var(--mardi-gras-green);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .photo-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 10px;
+    }
+    
+    .lightbox-close,
+    .lightbox-prev,
+    .lightbox-next {
+        font-size: 2rem;
+        padding: 5px 15px;
+    }
+}
+</style>
+
 <?php
 get_footer();
-?>

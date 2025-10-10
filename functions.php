@@ -12,6 +12,11 @@ if (!defined('ABSPATH')) {
 }
 
 /**
+ * Include Google Photos API Integration
+ */
+require_once get_template_directory() . '/inc/google-photos-api.php';
+
+/**
  * Theme Setup
  */
 function nolaholi_setup() {

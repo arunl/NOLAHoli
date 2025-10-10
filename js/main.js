@@ -299,6 +299,91 @@
     }
 
     /**
+     * Photo Lightbox
+     */
+    function initPhotoLightbox() {
+        var currentIndex = 0;
+        var currentGallery = [];
+        var $lightbox = $('#photo-lightbox');
+        var $lightboxImage = $('#lightbox-image');
+        var $lightboxCounter = $('#lightbox-counter');
+        var $lightboxDownload = $('#lightbox-download');
+
+        // Open lightbox when clicking a photo
+        $(document).on('click', '.photo-item', function() {
+            var $gallery = $(this).closest('.photo-gallery');
+            var $allPhotos = $gallery.find('.photo-item');
+            
+            currentIndex = $(this).data('index');
+            currentGallery = [];
+            
+            // Build gallery array
+            $allPhotos.each(function() {
+                var $img = $(this).find('img');
+                currentGallery.push({
+                    full: $img.data('full'),
+                    original: $img.data('original'),
+                    alt: $img.attr('alt')
+                });
+            });
+            
+            showPhoto(currentIndex);
+            $lightbox.removeClass('hidden');
+            $('body').css('overflow', 'hidden');
+        });
+
+        // Close lightbox
+        function closeLightbox() {
+            $lightbox.addClass('hidden');
+            $('body').css('overflow', '');
+        }
+
+        $('.lightbox-close, .lightbox-overlay').on('click', closeLightbox);
+
+        // Navigate photos
+        $('.lightbox-prev').on('click', function(e) {
+            e.stopPropagation();
+            currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+            showPhoto(currentIndex);
+        });
+
+        $('.lightbox-next').on('click', function(e) {
+            e.stopPropagation();
+            currentIndex = (currentIndex + 1) % currentGallery.length;
+            showPhoto(currentIndex);
+        });
+
+        // Keyboard navigation
+        $(document).on('keydown', function(e) {
+            if (!$lightbox.hasClass('hidden')) {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    $('.lightbox-prev').click();
+                } else if (e.key === 'ArrowRight') {
+                    $('.lightbox-next').click();
+                }
+            }
+        });
+
+        // Show photo
+        function showPhoto(index) {
+            if (currentGallery.length === 0) return;
+            
+            var photo = currentGallery[index];
+            $lightboxImage.attr('src', photo.full);
+            $lightboxImage.attr('alt', photo.alt);
+            $lightboxDownload.attr('href', photo.original);
+            $lightboxCounter.text((index + 1) + ' / ' + currentGallery.length);
+        }
+
+        // Prevent lightbox content from closing when clicked
+        $('.lightbox-content').on('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+
+    /**
      * Initialize all functions when document is ready
      */
     $(document).ready(function() {
@@ -306,6 +391,7 @@
         initSmoothScroll();
         initStickyHeader();
         initGalleryTabs();
+        initPhotoLightbox();
         initLazyLoading();
         initFormValidation();
         initBackToTop();
