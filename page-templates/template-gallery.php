@@ -81,12 +81,6 @@ $gallery_2024 = get_theme_mod('nolaholi_gallery_2024', 'https://photos.google.co
                     </div>
                 </div>
                 
-                <!-- Embedded Album Preview -->
-                <div style="max-width: 1000px; margin: 40px auto;">
-                    <div style="background: var(--white); padding: 20px; border-radius: 15px; box-shadow: var(--shadow-md);">
-                        <iframe src="<?php echo esc_url($gallery_2026); ?>" width="100%" height="600" frameborder="0" allowfullscreen style="border-radius: 10px;"></iframe>
-                    </div>
-                </div>
             </div>
             <?php endif; ?>
             
@@ -112,12 +106,6 @@ $gallery_2024 = get_theme_mod('nolaholi_gallery_2024', 'https://photos.google.co
                     </div>
                 </div>
                 
-                <!-- Embedded Album Preview -->
-                <div style="max-width: 1000px; margin: 40px auto;">
-                    <div style="background: var(--white); padding: 20px; border-radius: 15px; box-shadow: var(--shadow-md);">
-                        <iframe src="<?php echo esc_url($gallery_2025); ?>" width="100%" height="600" frameborder="0" allowfullscreen style="border-radius: 10px;"></iframe>
-                    </div>
-                </div>
             </div>
             <?php endif; ?>
             
@@ -146,12 +134,6 @@ $gallery_2024 = get_theme_mod('nolaholi_gallery_2024', 'https://photos.google.co
                     </div>
                 </div>
                 
-                <!-- Embedded Album Preview -->
-                <div style="max-width: 1000px; margin: 40px auto;">
-                    <div style="background: var(--white); padding: 20px; border-radius: 15px; box-shadow: var(--shadow-md);">
-                        <iframe src="<?php echo esc_url($gallery_2024); ?>" width="100%" height="600" frameborder="0" allowfullscreen style="border-radius: 10px;"></iframe>
-                    </div>
-                </div>
             </div>
             <?php endif; ?>
             
