@@ -161,21 +161,21 @@ get_header();
         <div class="photo-gallery">
             <!-- Sample gallery items - these would be dynamically populated -->
             <div class="gallery-item">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/placeholder-1.jpg" alt="Holi celebration" loading="lazy">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/parade-photo-1.jpg" alt="Holi Parade" loading="lazy">
                 <div class="gallery-overlay">
-                    <p>NOLA Holi 2024</p>
+                    <p>Parade</p>
                 </div>
             </div>
             <div class="gallery-item">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/placeholder-2.jpg" alt="Color throw" loading="lazy">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/celebration-photo-1.jpg" alt="Color throw" loading="lazy">
                 <div class="gallery-overlay">
-                    <p>Festival Colors</p>
+                    <p>Colors</p>
                 </div>
             </div>
             <div class="gallery-item">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/placeholder-3.jpg" alt="Parade" loading="lazy">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/food-photo.jpg" alt="Food" loading="lazy">
                 <div class="gallery-overlay">
-                    <p>Parade 2025</p>
+                    <p>Food</p>
                 </div>
             </div>
         </div>
