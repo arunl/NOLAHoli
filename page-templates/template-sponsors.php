@@ -310,7 +310,7 @@ get_header();
                     <div class="feature-icon">💜</div>
                     <h3 class="feature-title">Feel Good</h3>
                     <p class="feature-description">
-                        Be part of keeping Michelle Lakhotia's vision alive and creating joyful memories for thousands 
+                        Be part of bringing together communities and creating joyful memories for thousands 
                         of festival-goers.
                     </p>
                 </div>
