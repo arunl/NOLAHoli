@@ -229,6 +229,14 @@ img {
     display: flex;
     list-style: none;
     gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-menu a {
@@ -293,8 +301,10 @@ img {
     transition: transform 0.3s ease;
 }
 
-.sub-menu {
-    display: none;
+/* Sub-menu styling - works for both custom and WordPress menus */
+.sub-menu,
+.menu-item-has-children .sub-menu {
+    display: none !important;
     position: absolute;
     top: 100%;
     left: 0;
@@ -308,8 +318,8 @@ img {
     z-index: 1000;
 }
 
-.menu-item-has-children:hover .sub-menu {
-    display: block;
+.menu-item-has-children:hover > .sub-menu {
+    display: block !important;
 }
 
 .menu-item-has-children:hover .submenu-icon {
@@ -318,6 +328,12 @@ img {
 
 .sub-menu li {
     padding: 0;
+    list-style: none;
+    margin: 0;
+}
+
+.sub-menu li::before {
+    content: none !important;
 }
 
 .sub-menu a {
@@ -326,10 +342,11 @@ img {
     color: var(--text-dark);
     font-weight: 500;
     transition: background 0.2s ease, color 0.2s ease;
+    text-decoration: none;
 }
 
 .sub-menu a::after {
-    display: none;
+    display: none !important;
 }
 
 .sub-menu a:hover {
@@ -956,17 +973,18 @@ img {
     }
     
     /* Mobile dropdown styles */
-    .sub-menu {
-        position: static;
-        display: none;
+    .sub-menu,
+    .menu-item-has-children .sub-menu {
+        position: static !important;
+        display: none !important;
         box-shadow: none;
         background: var(--off-white);
         margin: 0;
         border-radius: 0;
     }
     
-    .menu-item-has-children.active .sub-menu {
-        display: block;
+    .menu-item-has-children.active > .sub-menu {
+        display: block !important;
     }
     
     .sub-menu a {
@@ -976,6 +994,11 @@ img {
     
     .menu-item-has-children > a {
         justify-content: space-between;
+    }
+    
+    .nav-menu .sub-menu li {
+        list-style: none;
+        border-bottom: none;
     }
     
     .header-content {

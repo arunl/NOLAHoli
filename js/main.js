@@ -41,9 +41,16 @@
             }
         });
         
-        // Handle mobile dropdown toggle
+        // Handle mobile dropdown toggle and prevent # in URL
         $('.menu-item-has-children > a').on('click', function(e) {
-            // Only prevent default on mobile
+            var href = $(this).attr('href');
+            
+            // Prevent default for dropdown toggles (links with # or no href)
+            if (!href || href === '#' || href === 'javascript:void(0)') {
+                e.preventDefault();
+            }
+            
+            // Only toggle dropdown on mobile
             if ($(window).width() <= 768) {
                 e.preventDefault();
                 $(this).parent().toggleClass('active');
