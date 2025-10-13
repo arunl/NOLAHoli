@@ -1,7 +1,7 @@
 <?php
 /**
  * Template Name: Sponsors
- * Template for the Sponsors page
+ * Template for displaying current sponsors by tier
  * 
  * @package NOLAHoli
  */
@@ -15,7 +15,7 @@ get_header();
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1 class="hero-title">Our Sponsors</h1>
-            <p class="hero-subtitle">Supporting the Festival of Colors in New Orleans</p>
+            <p class="hero-subtitle">Thank You for Supporting the Festival of Colors</p>
         </div>
     </section>
     
@@ -31,320 +31,193 @@ get_header();
                     and individuals share our vision of celebrating diversity, culture, and community in New Orleans. 
                     Their contributions help us create a vibrant, FREE festival for everyone to enjoy!
                 </p>
+                
+                <a href="<?php echo esc_url(home_url('/sponsorship-packet/')); ?>" class="btn btn-primary">
+                    Become a Sponsor
+                </a>
             </div>
         </div>
     </section>
     
-    <!-- Sponsorship Tiers -->
-    <section class="content-section sponsor-tiers bg-light">
-        <div class="container">
-            <h2 class="section-title text-center">Sponsorship Packages</h2>
-            <div class="section-divider"></div>
-            <p style="text-align: center; max-width: 700px; margin: 20px auto 40px; font-size: 1.1rem; color: var(--text-light);">
-                Join us in making NOLA Holi 2026 bigger and better! Choose a sponsorship level that works for you.
-            </p>
-            
-            <div class="tier-grid">
-                <!-- Event Sponsor -->
-                <div class="sponsor-tier tier-event">
-                    <div class="tier-header">
-                        <h3 class="tier-name" style="color: var(--mardi-gras-purple);">Event Sponsor</h3>
-                        <div class="tier-amount">$10,000+</div>
-                    </div>
-                    <ul class="tier-benefits">
-                        <li>Title sponsorship recognition on all marketing materials</li>
-                        <li>Exclusive VIP tent at the festival</li>
-                        <li>Prime booth location</li>
-                        <li>Logo on main stage backdrop</li>
-                        <li>Featured in all press releases and media coverage</li>
-                        <li>Social media spotlight campaign</li>
-                        <li>Speaking opportunity at the event</li>
-                        <li>Company banner displayed prominently</li>
-                        <li>30 VIP passes for employees/guests</li>
-                        <li>Logo on event t-shirts</li>
-                        <li>Exclusive mention by MC throughout the day</li>
-                        <li>First right of refusal for following year</li>
-                    </ul>
-                </div>
-                
-                <!-- Diamond Sponsor -->
-                <div class="sponsor-tier tier-diamond">
-                    <div class="tier-header">
-                        <h3 class="tier-name" style="color: #4DB8FF;">Diamond Sponsor</h3>
-                        <div class="tier-amount">$5,000</div>
-                    </div>
-                    <ul class="tier-benefits">
-                        <li>Prominent logo placement on website and all marketing</li>
-                        <li>Premium booth space at festival</li>
-                        <li>Logo on main stage backdrop</li>
-                        <li>Featured in press releases</li>
-                        <li>Social media recognition (5+ posts)</li>
-                        <li>Company banner at event</li>
-                        <li>20 VIP passes</li>
-                        <li>Logo in event program</li>
-                        <li>Mentioned by MC during event</li>
-                        <li>Recognition in email newsletters</li>
-                    </ul>
-                </div>
-                
-                <!-- Platinum Sponsor -->
-                <div class="sponsor-tier tier-platinum">
-                    <div class="tier-header">
-                        <h3 class="tier-name" style="color: #6C757D;">Platinum Sponsor</h3>
-                        <div class="tier-amount">$2,500</div>
-                    </div>
-                    <ul class="tier-benefits">
-                        <li>Logo on website and select marketing materials</li>
-                        <li>Booth space at festival</li>
-                        <li>Logo included on stage signage</li>
-                        <li>Social media recognition (3+ posts)</li>
-                        <li>15 VIP passes</li>
-                        <li>Logo in event program</li>
-                        <li>Recognition in email newsletter</li>
-                        <li>Company name announced at event</li>
-                    </ul>
-                </div>
-                
-                <!-- Gold Sponsor -->
-                <div class="sponsor-tier tier-gold">
-                    <div class="tier-header">
-                        <h3 class="tier-name" style="color: var(--mardi-gras-gold);">Gold Sponsor</h3>
-                        <div class="tier-amount">$1,000</div>
-                    </div>
-                    <ul class="tier-benefits">
-                        <li>Logo on website sponsor page</li>
-                        <li>Booth space at festival (subject to availability)</li>
-                        <li>Social media recognition (2+ posts)</li>
-                        <li>10 VIP passes</li>
-                        <li>Logo in event program</li>
-                        <li>Recognition in email newsletter</li>
-                        <li>Company name announced at event</li>
-                    </ul>
-                </div>
-                
-                <!-- Silver Sponsor -->
-                <div class="sponsor-tier tier-silver">
-                    <div class="tier-header">
-                        <h3 class="tier-name" style="color: #95A5A6;">Silver Sponsor</h3>
-                        <div class="tier-amount">$500</div>
-                    </div>
-                    <ul class="tier-benefits">
-                        <li>Logo on website sponsor page</li>
-                        <li>Social media recognition (1+ posts)</li>
-                        <li>5 festival passes</li>
-                        <li>Name listed in event program</li>
-                        <li>Recognition in email newsletter</li>
-                    </ul>
-                </div>
-                
-                <!-- Friends of NOLA Holi -->
-                <div class="sponsor-tier tier-friends">
-                    <div class="tier-header">
-                        <h3 class="tier-name" style="color: var(--mardi-gras-green);">Friends of NOLA Holi</h3>
-                        <div class="tier-amount">$100 - $499</div>
-                    </div>
-                    <ul class="tier-benefits">
-                        <li>Name listed on website</li>
-                        <li>Social media thank you</li>
-                        <li>2 festival passes</li>
-                        <li>Name in event program</li>
-                        <li>Our eternal gratitude! 💜</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- In-Kind Sponsorship -->
-    <section class="content-section bg-white">
-        <div class="container">
-            <h2 class="section-title text-center">In-Kind Sponsorship</h2>
-            <div class="section-divider"></div>
-            
-            <div style="max-width: 800px; margin: 40px auto 0;">
-                <p style="text-align: center; font-size: 1.1rem; color: var(--text-light); line-height: 1.8; margin-bottom: 30px;">
-                    Can't provide financial support? We also welcome in-kind donations of goods and services!
-                </p>
-                
-                <div style="background: var(--off-white); padding: 40px; border-radius: 15px;">
-                    <h4 style="color: var(--mardi-gras-purple); margin-bottom: 20px; font-size: 1.3rem; text-align: center;">
-                        What We Need
-                    </h4>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                        <ul style="color: var(--text-light); line-height: 2;">
-                            <li>Tents and canopies</li>
-                            <li>Sound equipment</li>
-                            <li>Printing services</li>
-                            <li>Transportation/logistics</li>
-                            <li>Food and beverages</li>
-                        </ul>
-                        <ul style="color: var(--text-light); line-height: 2;">
-                            <li>Photography/videography</li>
-                            <li>Marketing services</li>
-                            <li>Event supplies</li>
-                            <li>Eco-friendly color powder</li>
-                            <li>Portable restrooms</li>
-                        </ul>
-                    </div>
-                    <p style="text-align: center; margin-top: 30px; font-style: italic; color: var(--text-dark);">
-                        In-kind sponsors receive recognition based on the value of their contribution.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Current Sponsors (2025) -->
+    <!-- 2025 Sponsors by Tier -->
     <section class="content-section bg-light">
         <div class="container">
             <h2 class="section-title text-center">2025 Sponsors</h2>
             <div class="section-divider"></div>
-            <p style="text-align: center; font-size: 1.1rem; color: var(--text-light); margin-bottom: 40px;">
-                Thank you to our 2025 sponsors who made last year's festival a huge success!
+            <p style="text-align: center; font-size: 1.1rem; color: var(--text-light); margin-bottom: 50px;">
+                We are grateful to our 2025 sponsors who help make the festival possible!
             </p>
             
             <?php
-            // Query sponsors from 2025
-            $args = array(
+            // Define tier order and styling
+            $tiers = array(
+                'event' => array(
+                    'name' => 'Event Sponsors',
+                    'color' => 'var(--mardi-gras-purple)',
+                    'order' => 1
+                ),
+                'diamond' => array(
+                    'name' => 'Diamond Sponsors',
+                    'color' => '#4DB8FF',
+                    'order' => 2
+                ),
+                'platinum' => array(
+                    'name' => 'Platinum Sponsors',
+                    'color' => '#6C757D',
+                    'order' => 3
+                ),
+                'gold' => array(
+                    'name' => 'Gold Sponsors',
+                    'color' => 'var(--mardi-gras-gold)',
+                    'order' => 4
+                ),
+                'silver' => array(
+                    'name' => 'Silver Sponsors',
+                    'color' => '#95A5A6',
+                    'order' => 5
+                ),
+                'friends' => array(
+                    'name' => 'Friends of NOLA Holi',
+                    'color' => 'var(--mardi-gras-green)',
+                    'order' => 6
+                )
+            );
+            
+            // Loop through each tier
+            foreach ($tiers as $tier_key => $tier_data) :
+                // Query sponsors for this tier
+                $args = array(
+                    'post_type' => 'sponsor',
+                    'posts_per_page' => -1,
+                    'meta_query' => array(
+                        'relation' => 'AND',
+                        array(
+                            'key' => '_sponsor_year',
+                            'value' => '2025',
+                            'compare' => '='
+                        ),
+                        array(
+                            'key' => '_sponsor_tier',
+                            'value' => $tier_key,
+                            'compare' => '='
+                        )
+                    ),
+                    'meta_key' => '_sponsor_display_order',
+                    'orderby' => array(
+                        'meta_value_num' => 'ASC',
+                        'title' => 'ASC'
+                    )
+                );
+                
+                $sponsors_query = new WP_Query($args);
+                
+                if ($sponsors_query->have_posts()) : ?>
+                    <!-- Tier Section -->
+                    <div class="sponsor-tier-section" style="margin-bottom: 60px;">
+                        <h3 class="tier-title" style="color: <?php echo $tier_data['color']; ?>; text-align: center; font-size: 2rem; margin-bottom: 30px;">
+                            <?php echo $tier_data['name']; ?>
+                        </h3>
+                        
+                        <div class="sponsor-logos" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; align-items: center; justify-items: center;">
+                            <?php while ($sponsors_query->have_posts()) : $sponsors_query->the_post(); 
+                                $website = get_post_meta(get_the_ID(), '_sponsor_website', true);
+                                $display_order = get_post_meta(get_the_ID(), '_sponsor_display_order', true);
+                            ?>
+                                <div class="sponsor-logo-item" style="text-align: center; padding: 20px; background: white; border-radius: 10px; box-shadow: var(--shadow-sm); transition: transform 0.3s ease, box-shadow 0.3s ease; width: 100%; max-width: 300px;">
+                                    <?php if ($website) : ?>
+                                        <a href="<?php echo esc_url($website); ?>" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: block;">
+                                            <?php if (has_post_thumbnail()) : ?>
+                                                <div style="height: 150px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+                                                    <?php the_post_thumbnail('medium', array('style' => 'max-width: 100%; max-height: 150px; height: auto; object-fit: contain;')); ?>
+                                                </div>
+                                            <?php endif; ?>
+                                            <h4 style="color: <?php echo $tier_data['color']; ?>; margin: 0; font-size: 1.2rem;">
+                                                <?php the_title(); ?>
+                                            </h4>
+                                        </a>
+                                    <?php else : ?>
+                                        <?php if (has_post_thumbnail()) : ?>
+                                            <div style="height: 150px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+                                                <?php the_post_thumbnail('medium', array('style' => 'max-width: 100%; max-height: 150px; height: auto; object-fit: contain;')); ?>
+                                            </div>
+                                        <?php endif; ?>
+                                        <h4 style="color: <?php echo $tier_data['color']; ?>; margin: 0; font-size: 1.2rem;">
+                                            <?php the_title(); ?>
+                                        </h4>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endwhile; wp_reset_postdata(); ?>
+                        </div>
+                    </div>
+                <?php endif;
+            endforeach;
+            
+            // Check if there are ANY sponsors at all
+            $all_sponsors_args = array(
                 'post_type' => 'sponsor',
-                'posts_per_page' => -1,
+                'posts_per_page' => 1,
                 'meta_query' => array(
                     array(
                         'key' => '_sponsor_year',
                         'value' => '2025',
                         'compare' => '='
                     )
-                ),
-                'orderby' => 'title',
-                'order' => 'ASC'
+                )
             );
+            $check_query = new WP_Query($all_sponsors_args);
             
-            $sponsors_query = new WP_Query($args);
-            
-            if ($sponsors_query->have_posts()) : ?>
-                <div class="sponsor-logos">
-                    <?php while ($sponsors_query->have_posts()) : $sponsors_query->the_post(); 
-                        $website = get_post_meta(get_the_ID(), '_sponsor_website', true);
-                        $tier = get_post_meta(get_the_ID(), '_sponsor_tier', true);
-                    ?>
-                        <div class="sponsor-logo-item">
-                            <?php if ($website) : ?>
-                                <a href="<?php echo esc_url($website); ?>" target="_blank" rel="noopener noreferrer">
-                                    <?php if (has_post_thumbnail()) : ?>
-                                        <?php the_post_thumbnail('medium'); ?>
-                                    <?php else : ?>
-                                        <h4 style="color: var(--mardi-gras-purple); margin: 0;"><?php the_title(); ?></h4>
-                                    <?php endif; ?>
-                                </a>
-                            <?php else : ?>
-                                <?php if (has_post_thumbnail()) : ?>
-                                    <?php the_post_thumbnail('medium'); ?>
-                                <?php else : ?>
-                                    <h4 style="color: var(--mardi-gras-purple); margin: 0;"><?php the_title(); ?></h4>
-                                <?php endif; ?>
-                            <?php endif; ?>
-                        </div>
-                    <?php endwhile; wp_reset_postdata(); ?>
-                </div>
-            <?php else : ?>
-                <p style="text-align: center; color: var(--text-light);">
-                    Our 2025 sponsors will be announced soon. Want to be first? <a href="#contact-cta" style="color: var(--mardi-gras-purple); font-weight: 600;">Become a sponsor today!</a>
-                </p>
-            <?php endif; ?>
-        </div>
-    </section>
-    
-    <!-- Why Sponsor -->
-    <section class="content-section bg-white">
-        <div class="container">
-            <h2 class="section-title text-center">Why Sponsor NOLA Holi?</h2>
-            <div class="section-divider"></div>
-            
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">👥</div>
-                    <h3 class="feature-title">Community Impact</h3>
-                    <p class="feature-description">
-                        Support a FREE community event that brings together thousands of New Orleanians and visitors, 
-                        fostering cultural understanding and unity.
+            if (!$check_query->have_posts()) : ?>
+                <div style="text-align: center; padding: 60px 20px; background: white; border-radius: 15px;">
+                    <div style="font-size: 3rem; margin-bottom: 20px;">🎉</div>
+                    <h3 style="color: var(--mardi-gras-purple); margin-bottom: 15px; font-size: 1.8rem;">
+                        Be Our First Sponsor!
+                    </h3>
+                    <p style="color: var(--text-light); line-height: 1.8; margin-bottom: 25px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                        Our 2025 sponsors will be announced soon. Want to be first? Join us in making NOLA Holi 2026 
+                        the biggest celebration yet!
                     </p>
+                    <a href="<?php echo esc_url(home_url('/sponsorship-packet/')); ?>" class="btn btn-primary">
+                        View Sponsorship Opportunities
+                    </a>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">📣</div>
-                    <h3 class="feature-title">Brand Visibility</h3>
-                    <p class="feature-description">
-                        Gain exposure to a diverse, engaged audience through event marketing, social media, press coverage, 
-                        and on-site presence.
-                    </p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">🤝</div>
-                    <h3 class="feature-title">Networking</h3>
-                    <p class="feature-description">
-                        Connect with other sponsors, community leaders, and potential customers in a positive, 
-                        celebratory environment.
-                    </p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">🌈</div>
-                    <h3 class="feature-title">Cultural Celebration</h3>
-                    <p class="feature-description">
-                        Show your commitment to diversity and inclusion by supporting one of New Orleans' most unique 
-                        cultural celebrations.
-                    </p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3 class="feature-title">Demographics</h3>
-                    <p class="feature-description">
-                        Reach families, young professionals, tourists, students, and community members from diverse 
-                        backgrounds and neighborhoods.
-                    </p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">💜</div>
-                    <h3 class="feature-title">Feel Good</h3>
-                    <p class="feature-description">
-                        Be part of keeping Michelle Lakhotia's vision alive and creating joyful memories for thousands 
-                        of festival-goers.
-                    </p>
-                </div>
-            </div>
+            <?php endif;
+            wp_reset_postdata();
+            ?>
         </div>
     </section>
     
     <!-- CTA Section -->
-    <section id="contact-cta" class="content-section bg-purple">
-        <div class="container">
-            <div style="text-align: center; max-width: 700px; margin: 0 auto;">
-                <h2 class="section-title" style="color: white;">Become a Sponsor</h2>
-                <div class="section-divider"></div>
-                <p style="font-size: 1.1rem; color: var(--off-white); line-height: 1.8; margin-bottom: 30px;">
-                    Ready to support NOLA Holi 2026? We'd love to partner with you! Sponsorship packages can be 
-                    customized to meet your organization's goals and budget.
-                </p>
-                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-                    <a href="<?php echo esc_url(home_url('/contact/')); ?>" class="btn btn-gold">Contact Us</a>
-                    <a href="mailto:sponsors@nolaholi.org" class="btn btn-secondary">Email: sponsors@nolaholi.org</a>
-                </div>
-                
-                <div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 10px; margin-top: 40px;">
-                    <p style="color: var(--off-white); font-size: 1rem; margin: 0;">
-                        <strong>Tax-Deductible Donations:</strong> NOLA Holi is a registered non-profit organization. 
-                        All sponsorships are tax-deductible to the extent allowed by law.
-                    </p>
-                </div>
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2 style="margin-bottom: 20px; font-size: 2.5rem; color: white;">Join Our Sponsors</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 30px; color: white; opacity: 0.95;">
+                Interested in sponsoring NOLA Holi 2026? We'd love to partner with you!
+            </p>
+            <div class="cta-buttons">
+                <a href="<?php echo esc_url(home_url('/sponsorship-packet/')); ?>" class="btn btn-gold">
+                    View Sponsorship Packages
+                </a>
+                <a href="<?php echo esc_url(home_url('/contact/')); ?>" class="btn btn-white">
+                    Contact Us
+                </a>
             </div>
         </div>
     </section>
 </main>
 
+<style>
+.sponsor-logo-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+@media (max-width: 768px) {
+    .sponsor-logos {
+        grid-template-columns: 1fr !important;
+    }
+}
+</style>
+
 <?php
 get_footer();
 ?>
-
