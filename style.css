@@ -266,6 +266,77 @@ img {
     border-radius: 5px;
 }
 
+/* Home icon */
+.menu-item-home .home-icon {
+    font-size: 1.5rem;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.menu-item-home:hover .home-icon {
+    transform: scale(1.2);
+}
+
+/* Dropdown menus */
+.menu-item-has-children {
+    position: relative;
+}
+
+.menu-item-has-children > a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.submenu-icon {
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+}
+
+.sub-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--white);
+    box-shadow: var(--shadow-md);
+    list-style: none;
+    padding: 10px 0;
+    min-width: 180px;
+    border-radius: 8px;
+    margin-top: 10px;
+    z-index: 1000;
+}
+
+.menu-item-has-children:hover .sub-menu {
+    display: block;
+}
+
+.menu-item-has-children:hover .submenu-icon {
+    transform: rotate(180deg);
+}
+
+.sub-menu li {
+    padding: 0;
+}
+
+.sub-menu a {
+    display: block;
+    padding: 10px 20px;
+    color: var(--text-dark);
+    font-weight: 500;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sub-menu a::after {
+    display: none;
+}
+
+.sub-menu a:hover {
+    background: var(--off-white);
+    color: var(--mardi-gras-purple);
+}
+
 /* ===========================
    Hero Section
    =========================== */
@@ -882,6 +953,29 @@ img {
     .nav-menu a {
         display: block;
         padding: 15px 20px;
+    }
+    
+    /* Mobile dropdown styles */
+    .sub-menu {
+        position: static;
+        display: none;
+        box-shadow: none;
+        background: var(--off-white);
+        margin: 0;
+        border-radius: 0;
+    }
+    
+    .menu-item-has-children.active .sub-menu {
+        display: block;
+    }
+    
+    .sub-menu a {
+        padding: 12px 20px 12px 40px;
+        font-size: 0.95rem;
+    }
+    
+    .menu-item-has-children > a {
+        justify-content: space-between;
     }
     
     .header-content {
