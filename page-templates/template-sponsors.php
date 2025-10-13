@@ -217,7 +217,7 @@ get_header();
             <p style="font-size: 1.2rem; margin-bottom: 30px; color: white; opacity: 0.95;">
                 Interested in sponsoring NOLA Holi 2026? We'd love to partner with you!
             </p>
-            <div class="cta-buttons" style="justify-content: center;">
+            <div class="cta-buttons" style="display: flex; justify-content: center;">
                 <a href="<?php echo esc_url(home_url('/sponsorship-packet/')); ?>" class="btn btn-gold">
                     See Our Sponsorship Package
                 </a>
