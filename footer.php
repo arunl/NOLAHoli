@@ -65,7 +65,7 @@
         </div>
         
         <div class="footer-bottom">
-            <p>&copy; <?php echo date('Y'); ?> NOLA Holi. All rights reserved.</p>
+            <p>&copy; <?php echo date('Y'); ?> NOLA Holi Festival, Inc. All rights reserved.</p>
         </div>
     </div>
 </footer>
