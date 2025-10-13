@@ -83,6 +83,7 @@ function nolaholi_footer_menu_fallback() {
     echo '<li><a href="' . esc_url(home_url('/')) . '">Home</a></li>';
     echo '<li><a href="' . esc_url(home_url('/about-holi/')) . '">About Holi</a></li>';
     echo '<li><a href="' . esc_url(home_url('/about-nola-holi/')) . '">Our Story</a></li>';
+    echo '<li><a href="' . esc_url(home_url('/organizers/')) . '">Organizers</a></li>';
     echo '<li><a href="' . esc_url(home_url('/sponsors/')) . '">Sponsors</a></li>';
     echo '<li><a href="' . esc_url(home_url('/vendors/')) . '">Vendors</a></li>';
     echo '<li><a href="' . esc_url(home_url('/volunteers/')) . '">Volunteers</a></li>';
