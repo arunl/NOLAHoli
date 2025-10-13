@@ -101,17 +101,39 @@ get_header();
                             'value' => $tier_key,
                             'compare' => '='
                         )
-                    ),
-                    'meta_key' => '_sponsor_display_order',
-                    'orderby' => array(
-                        'meta_value_num' => 'ASC',
-                        'title' => 'ASC'
                     )
                 );
                 
                 $sponsors_query = new WP_Query($args);
                 
-                if ($sponsors_query->have_posts()) : ?>
+                // Sort sponsors manually with display_order (default 0) as primary key and title as secondary
+                $sponsors_array = array();
+                if ($sponsors_query->have_posts()) {
+                    while ($sponsors_query->have_posts()) {
+                        $sponsors_query->the_post();
+                        $display_order = get_post_meta(get_the_ID(), '_sponsor_display_order', true);
+                        $display_order = ($display_order === '' || $display_order === false) ? 0 : intval($display_order);
+                        
+                        $sponsors_array[] = array(
+                            'id' => get_the_ID(),
+                            'title' => get_the_title(),
+                            'display_order' => $display_order,
+                            'website' => get_post_meta(get_the_ID(), '_sponsor_website', true),
+                            'has_thumbnail' => has_post_thumbnail()
+                        );
+                    }
+                    wp_reset_postdata();
+                    
+                    // Sort by display_order first, then by title
+                    usort($sponsors_array, function($a, $b) {
+                        if ($a['display_order'] === $b['display_order']) {
+                            return strcmp($a['title'], $b['title']);
+                        }
+                        return $a['display_order'] - $b['display_order'];
+                    });
+                }
+                
+                if (!empty($sponsors_array)) : ?>
                     <!-- Tier Section -->
                     <div class="sponsor-tier-section" style="margin-bottom: 60px;">
                         <h3 class="tier-title" style="color: <?php echo $tier_data['color']; ?>; text-align: center; font-size: 2rem; margin-bottom: 30px;">
@@ -119,34 +141,36 @@ get_header();
                         </h3>
                         
                         <div class="sponsor-logos" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; align-items: center; justify-items: center;">
-                            <?php while ($sponsors_query->have_posts()) : $sponsors_query->the_post(); 
-                                $website = get_post_meta(get_the_ID(), '_sponsor_website', true);
-                                $display_order = get_post_meta(get_the_ID(), '_sponsor_display_order', true);
+                            <?php foreach ($sponsors_array as $sponsor) : 
+                                // Get the post to access thumbnail
+                                $sponsor_post = get_post($sponsor['id']);
                             ?>
                                 <div class="sponsor-logo-item" style="text-align: center; padding: 20px; background: white; border-radius: 10px; box-shadow: var(--shadow-sm); transition: transform 0.3s ease, box-shadow 0.3s ease; width: 100%; max-width: 300px;">
-                                    <?php if ($website) : ?>
-                                        <a href="<?php echo esc_url($website); ?>" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: block;">
-                                            <?php if (has_post_thumbnail()) : ?>
-                                                <div style="height: 150px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
-                                                    <?php the_post_thumbnail('medium', array('style' => 'max-width: 100%; max-height: 150px; height: auto; object-fit: contain;')); ?>
+                                    <?php if ($sponsor['website']) : ?>
+                                        <a href="<?php echo esc_url($sponsor['website']); ?>" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: block;">
+                                            <?php if ($sponsor['has_thumbnail']) : ?>
+                                                <div style="height: 150px; display: flex; align-items: center; justify-content: center;">
+                                                    <?php echo get_the_post_thumbnail($sponsor['id'], 'medium', array('style' => 'max-width: 100%; max-height: 150px; height: auto; object-fit: contain;')); ?>
                                                 </div>
+                                            <?php else : ?>
+                                                <h4 style="color: <?php echo $tier_data['color']; ?>; margin: 0; font-size: 1.2rem;">
+                                                    <?php echo esc_html($sponsor['title']); ?>
+                                                </h4>
                                             <?php endif; ?>
-                                            <h4 style="color: <?php echo $tier_data['color']; ?>; margin: 0; font-size: 1.2rem;">
-                                                <?php the_title(); ?>
-                                            </h4>
                                         </a>
                                     <?php else : ?>
-                                        <?php if (has_post_thumbnail()) : ?>
-                                            <div style="height: 150px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
-                                                <?php the_post_thumbnail('medium', array('style' => 'max-width: 100%; max-height: 150px; height: auto; object-fit: contain;')); ?>
+                                        <?php if ($sponsor['has_thumbnail']) : ?>
+                                            <div style="height: 150px; display: flex; align-items: center; justify-content: center;">
+                                                <?php echo get_the_post_thumbnail($sponsor['id'], 'medium', array('style' => 'max-width: 100%; max-height: 150px; height: auto; object-fit: contain;')); ?>
                                             </div>
+                                        <?php else : ?>
+                                            <h4 style="color: <?php echo $tier_data['color']; ?>; margin: 0; font-size: 1.2rem;">
+                                                <?php echo esc_html($sponsor['title']); ?>
+                                            </h4>
                                         <?php endif; ?>
-                                        <h4 style="color: <?php echo $tier_data['color']; ?>; margin: 0; font-size: 1.2rem;">
-                                            <?php the_title(); ?>
-                                        </h4>
                                     <?php endif; ?>
                                 </div>
-                            <?php endwhile; wp_reset_postdata(); ?>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 <?php endif;
