@@ -275,14 +275,17 @@ get_header();
                     </p>
                 </div>
                 
-                <div style="margin-top: 30px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.2);">
-                    <p style="color: var(--off-white); margin-bottom: 15px;">
-                        Want to see our current sponsors?
-                    </p>
-                    <a href="<?php echo esc_url(home_url('/sponsors/')); ?>" class="btn btn-white" style="display: inline-block;">
-                        View 2025 Sponsors →
-                    </a>
-                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- View Current Sponsors Section -->
+    <section class="content-section bg-white">
+        <div class="container">
+            <div style="text-align: center; max-width: 700px; margin: 0 auto;">
+                <a href="<?php echo esc_url(home_url('/sponsors/')); ?>" class="btn btn-primary btn-large">
+                    See Our Current Sponsors
+                </a>
             </div>
         </div>
     </section>
