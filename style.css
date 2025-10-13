@@ -276,22 +276,30 @@ img {
 
 /* Home icon */
 .menu-item-home .home-icon {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     display: inline-block;
     transition: transform 0.3s ease;
+    filter: grayscale(0);
+}
+
+.menu-item-home a {
+    color: var(--mardi-gras-purple);
+    font-size: 1.8rem;
 }
 
 .menu-item-home:hover .home-icon {
-    transform: scale(1.2);
+    transform: scale(1.15);
 }
 
 /* Dropdown menus */
 .menu-item-has-children {
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .menu-item-has-children > a {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 5px;
 }
@@ -314,11 +322,13 @@ img {
     padding: 10px 0;
     min-width: 180px;
     border-radius: 8px;
-    margin-top: 10px;
+    margin-top: 5px;
     z-index: 1000;
 }
 
-.menu-item-has-children:hover > .sub-menu {
+.menu-item-has-children:hover > .sub-menu,
+.menu-item-has-children > a:hover + .sub-menu,
+.sub-menu:hover {
     display: block !important;
 }
 
@@ -963,13 +973,17 @@ img {
         display: flex;
     }
     
-    .nav-menu li {
+    .nav-menu > li {
         border-bottom: 1px solid #eee;
     }
     
     .nav-menu a {
         display: block;
         padding: 15px 20px;
+    }
+    
+    .menu-item-has-children {
+        display: block;
     }
     
     /* Mobile dropdown styles */
