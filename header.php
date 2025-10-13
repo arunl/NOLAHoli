@@ -67,11 +67,11 @@
  */
 function nolaholi_default_menu() {
     echo '<ul class="nav-menu">';
-    echo '<li class="menu-item-home"><a href="' . esc_url(home_url('/')) . '"><span class="home-icon">🏠</span></a></li>';
+    echo '<li class="menu-item-home"><a href="' . esc_url(home_url('/')) . '" title="Home"><span class="home-icon">⌂</span></a></li>';
     echo '<li><a href="' . esc_url(home_url('/about-holi/')) . '">About Holi</a></li>';
     echo '<li><a href="' . esc_url(home_url('/about-nola-holi/')) . '">Our Story</a></li>';
     echo '<li class="menu-item-has-children">';
-    echo '<a href="#">Celebrations <span class="submenu-icon">▼</span></a>';
+    echo '<a href="javascript:void(0)">Celebrations <span class="submenu-icon">▼</span></a>';
     echo '<ul class="sub-menu">';
     echo '<li><a href="' . esc_url(home_url('/parade/')) . '">Parade</a></li>';
     echo '<li><a href="' . esc_url(home_url('/festival/')) . '">Festival</a></li>';
@@ -79,7 +79,7 @@ function nolaholi_default_menu() {
     echo '</li>';
     echo '<li><a href="' . esc_url(home_url('/gallery/')) . '">Gallery</a></li>';
     echo '<li class="menu-item-has-children">';
-    echo '<a href="#">Supporters <span class="submenu-icon">▼</span></a>';
+    echo '<a href="javascript:void(0)">Supporters <span class="submenu-icon">▼</span></a>';
     echo '<ul class="sub-menu">';
     echo '<li><a href="' . esc_url(home_url('/sponsors/')) . '">Sponsors</a></li>';
     echo '<li><a href="' . esc_url(home_url('/vendors/')) . '">Vendors</a></li>';
