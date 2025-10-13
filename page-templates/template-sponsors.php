@@ -211,7 +211,7 @@ get_header();
     </section>
     
     <!-- CTA Section -->
-    <section class="cta-section">
+    <section class="cta-section" style="margin-bottom: 80px;">
         <div class="cta-content">
             <h2 style="margin-bottom: 20px; font-size: 2.5rem; color: white;">Join Our Sponsors</h2>
             <p style="font-size: 1.2rem; margin-bottom: 30px; color: white; opacity: 0.95;">
