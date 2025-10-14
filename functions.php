@@ -56,14 +56,18 @@ add_action('after_setup_theme', 'nolaholi_setup');
  * Enqueue scripts and styles
  */
 function nolaholi_scripts() {
+    // Cache busting: use file modification time in development, version in production
+    $css_version = (defined('WP_DEBUG') && WP_DEBUG) ? filemtime(get_template_directory() . '/style.css') : '1.4.0';
+    $js_version = (defined('WP_DEBUG') && WP_DEBUG) ? filemtime(get_template_directory() . '/js/main.js') : '1.4.0';
+    
     // Main stylesheet
-    wp_enqueue_style('nolaholi-style', get_stylesheet_uri(), array(), '1.4.0');
+    wp_enqueue_style('nolaholi-style', get_stylesheet_uri(), array(), $css_version);
     
     // Google Fonts
     wp_enqueue_style('nolaholi-fonts', 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap', array(), null);
     
     // Main JavaScript
-    wp_enqueue_script('nolaholi-script', get_template_directory_uri() . '/js/main.js', array('jquery'), '1.4.0', true);
+    wp_enqueue_script('nolaholi-script', get_template_directory_uri() . '/js/main.js', array('jquery'), $js_version, true);
     
     // Localize script for AJAX
     wp_localize_script('nolaholi-script', 'nolaholi_ajax', array(
