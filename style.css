@@ -1245,23 +1245,26 @@ img {
     
     .header-content {
         display: grid;
-        grid-template-columns: 1fr auto;
+        grid-template-columns: 1fr 1fr;  /* Equal halves */
         grid-template-rows: auto auto;
         gap: 12px;
         align-items: center;
     }
 
-    /* Mobile site branding - first column */
+    /* Mobile site branding - centered in left half */
     .site-branding {
         grid-column: 1;
         grid-row: 1;
         gap: 8px;
         min-width: 0;
         overflow: hidden;
+        justify-self: center;  /* Center within left half */
+        text-align: center;
     }
 
     .site-logo img {
         height: 40px;
+        margin: 0 auto;
     }
 
     .site-title {
@@ -1274,7 +1277,7 @@ img {
         line-height: 1.2;
     }
 
-    /* Mobile header sponsor - second column, same row */
+    /* Mobile header sponsor - centered in right half */
     .header-sponsor {
         grid-column: 2;
         grid-row: 1;
@@ -1282,6 +1285,7 @@ img {
         padding: 0;
         height: auto;
         gap: 2px;
+        justify-self: center;  /* Center within right half */
     }
 
     .presented-by-text {
