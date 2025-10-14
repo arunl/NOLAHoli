@@ -8,35 +8,256 @@
 (function($) {
     'use strict';
 
+    // Check jQuery dependency
+    if (typeof jQuery === 'undefined') {
+        console.error('NOLA Holi Theme Error: jQuery is required but not loaded.');
+        return;
+    }
+
     /**
-     * Mobile Menu Toggle
+     * Mobile Menu Toggle (enhanced)
+     * 
+     * Features:
+     * - Responsive mobile/desktop detection with matchMedia
+     * - Touch device support with tap-to-open on desktop
+     * - Full ARIA attributes for accessibility
+     * - Keyboard navigation (Enter, Space, Escape, Tab)
+     * - Auto-close siblings on mobile
+     * - Outside click detection
+     * - Smooth transitions and visual feedback
      */
     function initMobileMenu() {
-        $('.menu-toggle').on('click', function() {
-            $(this).toggleClass('active');
-            $('.nav-menu').toggleClass('active');
+        var $nav    = $('.main-navigation');
+        var $menu   = $('#primary-menu');
+        var $toggle = $('.menu-toggle');
+        var mq      = window.matchMedia('(max-width: 768px)');
+
+        if (!$nav.length || !$menu.length || !$toggle.length) {
+            if (window.console && console.warn) {
+                console.warn('NOLA Holi: Navigation elements not found. Menu initialization skipped.');
+            }
+            return;
+        }
+
+        var isMobile = function() { return mq.matches; };
+
+        // Ensure ARIA on parents
+        $menu.find('li.menu-item-has-children > a').each(function() {
+            $(this).attr({
+                'aria-haspopup': 'true',
+                'aria-expanded': 'false'
+            });
+        });
+
+        // Helper: close all submenus
+        function closeAllSubmenus() {
+            $menu.find('li.menu-item-has-children.active')
+                 .removeClass('active')
+                 .children('a[aria-expanded]')
+                 .attr('aria-expanded', 'false');
+        }
+
+        // Helper: close whole mobile menu
+        function closeMenu() {
+            $toggle.removeClass('active').attr('aria-expanded', 'false');
+            $menu.removeClass('active');
+            closeAllSubmenus();
+        }
+
+        // Toggle mobile menu
+        $toggle.on('click', function() {
+            var nowOpen = !$menu.hasClass('active');
+            $(this).toggleClass('active', nowOpen)
+                   .attr('aria-expanded', String(nowOpen));
+            $menu.toggleClass('active', nowOpen);
+            if (!nowOpen) closeAllSubmenus();
+        });
+
+        // Detect touch device
+        var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+        // Handle mobile dropdown toggle
+        function handleMobileToggle($a) {
+            var $li = $a.parent('li');
+            var isCurrentlyOpen = $li.hasClass('active');
+
+            // Close all siblings first
+            $li.siblings('.menu-item-has-children.active')
+               .removeClass('active')
+               .children('a[aria-expanded]')
+               .attr('aria-expanded', 'false');
+
+            // Toggle this one
+            if (isCurrentlyOpen) {
+                // It was open, now close it
+                $li.removeClass('active');
+                $a.attr('aria-expanded', 'false');
+            } else {
+                // It was closed, now open it
+                $li.addClass('active');
+                $a.attr('aria-expanded', 'true');
+            }
+        }
+
+        // Delegate clicks on parent items
+        // - On mobile: toggle this submenu, close siblings
+        // - On desktop with touch: toggle on tap
+        // - On desktop: prevent "#" from jumping to top
+        $menu.on('click touchend', '> li.menu-item-has-children > a', function(e) {
+            var $a  = $(this);
+            var href = $a.attr('href') || '';
+            var $li = $a.parent('li');
+
+            if (isMobile()) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Prevent double-firing on devices that support both touch and click
+                if (e.type === 'touchend') {
+                    $a.data('touched', true);
+                    handleMobileToggle($a);
+                } else if (e.type === 'click') {
+                    if ($a.data('touched')) {
+                        $a.data('touched', false);
+                        return false;
+                    }
+                    handleMobileToggle($a);
+                }
+            } else {
+                // Desktop with touch: first tap opens submenu, second tap follows link
+                if (isTouchDevice && (href !== '#' && !href.toLowerCase().startsWith('javascript'))) {
+                    if (!$li.hasClass('touch-hover')) {
+                        e.preventDefault();
+                        // Close other touch-hover items
+                        $li.siblings('.touch-hover').removeClass('touch-hover')
+                           .find('> a[aria-expanded]').attr('aria-expanded', 'false');
+                        // Open this one
+                        $li.addClass('touch-hover');
+                        $a.attr('aria-expanded', 'true');
+                    }
+                    // If already has touch-hover, let the link work normally
+                } else if (href === '#' || href.toLowerCase().startsWith('javascript')) {
+                    // Non-clickable parent items
+                    e.preventDefault();
+                }
+            }
+        });
+
+        // Desktop: Better hover behavior with intent detection (mouse only)
+        if (!isMobile() && !isTouchDevice) {
+            var hoverTimer;
             
-            // Toggle aria-expanded
-            var expanded = $(this).attr('aria-expanded') === 'true';
-            $(this).attr('aria-expanded', !expanded);
+            $menu.on('mouseenter', '> li.menu-item-has-children', function() {
+                var $li = $(this);
+                clearTimeout(hoverTimer);
+                
+                // Immediate open on hover
+                $li.addClass('hover-open');
+                $li.find('> a[aria-expanded]').attr('aria-expanded', 'true');
+            }).on('mouseleave', '> li.menu-item-has-children', function() {
+                var $li = $(this);
+                
+                // Delay close to allow moving to submenu
+                hoverTimer = setTimeout(function() {
+                    $li.removeClass('hover-open');
+                    $li.find('> a[aria-expanded]').attr('aria-expanded', 'false');
+                }, 300); // 300ms grace period
+            });
+            
+            // Cancel close if entering submenu
+            $menu.on('mouseenter', '.sub-menu', function() {
+                clearTimeout(hoverTimer);
+            });
+        } else if (!isMobile()) {
+            // Touch device desktop - just update ARIA
+            $menu.on('mouseenter', '> li.menu-item-has-children', function() {
+                $(this).find('> a[aria-expanded]').attr('aria-expanded', 'true');
+            }).on('mouseleave', '> li.menu-item-has-children', function() {
+                $(this).find('> a[aria-expanded]').attr('aria-expanded', 'false');
+            });
+        }
+
+        // Close touch-hover dropdowns when clicking outside (desktop touch devices)
+        if (isTouchDevice) {
+            $(document).on('click', function(e) {
+                if (!isMobile() && !$nav.is(e.target) && $nav.has(e.target).length === 0) {
+                    $menu.find('.touch-hover').removeClass('touch-hover')
+                         .find('> a[aria-expanded]').attr('aria-expanded', 'false');
+                }
+            });
+        }
+
+        // Prevent submenu clicks from closing parent (mobile)
+        $menu.on('click', '.sub-menu a', function(e) {
+            e.stopPropagation(); // Let submenu links work normally
         });
 
-        // Close menu when clicking outside
+        // Close on outside click (mobile only)
         $(document).on('click', function(e) {
-            if (!$(e.target).closest('.main-navigation').length) {
-                $('.menu-toggle').removeClass('active');
-                $('.nav-menu').removeClass('active');
-                $('.menu-toggle').attr('aria-expanded', 'false');
+            if (!isMobile()) return;
+            if (!$nav.is(e.target) && $nav.has(e.target).length === 0) {
+                closeMenu();
             }
         });
 
-        // Close menu on ESC key
-        $(document).on('keyup', function(e) {
+        // Enhanced keyboard navigation
+        $(document).on('keydown', function(e) {
+            // ESC key - close menu on mobile, close dropdowns on desktop
             if (e.key === 'Escape') {
-                $('.menu-toggle').removeClass('active');
-                $('.nav-menu').removeClass('active');
-                $('.menu-toggle').attr('aria-expanded', 'false');
+                if (isMobile()) {
+                    closeMenu();
+                } else {
+                    // Close any open touch-hover dropdowns on desktop
+                    $menu.find('.touch-hover').removeClass('touch-hover')
+                         .find('> a[aria-expanded]').attr('aria-expanded', 'false');
+                }
+                return;
             }
+
+            // Mobile-specific keyboard handling
+            if (isMobile()) {
+                var $focused = $(document.activeElement);
+                var $parentLi = $focused.closest('li.menu-item-has-children');
+
+                // Enter or Space on parent items to toggle dropdown
+                if ((e.key === 'Enter' || e.key === ' ') && $parentLi.length) {
+                    var $link = $parentLi.find('> a');
+                    if ($link.is($focused)) {
+                        var href = $link.attr('href') || '';
+                        if (href === '#' || href.toLowerCase().startsWith('javascript')) {
+                            e.preventDefault();
+                            var willOpen = !$parentLi.hasClass('active');
+                            
+                            // Close siblings
+                            $parentLi.siblings('.menu-item-has-children.active')
+                                    .removeClass('active')
+                                    .children('a[aria-expanded]')
+                                    .attr('aria-expanded', 'false');
+                            
+                            // Toggle this one
+                            $parentLi.toggleClass('active', willOpen);
+                            $link.attr('aria-expanded', String(willOpen));
+
+                            // Focus management: move focus to first submenu item when opening
+                            if (willOpen) {
+                                var $firstSubmenuLink = $parentLi.find('.sub-menu a').first();
+                                if ($firstSubmenuLink.length) {
+                                    setTimeout(function() {
+                                        $firstSubmenuLink.focus();
+                                    }, 100);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Reset when resizing up to desktop
+        mq.addEventListener ? mq.addEventListener('change', function(ev) {
+            if (!ev.matches) closeMenu();
+        }) : $(window).on('resize', function() {
+            if (!isMobile()) closeMenu();
         });
     }
 

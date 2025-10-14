@@ -4,7 +4,7 @@ Theme URI: https://nolaholi.org
 Author: NOLA Holi Team
 Author URI: https://nolaholi.org
 Description: A vibrant WordPress theme for the NOLA Holi Festival celebrating the Indian festival of colors in New Orleans with Mardi Gras flair
-Version: 1.1.1
+Version: 1.1.2
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: nolaholi
@@ -16,7 +16,7 @@ This theme, like WordPress, is licensed under the GPL.
 /* ===========================
    CSS Variables - Mardi Gras Colors
    =========================== */
-:root {
+   :root {
     --mardi-gras-purple: #5E2B7A;
     --mardi-gras-green: #00843D;
     --mardi-gras-gold: #FFC107;
@@ -229,13 +229,21 @@ img {
     display: flex;
     list-style: none;
     gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-menu a {
     color: var(--text-dark);
     font-weight: 600;
     font-size: 1rem;
-    padding: 8px 0;
+    padding: 8px 0; /* base padding; overridden for top-level on desktop below */
     position: relative;
 }
 
@@ -251,8 +259,25 @@ img {
 }
 
 .nav-menu a:hover::after,
-.nav-menu a.current::after {
+.nav-menu a.current::after,
+.nav-menu a:focus::after {
     width: 100%;
+}
+
+/* Keyboard focus styles for accessibility */
+.nav-menu a:focus {
+    outline: 2px solid var(--mardi-gras-gold);
+    outline-offset: 4px;
+}
+
+.nav-menu a:focus:not(:focus-visible) {
+    outline: none;
+}
+
+.nav-menu a:focus-visible {
+    outline: 2px solid var(--mardi-gras-gold);
+    outline-offset: 4px;
+    background: rgba(255, 193, 7, 0.1);
 }
 
 .menu-toggle {
@@ -264,6 +289,226 @@ img {
     font-size: 1.2rem;
     cursor: pointer;
     border-radius: 5px;
+}
+
+/* Home icon */
+.menu-item-home .home-icon {
+    font-size: 1.8rem;
+    display: inline-block;
+    transition: transform 0.3s ease;
+    filter: grayscale(0);
+}
+
+.menu-item-home a {
+    color: var(--mardi-gras-purple);
+    font-size: 1.8rem;
+}
+
+.menu-item-home:hover .home-icon {
+    transform: scale(1.15);
+}
+
+/* Dropdown menus */
+.menu-item-has-children {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.menu-item-has-children > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.submenu-icon {
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+}
+
+/* Sub-menu styling - works for both custom and WordPress menus */
+.sub-menu,
+.menu-item-has-children .sub-menu {
+    display: none !important;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--white);
+    box-shadow: var(--shadow-md);
+    list-style: none;
+    padding: 10px 0;
+    min-width: 180px;
+    border-radius: 8px;
+    margin-top: 5px;
+    z-index: 1000;
+}
+
+/* Add invisible hover bridge to prevent gap issues on desktop */
+@media (min-width: 769px) {
+    .sub-menu::before {
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background: transparent;
+    }
+}
+
+.menu-item-has-children:hover > .sub-menu,
+.menu-item-has-children > a:hover + .sub-menu,
+.sub-menu:hover {
+    display: block !important;
+}
+
+.menu-item-has-children:hover .submenu-icon {
+    transform: rotate(180deg);
+}
+
+.sub-menu li {
+    padding: 0;
+    list-style: none;
+    margin: 0;
+}
+
+.sub-menu li::before {
+    content: none !important;
+}
+
+.sub-menu a {
+    display: block;
+    padding: 10px 20px;
+    color: var(--text-dark);
+    font-weight: 500;
+    transition: background 0.2s ease, color 0.2s ease;
+    text-decoration: none;
+}
+
+.sub-menu a::after {
+    display: none !important;
+}
+
+.sub-menu a:hover {
+    background: var(--off-white);
+    color: var(--mardi-gras-purple);
+}
+
+/* Focus styles for submenu items */
+.sub-menu a:focus {
+    outline: 2px solid var(--mardi-gras-gold);
+    outline-offset: -2px;
+    background: var(--off-white);
+    color: var(--mardi-gras-purple);
+}
+
+/* Smooth transitions for dropdowns */
+.sub-menu {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition-delay: 0s;
+    pointer-events: none;
+}
+
+/* Keep submenu open when hovering parent OR submenu */
+.menu-item-has-children:hover > .sub-menu,
+.menu-item-has-children.hover-open > .sub-menu,
+.menu-item-has-children:focus-within > .sub-menu {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: auto;
+    transition-delay: 0s;
+}
+
+/* Add a small delay before closing to prevent accidental close */
+.sub-menu {
+    transition-delay: 0s, 0s, 0.15s; /* delay hiding pointer-events */
+}
+
+/* Close submenu after leaving hover zone */
+.menu-item-has-children:not(:hover) > .sub-menu {
+    transition-delay: 0.2s;
+}
+
+/* === Desktop menu alignment normalization (top-level anchors) === */
+@media (min-width: 769px) {
+  /* Keep the main list aligned center and remove stray margins */
+  .main-navigation #primary-menu {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+  .main-navigation #primary-menu > li { margin: 0; }
+
+  /* Make EVERY top-level link share the same line box */
+  .main-navigation #primary-menu > li > a {
+    display: inline-flex;     /* stable inline box */
+    align-items: center;      /* vertical centering */
+    height: 48px;             /* menu bar height */
+    line-height: 1;           /* avoid baseline differences */
+    padding: 0 18px;          /* horizontal padding */
+    vertical-align: middle;
+  }
+
+  /* Parents with submenus: reserve space for caret without shifting text */
+  .main-navigation #primary-menu > li.menu-item-has-children > a {
+    position: relative;
+    padding-right: 34px;      /* space for caret */
+  }
+
+  /* Draw caret without impacting line height/baseline */
+  .main-navigation #primary-menu > li.menu-item-has-children > a::after {
+    content: "";
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0; height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid currentColor; /* ▼ */
+    opacity: .7;
+    display: block;
+    line-height: 0;
+  }
+
+  /* Touch device support: show submenu when touch-hover class is active */
+  .main-navigation #primary-menu > li.menu-item-has-children.touch-hover > .sub-menu {
+    display: block !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: auto;
+  }
+
+  /* Rotate caret when touch-hover is active (same as hover) */
+  .main-navigation #primary-menu > li.menu-item-has-children.touch-hover .submenu-icon {
+    transform: rotate(180deg);
+  }
+
+  /* Skip link for screen readers */
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--mardi-gras-gold);
+    color: var(--text-dark);
+    padding: 8px 16px;
+    text-decoration: none;
+    font-weight: 600;
+    z-index: 9999;
+  }
+
+  .skip-link:focus {
+    top: 0;
+  }
+}
+
+/* Optional: make non-clickable parents feel intentional */
+.main-navigation #primary-menu > li.menu-item-type-custom > a[href="#"] {
+    cursor: default;
+    /* pointer-events: none;  /* uncomment if you want to fully disable click */
 }
 
 /* ===========================
@@ -875,13 +1120,59 @@ img {
         display: flex;
     }
     
-    .nav-menu li {
+    .nav-menu > li {
         border-bottom: 1px solid #eee;
     }
     
     .nav-menu a {
         display: block;
         padding: 15px 20px;
+    }
+    
+    .menu-item-has-children {
+        display: block;
+    }
+    
+    /* Mobile dropdown styles */
+    .sub-menu,
+    .menu-item-has-children .sub-menu {
+        position: static !important;
+        display: none !important;
+        box-shadow: none;
+        background: var(--off-white);
+        margin: 0;
+        border-radius: 0;
+    }
+    
+    .menu-item-has-children.active > .sub-menu {
+        display: block !important;
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        pointer-events: auto;
+    }
+    
+    .sub-menu a {
+        padding: 12px 20px 12px 40px;
+        font-size: 0.95rem;
+    }
+
+    /* Focus styles for mobile menu */
+    .nav-menu.active a:focus {
+        background: rgba(94, 43, 122, 0.1);
+    }
+
+    .menu-toggle:focus {
+        outline: 2px solid var(--mardi-gras-gold);
+        outline-offset: 2px;
+    }
+    
+    .menu-item-has-children > a {
+        justify-content: space-between;
+    }
+    
+    .nav-menu .sub-menu li {
+        list-style: none;
+        border-bottom: none;
     }
     
     .header-content {
@@ -932,21 +1223,10 @@ img {
 /* ===========================
    Utility Classes
    =========================== */
-.text-center {
-    text-align: center;
-}
-
-.text-purple {
-    color: var(--mardi-gras-purple);
-}
-
-.text-green {
-    color: var(--mardi-gras-green);
-}
-
-.text-gold {
-    color: var(--mardi-gras-gold);
-}
+.text-center { text-align: center; }
+.text-purple { color: var(--mardi-gras-purple); }
+.text-green  { color: var(--mardi-gras-green); }
+.text-gold   { color: var(--mardi-gras-gold); }
 
 .mt-1 { margin-top: 1rem; }
 .mt-2 { margin-top: 2rem; }
@@ -959,3 +1239,25 @@ img {
 .p-2 { padding: 2rem; }
 .p-3 { padding: 3rem; }
 
+@media (max-width: 768px) {
+    .main-navigation #primary-menu > li.menu-item-has-children > a {
+      position: relative;
+      padding-right: 40px; /* room for caret */
+    }
+    .main-navigation #primary-menu > li.menu-item-has-children > a::after {
+      content: "";
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%) rotate(0deg);
+      width: 0; height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 7px solid currentColor; /* ▼ */
+      transition: transform .2s ease;
+      opacity: .8;
+    }
+    .main-navigation #primary-menu > li.menu-item-has-children.active > a::after {
+      transform: translateY(-50%) rotate(180deg);
+    }
+  }
