@@ -41,6 +41,31 @@
                         <?php endif; ?>
                     </div>
                 </div>
+
+                <?php
+                // Get first event sponsor for header display
+                $event_sponsor = nolaholi_get_first_event_sponsor();
+                if ($event_sponsor) :
+                ?>
+                    <div class="header-sponsor">
+                        <div class="presented-by-text">Presented by</div>
+                        <?php if ($event_sponsor['website']) : ?>
+                            <a href="<?php echo esc_url($event_sponsor['website']); ?>" target="_blank" rel="noopener noreferrer" class="sponsor-logo-link">
+                                <?php if ($event_sponsor['logo']) : ?>
+                                    <img src="<?php echo esc_url($event_sponsor['logo']); ?>" alt="<?php echo esc_attr($event_sponsor['name']); ?>" class="sponsor-logo">
+                                <?php else : ?>
+                                    <div class="sponsor-name"><?php echo esc_html($event_sponsor['name']); ?></div>
+                                <?php endif; ?>
+                            </a>
+                        <?php else : ?>
+                            <?php if ($event_sponsor['logo']) : ?>
+                                <img src="<?php echo esc_url($event_sponsor['logo']); ?>" alt="<?php echo esc_attr($event_sponsor['name']); ?>" class="sponsor-logo">
+                            <?php else : ?>
+                                <div class="sponsor-name"><?php echo esc_html($event_sponsor['name']); ?></div>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
                 
                 <nav class="main-navigation">
                     <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">

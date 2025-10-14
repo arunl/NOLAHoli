@@ -219,6 +219,55 @@ img {
     margin: 0;
 }
 
+/* Header Sponsor (Presented by) */
+.header-sponsor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-left: auto;
+    margin-right: 20px;
+    text-align: center;
+}
+
+.presented-by-text {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-light);
+    letter-spacing: 0.5px;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.sponsor-logo {
+    max-height: 50px;
+    max-width: 120px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.sponsor-logo-link {
+    display: block;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.sponsor-logo-link:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+}
+
+.sponsor-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--mardi-gras-purple);
+    max-width: 120px;
+    line-height: 1.2;
+}
+
 /* Navigation */
 .main-navigation {
     display: flex;
@@ -1178,6 +1227,29 @@ img {
     .header-content {
         flex-direction: column;
         gap: 20px;
+    }
+
+    /* Mobile header sponsor - move to separate line */
+    .header-sponsor {
+        order: -1; /* Place before navigation */
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    .presented-by-text {
+        font-size: 0.6rem;
+    }
+
+    .sponsor-logo {
+        max-height: 40px;
+        max-width: 100px;
+    }
+
+    .sponsor-name {
+        font-size: 0.85rem;
+        max-width: 100px;
     }
     
     .hero-title {
