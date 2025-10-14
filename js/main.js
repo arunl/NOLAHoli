@@ -76,29 +76,53 @@
         // Detect touch device
         var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
+        // Handle mobile dropdown toggle
+        function handleMobileToggle($a) {
+            var $li = $a.parent('li');
+            var isCurrentlyOpen = $li.hasClass('active');
+
+            // Close all siblings first
+            $li.siblings('.menu-item-has-children.active')
+               .removeClass('active')
+               .children('a[aria-expanded]')
+               .attr('aria-expanded', 'false');
+
+            // Toggle this one
+            if (isCurrentlyOpen) {
+                // It was open, now close it
+                $li.removeClass('active');
+                $a.attr('aria-expanded', 'false');
+            } else {
+                // It was closed, now open it
+                $li.addClass('active');
+                $a.attr('aria-expanded', 'true');
+            }
+        }
+
         // Delegate clicks on parent items
         // - On mobile: toggle this submenu, close siblings
         // - On desktop with touch: toggle on tap
         // - On desktop: prevent "#" from jumping to top
-        $menu.on('click', '> li.menu-item-has-children > a', function(e) {
+        $menu.on('click touchend', '> li.menu-item-has-children > a', function(e) {
             var $a  = $(this);
             var href = $a.attr('href') || '';
             var $li = $a.parent('li');
 
             if (isMobile()) {
                 e.preventDefault();
-                e.stopPropagation(); // Prevent event from bubbling
-                var willOpen = !$li.hasClass('active');
-
-                // Close siblings
-                $li.siblings('.menu-item-has-children.active')
-                   .removeClass('active')
-                   .children('a[aria-expanded]')
-                   .attr('aria-expanded', 'false');
-
-                // Toggle this one
-                $li.toggleClass('active', willOpen);
-                $a.attr('aria-expanded', String(willOpen));
+                e.stopPropagation();
+                
+                // Prevent double-firing on devices that support both touch and click
+                if (e.type === 'touchend') {
+                    $a.data('touched', true);
+                    handleMobileToggle($a);
+                } else if (e.type === 'click') {
+                    if ($a.data('touched')) {
+                        $a.data('touched', false);
+                        return false;
+                    }
+                    handleMobileToggle($a);
+                }
             } else {
                 // Desktop with touch: first tap opens submenu, second tap follows link
                 if (isTouchDevice && (href !== '#' && !href.toLowerCase().startsWith('javascript'))) {
