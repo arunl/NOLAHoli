@@ -87,6 +87,7 @@
 
             if (isMobile()) {
                 e.preventDefault();
+                e.stopPropagation(); // Prevent event from bubbling
                 var willOpen = !$li.hasClass('active');
 
                 // Close siblings
@@ -98,16 +99,6 @@
                 // Toggle this one
                 $li.toggleClass('active', willOpen);
                 $a.attr('aria-expanded', String(willOpen));
-
-                // Focus management: move focus to first submenu item when opening
-                if (willOpen) {
-                    var $firstSubmenuLink = $li.find('.sub-menu a').first();
-                    if ($firstSubmenuLink.length) {
-                        setTimeout(function() {
-                            $firstSubmenuLink.focus();
-                        }, 100);
-                    }
-                }
             } else {
                 // Desktop with touch: first tap opens submenu, second tap follows link
                 if (isTouchDevice && (href !== '#' && !href.toLowerCase().startsWith('javascript'))) {
@@ -128,16 +119,37 @@
             }
         });
 
-        // Desktop: Update ARIA on hover (for screen readers)
-        if (!isMobile()) {
+        // Desktop: Better hover behavior with intent detection (mouse only)
+        if (!isMobile() && !isTouchDevice) {
+            var hoverTimer;
+            
             $menu.on('mouseenter', '> li.menu-item-has-children', function() {
-                if (!isMobile() && !isTouchDevice) {
-                    $(this).find('> a[aria-expanded]').attr('aria-expanded', 'true');
-                }
+                var $li = $(this);
+                clearTimeout(hoverTimer);
+                
+                // Immediate open on hover
+                $li.addClass('hover-open');
+                $li.find('> a[aria-expanded]').attr('aria-expanded', 'true');
             }).on('mouseleave', '> li.menu-item-has-children', function() {
-                if (!isMobile() && !isTouchDevice) {
-                    $(this).find('> a[aria-expanded]').attr('aria-expanded', 'false');
-                }
+                var $li = $(this);
+                
+                // Delay close to allow moving to submenu
+                hoverTimer = setTimeout(function() {
+                    $li.removeClass('hover-open');
+                    $li.find('> a[aria-expanded]').attr('aria-expanded', 'false');
+                }, 300); // 300ms grace period
+            });
+            
+            // Cancel close if entering submenu
+            $menu.on('mouseenter', '.sub-menu', function() {
+                clearTimeout(hoverTimer);
+            });
+        } else if (!isMobile()) {
+            // Touch device desktop - just update ARIA
+            $menu.on('mouseenter', '> li.menu-item-has-children', function() {
+                $(this).find('> a[aria-expanded]').attr('aria-expanded', 'true');
+            }).on('mouseleave', '> li.menu-item-has-children', function() {
+                $(this).find('> a[aria-expanded]').attr('aria-expanded', 'false');
             });
         }
 
@@ -150,6 +162,11 @@
                 }
             });
         }
+
+        // Prevent submenu clicks from closing parent (mobile)
+        $menu.on('click', '.sub-menu a', function(e) {
+            e.stopPropagation(); // Let submenu links work normally
+        });
 
         // Close on outside click (mobile only)
         $(document).on('click', function(e) {

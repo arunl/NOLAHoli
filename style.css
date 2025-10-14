@@ -343,6 +343,19 @@ img {
     z-index: 1000;
 }
 
+/* Add invisible hover bridge to prevent gap issues on desktop */
+@media (min-width: 769px) {
+    .sub-menu::before {
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background: transparent;
+    }
+}
+
 .menu-item-has-children:hover > .sub-menu,
 .menu-item-has-children > a:hover + .sub-menu,
 .sub-menu:hover {
@@ -394,15 +407,28 @@ img {
     opacity: 0;
     transform: translateY(-10px);
     transition: opacity 0.2s ease, transform 0.2s ease;
+    transition-delay: 0s;
     pointer-events: none;
 }
 
+/* Keep submenu open when hovering parent OR submenu */
 .menu-item-has-children:hover > .sub-menu,
-.menu-item-has-children > a:hover + .sub-menu,
-.sub-menu:hover {
+.menu-item-has-children.hover-open > .sub-menu,
+.menu-item-has-children:focus-within > .sub-menu {
     opacity: 1 !important;
     transform: translateY(0) !important;
     pointer-events: auto;
+    transition-delay: 0s;
+}
+
+/* Add a small delay before closing to prevent accidental close */
+.sub-menu {
+    transition-delay: 0s, 0s, 0.15s; /* delay hiding pointer-events */
+}
+
+/* Close submenu after leaving hover zone */
+.menu-item-has-children:not(:hover) > .sub-menu {
+    transition-delay: 0.2s;
 }
 
 /* === Desktop menu alignment normalization (top-level anchors) === */
