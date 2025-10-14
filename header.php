@@ -41,6 +41,21 @@
                         <?php endif; ?>
                     </div>
                 </div>
+                
+                <nav class="main-navigation">
+                    <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+                        ☰
+                    </button>
+                    <?php
+                    wp_nav_menu(array(
+                        'theme_location' => 'primary',
+                        'menu_id'        => 'primary-menu',
+                        'menu_class'     => 'nav-menu',
+                        'container'      => false,
+                        'fallback_cb'    => 'nolaholi_default_menu',
+                    ));
+                    ?>
+                </nav>
 
                 <?php
                 // Get first event sponsor for header display
@@ -66,21 +81,6 @@
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>
-                
-                <nav class="main-navigation">
-                    <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
-                        ☰
-                    </button>
-                    <?php
-                    wp_nav_menu(array(
-                        'theme_location' => 'primary',
-                        'menu_id'        => 'primary-menu',
-                        'menu_class'     => 'nav-menu',
-                        'container'      => false,
-                        'fallback_cb'    => 'nolaholi_default_menu',
-                    ));
-                    ?>
-                </nav>
             </div>
         </div>
     </div>
