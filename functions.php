@@ -56,9 +56,10 @@ add_action('after_setup_theme', 'nolaholi_setup');
  * Enqueue scripts and styles
  */
 function nolaholi_scripts() {
-    // Cache busting: use file modification time in development, version in production
-    $css_version = (defined('WP_DEBUG') && WP_DEBUG) ? filemtime(get_template_directory() . '/style.css') : '1.4.0';
-    $js_version = (defined('WP_DEBUG') && WP_DEBUG) ? filemtime(get_template_directory() . '/js/main.js') : '1.4.0';
+    // Aggressive cache busting: always use file modification time
+    // This ensures browsers ALWAYS get the latest version
+    $css_version = filemtime(get_template_directory() . '/style.css');
+    $js_version = filemtime(get_template_directory() . '/js/main.js');
     
     // Main stylesheet
     wp_enqueue_style('nolaholi-style', get_stylesheet_uri(), array(), $css_version);
