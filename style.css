@@ -4,7 +4,7 @@ Theme URI: https://nolaholi.org
 Author: NOLA Holi Team
 Author URI: https://nolaholi.org
 Description: A vibrant WordPress theme for the NOLA Holi Festival celebrating the Indian festival of colors in New Orleans with Mardi Gras flair
-Version: 1.1.1
+Version: 1.1.2
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: nolaholi
@@ -16,7 +16,7 @@ This theme, like WordPress, is licensed under the GPL.
 /* ===========================
    CSS Variables - Mardi Gras Colors
    =========================== */
-:root {
+   :root {
     --mardi-gras-purple: #5E2B7A;
     --mardi-gras-green: #00843D;
     --mardi-gras-gold: #FFC107;
@@ -243,7 +243,7 @@ img {
     color: var(--text-dark);
     font-weight: 600;
     font-size: 1rem;
-    padding: 8px 0;
+    padding: 8px 0; /* base padding; overridden for top-level on desktop below */
     position: relative;
 }
 
@@ -362,6 +362,56 @@ img {
 .sub-menu a:hover {
     background: var(--off-white);
     color: var(--mardi-gras-purple);
+}
+
+/* === Desktop menu alignment normalization (top-level anchors) === */
+@media (min-width: 769px) {
+  /* Keep the main list aligned center and remove stray margins */
+  .main-navigation #primary-menu {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+  .main-navigation #primary-menu > li { margin: 0; }
+
+  /* Make EVERY top-level link share the same line box */
+  .main-navigation #primary-menu > li > a {
+    display: inline-flex;     /* stable inline box */
+    align-items: center;      /* vertical centering */
+    height: 48px;             /* menu bar height */
+    line-height: 1;           /* avoid baseline differences */
+    padding: 0 18px;          /* horizontal padding */
+    vertical-align: middle;
+  }
+
+  /* Parents with submenus: reserve space for caret without shifting text */
+  .main-navigation #primary-menu > li.menu-item-has-children > a {
+    position: relative;
+    padding-right: 34px;      /* space for caret */
+  }
+
+  /* Draw caret without impacting line height/baseline */
+  .main-navigation #primary-menu > li.menu-item-has-children > a::after {
+    content: "";
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0; height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid currentColor; /* ▼ */
+    opacity: .7;
+    display: block;
+    line-height: 0;
+  }
+}
+
+/* Optional: make non-clickable parents feel intentional */
+.main-navigation #primary-menu > li.menu-item-type-custom > a[href="#"] {
+    cursor: default;
+    /* pointer-events: none;  /* uncomment if you want to fully disable click */
 }
 
 /* ===========================
@@ -1063,21 +1113,10 @@ img {
 /* ===========================
    Utility Classes
    =========================== */
-.text-center {
-    text-align: center;
-}
-
-.text-purple {
-    color: var(--mardi-gras-purple);
-}
-
-.text-green {
-    color: var(--mardi-gras-green);
-}
-
-.text-gold {
-    color: var(--mardi-gras-gold);
-}
+.text-center { text-align: center; }
+.text-purple { color: var(--mardi-gras-purple); }
+.text-green  { color: var(--mardi-gras-green); }
+.text-gold   { color: var(--mardi-gras-gold); }
 
 .mt-1 { margin-top: 1rem; }
 .mt-2 { margin-top: 2rem; }
@@ -1089,4 +1128,3 @@ img {
 .p-1 { padding: 1rem; }
 .p-2 { padding: 2rem; }
 .p-3 { padding: 3rem; }
-
