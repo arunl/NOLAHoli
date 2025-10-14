@@ -259,8 +259,25 @@ img {
 }
 
 .nav-menu a:hover::after,
-.nav-menu a.current::after {
+.nav-menu a.current::after,
+.nav-menu a:focus::after {
     width: 100%;
+}
+
+/* Keyboard focus styles for accessibility */
+.nav-menu a:focus {
+    outline: 2px solid var(--mardi-gras-gold);
+    outline-offset: 4px;
+}
+
+.nav-menu a:focus:not(:focus-visible) {
+    outline: none;
+}
+
+.nav-menu a:focus-visible {
+    outline: 2px solid var(--mardi-gras-gold);
+    outline-offset: 4px;
+    background: rgba(255, 193, 7, 0.1);
 }
 
 .menu-toggle {
@@ -364,6 +381,30 @@ img {
     color: var(--mardi-gras-purple);
 }
 
+/* Focus styles for submenu items */
+.sub-menu a:focus {
+    outline: 2px solid var(--mardi-gras-gold);
+    outline-offset: -2px;
+    background: var(--off-white);
+    color: var(--mardi-gras-purple);
+}
+
+/* Smooth transitions for dropdowns */
+.sub-menu {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+}
+
+.menu-item-has-children:hover > .sub-menu,
+.menu-item-has-children > a:hover + .sub-menu,
+.sub-menu:hover {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: auto;
+}
+
 /* === Desktop menu alignment normalization (top-level anchors) === */
 @media (min-width: 769px) {
   /* Keep the main list aligned center and remove stray margins */
@@ -405,6 +446,36 @@ img {
     opacity: .7;
     display: block;
     line-height: 0;
+  }
+
+  /* Touch device support: show submenu when touch-hover class is active */
+  .main-navigation #primary-menu > li.menu-item-has-children.touch-hover > .sub-menu {
+    display: block !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: auto;
+  }
+
+  /* Rotate caret when touch-hover is active (same as hover) */
+  .main-navigation #primary-menu > li.menu-item-has-children.touch-hover .submenu-icon {
+    transform: rotate(180deg);
+  }
+
+  /* Skip link for screen readers */
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--mardi-gras-gold);
+    color: var(--text-dark);
+    padding: 8px 16px;
+    text-decoration: none;
+    font-weight: 600;
+    z-index: 9999;
+  }
+
+  .skip-link:focus {
+    top: 0;
   }
 }
 
@@ -1049,11 +1120,24 @@ img {
     
     .menu-item-has-children.active > .sub-menu {
         display: block !important;
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        pointer-events: auto;
     }
     
     .sub-menu a {
         padding: 12px 20px 12px 40px;
         font-size: 0.95rem;
+    }
+
+    /* Focus styles for mobile menu */
+    .nav-menu.active a:focus {
+        background: rgba(94, 43, 122, 0.1);
+    }
+
+    .menu-toggle:focus {
+        outline: 2px solid var(--mardi-gras-gold);
+        outline-offset: 2px;
     }
     
     .menu-item-has-children > a {
@@ -1128,3 +1212,26 @@ img {
 .p-1 { padding: 1rem; }
 .p-2 { padding: 2rem; }
 .p-3 { padding: 3rem; }
+
+@media (max-width: 768px) {
+    .main-navigation #primary-menu > li.menu-item-has-children > a {
+      position: relative;
+      padding-right: 40px; /* room for caret */
+    }
+    .main-navigation #primary-menu > li.menu-item-has-children > a::after {
+      content: "";
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%) rotate(0deg);
+      width: 0; height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 7px solid currentColor; /* ▼ */
+      transition: transform .2s ease;
+      opacity: .8;
+    }
+    .main-navigation #primary-menu > li.menu-item-has-children.active > a::after {
+      transform: translateY(-50%) rotate(180deg);
+    }
+  }
