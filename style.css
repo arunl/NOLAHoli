@@ -1245,75 +1245,86 @@ img {
     
     .header-content {
         display: grid;
-        grid-template-columns: 1fr 1fr;  /* Equal halves */
-        grid-template-rows: auto auto;
-        gap: 12px;
+        grid-template-columns: 1fr auto 1fr;  /* Left logo | Nav button | Right logo */
+        grid-template-rows: auto;  /* Single row */
+        gap: 8px;
         align-items: center;
     }
 
-    /* Mobile site branding - centered in left half */
+    /* Mobile site branding - left side */
     .site-branding {
         grid-column: 1;
         grid-row: 1;
-        gap: 8px;
+        gap: 6px;
         min-width: 0;
         overflow: hidden;
-        justify-self: center;  /* Center within left half */
+        justify-self: center;
         text-align: center;
     }
 
     .site-logo img {
-        height: 40px;
+        height: 35px;
         margin: 0 auto;
     }
 
     .site-title {
-        font-size: 1.2rem;
-        line-height: 1.2;
+        font-size: 1rem;
+        line-height: 1.1;
     }
 
     .site-description {
-        font-size: 0.7rem;
-        line-height: 1.2;
+        font-size: 0.65rem;
+        line-height: 1.1;
     }
 
-    /* Mobile header sponsor - centered in right half */
-    .header-sponsor {
+    /* Mobile navigation - center with purple rectangle */
+    .main-navigation {
         grid-column: 2;
+        grid-row: 1;
+        width: auto;
+    }
+
+    .menu-toggle {
+        width: auto;
+        min-width: 60px;
+        padding: 10px 15px;
+        font-size: 1.3rem;
+        background: var(--mardi-gras-purple);
+        color: var(--white);
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(94, 43, 122, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .menu-toggle:active {
+        transform: scale(0.95);
+        box-shadow: 0 1px 4px rgba(94, 43, 122, 0.3);
+    }
+
+    /* Mobile header sponsor - right side */
+    .header-sponsor {
+        grid-column: 3;
         grid-row: 1;
         margin-left: 0;
         padding: 0;
         height: auto;
         gap: 2px;
-        justify-self: center;  /* Center within right half */
+        justify-self: center;
     }
 
     .presented-by-text {
-        font-size: 0.45rem;
+        font-size: 0.42rem;
         letter-spacing: 0.3px;
     }
 
     .sponsor-logo {
-        max-height: 40px;
-        max-width: 90px;
+        max-height: 35px;
+        max-width: 80px;
     }
 
     .sponsor-name {
-        font-size: 0.7rem;
-        max-width: 90px;
-    }
-
-    /* Mobile navigation - full width on second row */
-    .main-navigation {
-        grid-column: 1 / -1;
-        grid-row: 2;
-        width: 100%;
-    }
-
-    .menu-toggle {
-        width: 100%;
-        padding: 12px;
-        font-size: 1.1rem;
+        font-size: 0.65rem;
+        max-width: 80px;
     }
     
     .hero-title {
