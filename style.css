@@ -1154,6 +1154,20 @@ img {
 }
 
 @media (max-width: 768px) {
+    /* Reduce header padding on mobile */
+    .header-main {
+        padding: 12px 0;
+    }
+
+    /* Prevent horizontal overflow */
+    body {
+        overflow-x: hidden;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+
     .menu-toggle {
         display: block;
     }
@@ -1230,31 +1244,72 @@ img {
     }
     
     .header-content {
-        flex-direction: column;
-        gap: 20px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
+        gap: 12px;
+        align-items: center;
     }
 
-    /* Mobile header sponsor - full width, centered */
+    /* Mobile site branding - first column */
+    .site-branding {
+        grid-column: 1;
+        grid-row: 1;
+        gap: 8px;
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    .site-logo img {
+        height: 40px;
+    }
+
+    .site-title {
+        font-size: 1.2rem;
+        line-height: 1.2;
+    }
+
+    .site-description {
+        font-size: 0.7rem;
+        line-height: 1.2;
+    }
+
+    /* Mobile header sponsor - second column, same row */
     .header-sponsor {
+        grid-column: 2;
+        grid-row: 1;
         margin-left: 0;
-        margin-top: 15px;
-        width: 100%;
-        padding: 15px 0;
-        border-top: 1px solid #eee;
+        padding: 0;
+        height: auto;
+        gap: 2px;
     }
 
     .presented-by-text {
-        font-size: 0.55rem;
+        font-size: 0.45rem;
+        letter-spacing: 0.3px;
     }
 
     .sponsor-logo {
-        max-height: 45px;
-        max-width: 130px;
+        max-height: 40px;
+        max-width: 90px;
     }
 
     .sponsor-name {
-        font-size: 0.85rem;
-        max-width: 130px;
+        font-size: 0.7rem;
+        max-width: 90px;
+    }
+
+    /* Mobile navigation - full width on second row */
+    .main-navigation {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        width: 100%;
+    }
+
+    .menu-toggle {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.1rem;
     }
     
     .hero-title {
