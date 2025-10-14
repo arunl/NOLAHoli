@@ -333,6 +333,7 @@ function nolaholi_sponsor_meta_box($post) {
     $website = get_post_meta($post->ID, '_sponsor_website', true);
     $tier = get_post_meta($post->ID, '_sponsor_tier', true);
     $year = get_post_meta($post->ID, '_sponsor_year', true);
+    $order = get_post_meta($post->ID, '_sponsor_display_order', true);
     ?>
     <p>
         <label for="sponsor_website"><?php _e('Website URL:', 'nolaholi'); ?></label><br>
@@ -352,6 +353,11 @@ function nolaholi_sponsor_meta_box($post) {
     <p>
         <label for="sponsor_year"><?php _e('Year:', 'nolaholi'); ?></label><br>
         <input type="number" id="sponsor_year" name="sponsor_year" value="<?php echo esc_attr($year); ?>" min="2024" max="2050" style="width: 100%;">
+    </p>
+    <p>
+        <label for="sponsor_display_order"><?php _e('Display Order (within tier):', 'nolaholi'); ?></label><br>
+        <input type="number" id="sponsor_display_order" name="sponsor_display_order" value="<?php echo esc_attr($order); ?>" min="0" style="width: 100%;">
+        <br><small>Lower numbers appear first. Use this to control ordering within the same sponsorship tier.</small>
     </p>
     <?php
 }
@@ -417,6 +423,9 @@ function nolaholi_save_meta_boxes($post_id) {
     }
     if (isset($_POST['sponsor_year'])) {
         update_post_meta($post_id, '_sponsor_year', sanitize_text_field($_POST['sponsor_year']));
+    }
+    if (isset($_POST['sponsor_display_order'])) {
+        update_post_meta($post_id, '_sponsor_display_order', intval($_POST['sponsor_display_order']));
     }
     
     // Save team member fields

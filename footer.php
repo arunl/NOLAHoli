@@ -53,13 +53,13 @@
             </div>
             
             <div class="footer-section">
-                <h3>Contact</h3>
+                <h3>Contact Us</h3>
                 <p>
                     <strong>Email:</strong> <a href="mailto:info@nolaholi.org">info@nolaholi.org</a><br>
                     <strong>Website:</strong> <a href="https://www.nolaholi.org">www.nolaholi.org</a>
                 </p>
                 <p class="mt-2">
-                    <a href="<?php echo esc_url(home_url('/volunteers/')); ?>" class="btn btn-gold">Volunteer With Us</a>
+                    <a href="<?php echo esc_url(home_url('/contact/')); ?>" class="btn btn-gold">Contact Us</a>
                 </p>
             </div>
         </div>
@@ -83,6 +83,7 @@ function nolaholi_footer_menu_fallback() {
     echo '<li><a href="' . esc_url(home_url('/')) . '">Home</a></li>';
     echo '<li><a href="' . esc_url(home_url('/about-holi/')) . '">About Holi</a></li>';
     echo '<li><a href="' . esc_url(home_url('/about-nola-holi/')) . '">Our Story</a></li>';
+    echo '<li><a href="' . esc_url(home_url('/organizers/')) . '">Organizers</a></li>';
     echo '<li><a href="' . esc_url(home_url('/sponsors/')) . '">Sponsors</a></li>';
     echo '<li><a href="' . esc_url(home_url('/vendors/')) . '">Vendors</a></li>';
     echo '<li><a href="' . esc_url(home_url('/volunteers/')) . '">Volunteers</a></li>';

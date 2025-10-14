@@ -75,8 +75,6 @@ function nolaholi_default_menu() {
     echo '<ul class="sub-menu">';
     echo '<li><a href="' . esc_url(home_url('/parade/')) . '">Parade</a></li>';
     echo '<li><a href="' . esc_url(home_url('/festival/')) . '">Festival</a></li>';
-    echo '</ul>';
-    echo '</li>';
     echo '<li><a href="' . esc_url(home_url('/gallery/')) . '">Gallery</a></li>';
     echo '<li class="menu-item-has-children">';
     echo '<a href="javascript:void(0)">Supporters <span class="submenu-icon">▼</span></a>';
