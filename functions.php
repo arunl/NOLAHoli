@@ -56,14 +56,19 @@ add_action('after_setup_theme', 'nolaholi_setup');
  * Enqueue scripts and styles
  */
 function nolaholi_scripts() {
+    // Aggressive cache busting: always use file modification time
+    // This ensures browsers ALWAYS get the latest version
+    $css_version = filemtime(get_template_directory() . '/style.css');
+    $js_version = filemtime(get_template_directory() . '/js/main.js');
+    
     // Main stylesheet
-    wp_enqueue_style('nolaholi-style', get_stylesheet_uri(), array(), '1.3.0');
+    wp_enqueue_style('nolaholi-style', get_stylesheet_uri(), array(), $css_version);
     
     // Google Fonts
     wp_enqueue_style('nolaholi-fonts', 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap', array(), null);
     
     // Main JavaScript
-    wp_enqueue_script('nolaholi-script', get_template_directory_uri() . '/js/main.js', array('jquery'), '1.3.0', true);
+    wp_enqueue_script('nolaholi-script', get_template_directory_uri() . '/js/main.js', array('jquery'), $js_version, true);
     
     // Localize script for AJAX
     wp_localize_script('nolaholi-script', 'nolaholi_ajax', array(
@@ -601,4 +606,91 @@ function nolaholi_customize_register($wp_customize) {
     ));
 }
 add_action('customize_register', 'nolaholi_customize_register');
+
+/**
+ * Get first event sponsor for header display
+ * 
+ * @return array|false Array with sponsor data or false if no sponsor found
+ */
+function nolaholi_get_first_event_sponsor() {
+    // Check for cached sponsor
+    $cached_sponsor = get_transient('nolaholi_first_event_sponsor');
+    if ($cached_sponsor !== false) {
+        return $cached_sponsor;
+    }
+    
+    // Query for event sponsors in 2025
+    $args = array(
+        'post_type' => 'sponsor',
+        'posts_per_page' => -1,  // Get all to sort properly
+        'meta_query' => array(
+            'relation' => 'AND',
+            array(
+                'key' => '_sponsor_year',
+                'value' => '2025',
+                'compare' => '='
+            ),
+            array(
+                'key' => '_sponsor_tier',
+                'value' => 'event',
+                'compare' => '='
+            )
+        )
+    );
+    
+    $sponsors_query = new WP_Query($args);
+    
+    if (!$sponsors_query->have_posts()) {
+        // No sponsor found, cache for 1 hour
+        set_transient('nolaholi_first_event_sponsor', false, HOUR_IN_SECONDS);
+        return false;
+    }
+    
+    // Sort sponsors by display_order
+    $sponsors_array = array();
+    while ($sponsors_query->have_posts()) {
+        $sponsors_query->the_post();
+        $display_order = get_post_meta(get_the_ID(), '_sponsor_display_order', true);
+        $display_order = ($display_order === '' || $display_order === false) ? 0 : intval($display_order);
+        
+        $sponsors_array[] = array(
+            'id' => get_the_ID(),
+            'name' => get_the_title(),
+            'display_order' => $display_order,
+            'website' => get_post_meta(get_the_ID(), '_sponsor_website', true),
+            'logo' => get_the_post_thumbnail_url(get_the_ID(), 'medium')
+        );
+    }
+    wp_reset_postdata();
+    
+    // Sort by display_order (ascending)
+    usort($sponsors_array, function($a, $b) {
+        return $a['display_order'] - $b['display_order'];
+    });
+    
+    // Get first sponsor
+    $first_sponsor = $sponsors_array[0];
+    
+    // Prepare return data
+    $sponsor_data = array(
+        'name' => $first_sponsor['name'],
+        'logo' => $first_sponsor['logo'],
+        'website' => $first_sponsor['website']
+    );
+    
+    // Cache for 1 hour
+    set_transient('nolaholi_first_event_sponsor', $sponsor_data, HOUR_IN_SECONDS);
+    
+    return $sponsor_data;
+}
+
+/**
+ * Clear sponsor cache when sponsor post is saved
+ */
+function nolaholi_clear_sponsor_cache($post_id) {
+    if (get_post_type($post_id) === 'sponsor') {
+        delete_transient('nolaholi_first_event_sponsor');
+    }
+}
+add_action('save_post', 'nolaholi_clear_sponsor_cache');
 
