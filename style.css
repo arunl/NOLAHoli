@@ -4,7 +4,7 @@ Theme URI: https://nolaholi.org
 Author: NOLA Holi Team
 Author URI: https://nolaholi.org
 Description: A vibrant WordPress theme for the NOLA Holi Festival celebrating the Indian festival of colors in New Orleans with Mardi Gras flair
-Version: 1.4.0
+Version: 1.4.1
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: nolaholi
@@ -220,8 +220,8 @@ img {
     margin: 0;
 }
 
-/* Header Sponsor (Presented by) */
-.header-sponsor {
+/* Header Presenter (Presented by) */
+.header-presenter {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -244,7 +244,7 @@ img {
     margin-bottom: 2px;
 }
 
-.sponsor-logo {
+.presenter-mark {
     max-height: 60px;
     max-width: 180px;
     width: auto;
@@ -253,7 +253,7 @@ img {
     display: block;
 }
 
-.sponsor-logo-link {
+.presenter-mark-link {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -261,12 +261,12 @@ img {
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.sponsor-logo-link:hover {
+.presenter-mark-link:hover {
     opacity: 0.85;
     transform: scale(1.03);
 }
 
-.sponsor-name {
+.presenter-name {
     font-size: 0.9rem;
     font-weight: 600;
     color: var(--mardi-gras-purple);
@@ -1302,8 +1302,8 @@ img {
         box-shadow: 0 1px 4px rgba(94, 43, 122, 0.3);
     }
 
-    /* Mobile header sponsor - right side */
-    .header-sponsor {
+    /* Mobile header presenter - right side */
+    .header-presenter {
         grid-column: 3;
         grid-row: 1;
         margin-left: 0;
@@ -1318,12 +1318,12 @@ img {
         letter-spacing: 0.3px;
     }
 
-    .sponsor-logo {
+    .presenter-mark {
         max-height: 35px;
         max-width: 80px;
     }
 
-    .sponsor-name {
+    .presenter-name {
         font-size: 0.65rem;
         max-width: 80px;
     }
