@@ -694,3 +694,183 @@ function nolaholi_clear_sponsor_cache($post_id) {
 }
 add_action('save_post', 'nolaholi_clear_sponsor_cache');
 
+/**
+ * Generate Open Graph and Twitter Card meta tags
+ * Creates rich preview cards when URLs are shared on social media, email, and text messages
+ */
+function nolaholi_open_graph_meta_tags() {
+    // Get site information
+    $site_name = get_bloginfo('name');
+    $site_description = get_bloginfo('description');
+    $site_url = home_url('/');
+    
+    // Get event information
+    $event_date = get_theme_mod('nolaholi_event_date', 'March 7, 2026');
+    $event_time = get_theme_mod('nolaholi_event_time', 'TBD');
+    $location = get_theme_mod('nolaholi_location', 'Washington Square Park, New Orleans');
+    
+    // Default values
+    $og_title = $site_name;
+    $og_description = $site_description;
+    $og_type = 'website';
+    $og_url = $site_url;
+    $og_image = '';
+    
+    // Get custom logo or use a default image
+    $custom_logo_id = get_theme_mod('custom_logo');
+    if ($custom_logo_id) {
+        $logo_image = wp_get_attachment_image_src($custom_logo_id, 'full');
+        if ($logo_image) {
+            $og_image = $logo_image[0];
+        }
+    }
+    
+    // Customize based on page type
+    if (is_front_page() || is_home()) {
+        $og_title = $site_name . ' - ' . $site_description;
+        $og_description = sprintf(
+            'Join us for %s on %s at %s. Experience the vibrant colors and joy of Holi in New Orleans!',
+            $site_name,
+            $event_date,
+            $location
+        );
+    } elseif (is_singular()) {
+        global $post;
+        $og_title = get_the_title();
+        $og_url = get_permalink();
+        $og_type = 'article';
+        
+        // Get excerpt or content for description
+        if (has_excerpt()) {
+            $og_description = wp_strip_all_tags(get_the_excerpt());
+        } else {
+            $og_description = wp_trim_words(wp_strip_all_tags(get_the_content()), 30, '...');
+        }
+        
+        // Get featured image if available
+        if (has_post_thumbnail()) {
+            $thumbnail = wp_get_attachment_image_src(get_post_thumbnail_id(), 'large');
+            if ($thumbnail) {
+                $og_image = $thumbnail[0];
+            }
+        }
+    } elseif (is_page()) {
+        $og_title = get_the_title() . ' - ' . $site_name;
+        $og_url = get_permalink();
+        
+        // Custom descriptions for specific pages
+        $page_slug = get_post_field('post_name', get_the_ID());
+        
+        switch ($page_slug) {
+            case 'about-holi':
+                $og_description = 'Learn about the ancient Hindu festival of colors, celebrating the victory of good over evil and the arrival of spring.';
+                break;
+            case 'about-nola-holi':
+                $og_description = 'Discover the story of NOLA Holi and how we bring this vibrant celebration to the heart of New Orleans.';
+                break;
+            case 'festival':
+                $og_description = sprintf('Join us for the NOLA Holi Festival on %s at %s. Food, music, dancing, and colors!', $event_date, $location);
+                break;
+            case 'parade':
+                $og_description = sprintf('Experience the colorful NOLA Holi Parade on %s. A spectacular celebration through the streets!', $event_date);
+                break;
+            case 'gallery':
+                $og_description = 'Browse our photo gallery showcasing the vibrant moments from previous NOLA Holi celebrations.';
+                break;
+            case 'sponsors':
+                $og_description = 'Meet our generous sponsors who make NOLA Holi possible. Thank you for supporting our community!';
+                break;
+            case 'vendors':
+                $og_description = 'Discover the amazing vendors bringing food, art, and culture to NOLA Holi.';
+                break;
+            case 'volunteers':
+                $og_description = 'Join our team of volunteers and help make NOLA Holi a success! Sign up to be part of the celebration.';
+                break;
+            case 'contact':
+                $og_description = 'Get in touch with the NOLA Holi team. We\'d love to hear from you!';
+                break;
+            default:
+                if (has_excerpt()) {
+                    $og_description = wp_strip_all_tags(get_the_excerpt());
+                } else {
+                    $og_description = sprintf('Learn more about %s at %s on %s.', $og_title, $location, $event_date);
+                }
+        }
+    }
+    
+    // If no image found, use first image from images directory as fallback
+    if (empty($og_image)) {
+        $default_image = get_template_directory_uri() . '/images/celebration-photo-1.jpg';
+        $og_image = $default_image;
+    }
+    
+    // Get sponsor information for additional context
+    $event_sponsor = nolaholi_get_first_event_sponsor();
+    
+    // Sanitize all values
+    $og_title = esc_attr($og_title);
+    $og_description = esc_attr($og_description);
+    $og_url = esc_url($og_url);
+    $og_image = esc_url($og_image);
+    $site_name = esc_attr($site_name);
+    
+    // Output Open Graph meta tags
+    ?>
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="<?php echo $og_title; ?>" />
+    <meta property="og:description" content="<?php echo $og_description; ?>" />
+    <meta property="og:type" content="<?php echo $og_type; ?>" />
+    <meta property="og:url" content="<?php echo $og_url; ?>" />
+    <meta property="og:site_name" content="<?php echo $site_name; ?>" />
+    <?php if (!empty($og_image)) : ?>
+    <meta property="og:image" content="<?php echo $og_image; ?>" />
+    <meta property="og:image:secure_url" content="<?php echo $og_image; ?>" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="<?php echo $og_title; ?>" />
+    <?php endif; ?>
+    
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- Event specific Open Graph tags -->
+    <meta property="event:start_date" content="<?php echo esc_attr($event_date); ?>" />
+    <meta property="event:location" content="<?php echo esc_attr($location); ?>" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="<?php echo $og_title; ?>" />
+    <meta name="twitter:description" content="<?php echo $og_description; ?>" />
+    <?php if (!empty($og_image)) : ?>
+    <meta name="twitter:image" content="<?php echo $og_image; ?>" />
+    <meta name="twitter:image:alt" content="<?php echo $og_title; ?>" />
+    <?php endif; ?>
+    
+    <?php
+    // Add Twitter handle if set
+    $twitter_url = get_theme_mod('nolaholi_twitter', '');
+    if (!empty($twitter_url)) {
+        // Extract Twitter handle from URL
+        preg_match('/twitter\.com\/([^\/\?]+)/', $twitter_url, $matches);
+        if (!empty($matches[1])) {
+            $twitter_handle = '@' . $matches[1];
+            echo '<meta name="twitter:site" content="' . esc_attr($twitter_handle) . '" />' . "\n";
+            echo '<meta name="twitter:creator" content="' . esc_attr($twitter_handle) . '" />' . "\n";
+        }
+    }
+    ?>
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="description" content="<?php echo $og_description; ?>" />
+    <meta name="keywords" content="NOLA Holi, Holi Festival, New Orleans, Festival of Colors, Indian Festival, Cultural Event, <?php echo esc_attr($event_date); ?>" />
+    
+    <!-- Schema.org markup for Google+ and other search engines -->
+    <meta itemprop="name" content="<?php echo $og_title; ?>" />
+    <meta itemprop="description" content="<?php echo $og_description; ?>" />
+    <?php if (!empty($og_image)) : ?>
+    <meta itemprop="image" content="<?php echo $og_image; ?>" />
+    <?php endif; ?>
+    
+    <?php
+}
+add_action('wp_head', 'nolaholi_open_graph_meta_tags');
+
