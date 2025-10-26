@@ -86,7 +86,7 @@ get_header();
                     <div class="feature-icon">💜</div>
                     <h3 class="feature-title">Feel Good</h3>
                     <p class="feature-description">
-                        Be part of keeping Michelle Lakhotia's vision alive and creating joyful memories for thousands 
+                        Create joyful memories for hundreds 
                         of festival-goers.
                     </p>
                 </div>
@@ -111,6 +111,8 @@ get_header();
                         <div class="tier-amount">$10,000+</div>
                     </div>
                     <ul class="tier-benefits">
+                        <li>TBD - Please revisit</li>
+                        <!--
                         <li>Title sponsorship recognition on all marketing materials</li>
                         <li>Exclusive VIP tent at the festival</li>
                         <li>Prime booth location</li>
@@ -123,6 +125,7 @@ get_header();
                         <li>Logo on event t-shirts</li>
                         <li>Exclusive mention by MC throughout the day</li>
                         <li>First right of refusal for following year</li>
+-->
                     </ul>
                 </div>
                 
@@ -133,6 +136,8 @@ get_header();
                         <div class="tier-amount">$5,000</div>
                     </div>
                     <ul class="tier-benefits">
+                        <li> TBD - Please revisit</li>
+                        <!--
                         <li>Prominent logo placement on website and all marketing</li>
                         <li>Premium booth space at festival</li>
                         <li>Logo on main stage backdrop</li>
@@ -143,6 +148,7 @@ get_header();
                         <li>Logo in event program</li>
                         <li>Mentioned by MC during event</li>
                         <li>Recognition in email newsletters</li>
+-->
                     </ul>
                 </div>
                 
@@ -153,6 +159,8 @@ get_header();
                         <div class="tier-amount">$2,500</div>
                     </div>
                     <ul class="tier-benefits">
+                        <li>TBD - Please revisit</li>
+                        <!--
                         <li>Logo on website and select marketing materials</li>
                         <li>Booth space at festival</li>
                         <li>Logo included on stage signage</li>
@@ -161,6 +169,7 @@ get_header();
                         <li>Logo in event program</li>
                         <li>Recognition in email newsletter</li>
                         <li>Company name announced at event</li>
+-->
                     </ul>
                 </div>
                 
@@ -171,6 +180,8 @@ get_header();
                         <div class="tier-amount">$1,000</div>
                     </div>
                     <ul class="tier-benefits">
+                        <li>TBD - Please revisit</li>
+                        <!--
                         <li>Logo on website sponsor page</li>
                         <li>Booth space at festival (subject to availability)</li>
                         <li>Social media recognition (2+ posts)</li>
@@ -178,6 +189,7 @@ get_header();
                         <li>Logo in event program</li>
                         <li>Recognition in email newsletter</li>
                         <li>Company name announced at event</li>
+-->
                     </ul>
                 </div>
                 
@@ -188,11 +200,14 @@ get_header();
                         <div class="tier-amount">$500</div>
                     </div>
                     <ul class="tier-benefits">
+                        <li>TBD - Please revisit</li>
+                        <!--
                         <li>Logo on website sponsor page</li>
                         <li>Social media recognition (1+ posts)</li>
                         <li>5 festival passes</li>
                         <li>Name listed in event program</li>
                         <li>Recognition in email newsletter</li>
+-->
                     </ul>
                 </div>
                 
@@ -205,8 +220,6 @@ get_header();
                     <ul class="tier-benefits">
                         <li>Name listed on website</li>
                         <li>Social media thank you</li>
-                        <li>2 festival passes</li>
-                        <li>Name in event program</li>
                         <li>Our eternal gratitude! 💜</li>
                     </ul>
                 </div>
