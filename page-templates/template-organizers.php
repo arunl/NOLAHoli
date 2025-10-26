@@ -121,9 +121,8 @@ get_header();
                     <p style="font-size: 1.3rem; line-height: 2; color: var(--text-dark); margin-bottom: 30px;">
                         <strong style="color: var(--mardi-gras-purple);">Our mission</strong> is to celebrate diversity, 
                         foster cultural understanding, and bring communities together through the joyful celebration of 
-                        Holi in New Orleans. We honor Michelle Lakhotia's vision of unity through celebration while 
-                        creating a FREE, family-friendly event that showcases the beauty of Indian culture and the 
-                        spirit of New Orleans.
+                        Holi in New Orleans.
+
                     </p>
                 </div>
                 
@@ -254,27 +253,6 @@ get_header();
         </div>
     </section>
     
-    <!-- Recognition -->
-    <section class="content-section bg-white">
-        <div class="container">
-            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
-                <h2 class="section-title">In Memoriam</h2>
-                <div class="section-divider"></div>
-                <div style="background: var(--off-white); padding: 40px; border-radius: 15px;">
-                    <p style="font-size: 1.2rem; line-height: 2; color: var(--text-dark); margin-bottom: 20px;">
-                        <strong style="color: var(--mardi-gras-purple);">Michelle Lakhotia</strong>
-                    </p>
-                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-light);">
-                        NOLA Holi exists because of Michelle's vision, passion, and belief in the power of celebration 
-                        to bring people together. Though she is no longer with us, her spirit lives on in every color 
-                        thrown, every smile shared, and every moment of joy at the festival. This is her legacy, 
-                        and we honor her memory with every celebration.
-                    </p>
-                    <p style="margin-top: 20px; color: var(--mardi-gras-gold); font-size: 1.5rem;">💜</p>
-                </div>
-            </div>
-        </div>
-    </section>
 </main>
 
 <?php

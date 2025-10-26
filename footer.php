@@ -3,7 +3,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>About NOLA Holi</h3>
-                <p>Celebrating the ancient Indian festival of colors in the heart of New Orleans. A vibrant tradition honoring the memory of Michelle Lakhotia and bringing communities together.</p>
+                <p>Celebrating the ancient Indian festival of colors in the heart of New Orleans and bringing communities together.</p>
                 <div class="social-links">
                     <?php
                     $facebook = get_theme_mod('nolaholi_facebook');
@@ -65,7 +65,7 @@
         </div>
         
         <div class="footer-bottom">
-            <p>&copy; <?php echo date('Y'); ?> NOLA Holi. All rights reserved. | In loving memory of Michelle Lakhotia 💜</p>
+            <p>&copy; <?php echo date('Y'); ?> NOLA Holi Festival, Inc. All rights reserved.</p>
         </div>
     </div>
 </footer>

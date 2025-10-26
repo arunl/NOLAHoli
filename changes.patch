@@ -1,0 +1,109 @@
+diff --git a/footer.php b/footer.php
+index 598b34d..8106589 100644
+--- a/footer.php
++++ b/footer.php
+@@ -3,7 +3,7 @@
+         <div class="footer-content">
+             <div class="footer-section">
+                 <h3>About NOLA Holi</h3>
+-                <p>Celebrating the ancient Indian festival of colors in the heart of New Orleans. A vibrant tradition honoring the memory of Michelle Lakhotia and bringing communities together.</p>
++                <p>Celebrating the ancient Indian festival of colors in the heart of New Orleans and bringing communities together.</p>
+                 <div class="social-links">
+                     <?php
+                     $facebook = get_theme_mod('nolaholi_facebook');
+@@ -65,7 +65,7 @@
+         </div>
+         
+         <div class="footer-bottom">
+-            <p>&copy; <?php echo date('Y'); ?> NOLA Holi. All rights reserved. | In loving memory of Michelle Lakhotia 💜</p>
++            <p>&copy; <?php echo date('Y'); ?> NOLA Holi Festival, Inc. All rights reserved.</p>
+         </div>
+     </div>
+ </footer>
+diff --git a/header.php b/header.php
+index 8e640b8..761c30e 100644
+--- a/header.php
++++ b/header.php
+@@ -72,10 +72,11 @@ function nolaholi_default_menu() {
+     echo '<li><a href="' . esc_url(home_url('/about-nola-holi/')) . '">Our Story</a></li>';
+     echo '<li><a href="' . esc_url(home_url('/parade/')) . '">Parade</a></li>';
+     echo '<li><a href="' . esc_url(home_url('/festival/')) . '">Festival</a></li>';
++    echo '<li><a href="' . esc_url(home_url('/gallery/')) . '">Gallery</a></li>';
+     echo '<li><a href="' . esc_url(home_url('/sponsors/')) . '">Sponsors</a></li>';
+     echo '<li><a href="' . esc_url(home_url('/vendors/')) . '">Vendors</a></li>';
+     echo '<li><a href="' . esc_url(home_url('/volunteers/')) . '">Volunteers</a></li>';
+-    echo '<li><a href="' . esc_url(home_url('/gallery/')) . '">Gallery</a></li>';
++    echo '<li><a href="' . esc_url(home_url('/organizers/')) . '">Organizers</a></li>';
+     echo '<li><a href="' . esc_url(home_url('/contact/')) . '">Contact</a></li>';
+     echo '</ul>';
+ }
+diff --git a/page-templates/template-about-nola-holi.php b/page-templates/template-about-nola-holi.php
+index e23cfed..db5b21f 100644
+--- a/page-templates/template-about-nola-holi.php
++++ b/page-templates/template-about-nola-holi.php
+@@ -178,7 +178,7 @@ get_header();
+             
+             <p style="max-width: 700px; margin: 20px auto 40px; text-align: center; font-size: 1.1rem; color: var(--text-light); line-height: 1.8;">
+                 Whether you attend as a participant, volunteer your time, sponsor the event, or simply spread the word, 
+-                you become part of NOLA Holi's ongoing story. Join us in keeping Michelle's vision alive and making 
++                you become part of NOLA Holi's ongoing story. Join us in making 
+                 New Orleans a little more colorful every year.
+             </p>
+             
+diff --git a/page-templates/template-organizers.php b/page-templates/template-organizers.php
+index f01929c..a6b4fca 100644
+--- a/page-templates/template-organizers.php
++++ b/page-templates/template-organizers.php
+@@ -121,9 +121,8 @@ get_header();
+                     <p style="font-size: 1.3rem; line-height: 2; color: var(--text-dark); margin-bottom: 30px;">
+                         <strong style="color: var(--mardi-gras-purple);">Our mission</strong> is to celebrate diversity, 
+                         foster cultural understanding, and bring communities together through the joyful celebration of 
+-                        Holi in New Orleans. We honor Michelle Lakhotia's vision of unity through celebration while 
+-                        creating a FREE, family-friendly event that showcases the beauty of Indian culture and the 
+-                        spirit of New Orleans.
++                        Holi in New Orleans.
++
+                     </p>
+                 </div>
+                 
+@@ -254,27 +253,6 @@ get_header();
+         </div>
+     </section>
+     
+-    <!-- Recognition -->
+-    <section class="content-section bg-white">
+-        <div class="container">
+-            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+-                <h2 class="section-title">In Memoriam</h2>
+-                <div class="section-divider"></div>
+-                <div style="background: var(--off-white); padding: 40px; border-radius: 15px;">
+-                    <p style="font-size: 1.2rem; line-height: 2; color: var(--text-dark); margin-bottom: 20px;">
+-                        <strong style="color: var(--mardi-gras-purple);">Michelle Lakhotia</strong>
+-                    </p>
+-                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-light);">
+-                        NOLA Holi exists because of Michelle's vision, passion, and belief in the power of celebration 
+-                        to bring people together. Though she is no longer with us, her spirit lives on in every color 
+-                        thrown, every smile shared, and every moment of joy at the festival. This is her legacy, 
+-                        and we honor her memory with every celebration.
+-                    </p>
+-                    <p style="margin-top: 20px; color: var(--mardi-gras-gold); font-size: 1.5rem;">💜</p>
+-                </div>
+-            </div>
+-        </div>
+-    </section>
+ </main>
+ 
+ <?php
+diff --git a/page-templates/template-sponsors.php b/page-templates/template-sponsors.php
+index d8d2d50..9812052 100644
+--- a/page-templates/template-sponsors.php
++++ b/page-templates/template-sponsors.php
+@@ -310,7 +310,7 @@ get_header();
+                     <div class="feature-icon">💜</div>
+                     <h3 class="feature-title">Feel Good</h3>
+                     <p class="feature-description">
+-                        Be part of keeping Michelle Lakhotia's vision alive and creating joyful memories for thousands 
++                        Be part of bringing together communities and creating joyful memories for thousands 
+                         of festival-goers.
+                     </p>
+                 </div>

@@ -178,7 +178,7 @@ get_header();
             
             <p style="max-width: 700px; margin: 20px auto 40px; text-align: center; font-size: 1.1rem; color: var(--text-light); line-height: 1.8;">
                 Whether you attend as a participant, volunteer your time, sponsor the event, or simply spread the word, 
-                you become part of NOLA Holi's ongoing story. Join us in keeping Michelle's vision alive and making 
+                you become part of NOLA Holi's ongoing story. Join us in making 
                 New Orleans a little more colorful every year.
             </p>
             
