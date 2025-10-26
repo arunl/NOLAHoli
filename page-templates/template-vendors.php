@@ -54,10 +54,10 @@ get_header();
                     <h4 style="color: var(--mardi-gras-green); margin: 20px 0 10px;">What You Get:</h4>
                     <ul style="color: var(--text-light); line-height: 2;">
                         <li>10' x 10' vendor space</li>
+                        <li>Tent, table, and chairs provided</li>
                         <li>Access to electricity (additional fee may apply)</li>
                         <li>Exposure to thousands of attendees</li>
                         <li>Promotion on our website and social media</li>
-                        <li>Vendor passes for your staff</li>
                     </ul>
                     
                     <h4 style="color: var(--mardi-gras-green); margin: 20px 0 10px;">Ideal Food Vendors:</h4>
@@ -82,10 +82,8 @@ get_header();
                     <h4 style="color: var(--mardi-gras-purple); margin: 20px 0 10px;">What You Get:</h4>
                     <ul style="color: var(--text-light); line-height: 2;">
                         <li>10' x 10' vendor space</li>
-                        <li>Table and chairs provided</li>
                         <li>Exposure to thousands of potential customers</li>
                         <li>Promotion on website and social media</li>
-                        <li>Vendor passes for your staff</li>
                     </ul>
                     
                     <h4 style="color: var(--mardi-gras-purple); margin: 20px 0 10px;">Ideal Non-Food Vendors:</h4>
@@ -119,7 +117,7 @@ get_header();
                                 Food Vendors
                             </div>
                             <div style="font-size: 2.5rem; font-weight: 700; color: var(--mardi-gras-green);">
-                                $250
+                                $TBD
                             </div>
                             <div style="color: var(--text-light); margin-top: 5px;">10' x 10' space</div>
                         </div>
@@ -128,7 +126,7 @@ get_header();
                                 Artisan/Retail Vendors
                             </div>
                             <div style="font-size: 2.5rem; font-weight: 700; color: var(--mardi-gras-purple);">
-                                $150
+                                $TBD
                             </div>
                             <div style="color: var(--text-light); margin-top: 5px;">10' x 10' space</div>
                         </div>
