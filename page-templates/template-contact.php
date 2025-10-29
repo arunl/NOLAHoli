@@ -30,14 +30,18 @@ get_header();
                         <p style="color: var(--text-light); margin-bottom: 30px;">
                             Have questions, ideas, or want to get involved? Fill out the form below and we'll get back to you soon!
                         </p>
-                        
-                        <!-- WordPress Contact Form or custom form -->
                         <?php
-
-                        // If using Contact Form 7, you can add shortcode here
-                        echo do_shortcode('[contact-form-7 id="a531477" title="Contact form 1"]');
-                        // Otherwise, here's a custom HTML form
+                          if (true) // Change to false if not using Contact Form 7
+                            {
                         ?>
+                        <!-- WordPress Contact Form 7 -->
+                        <?php
+                        echo do_shortcode('[contact-form-7 id="a531477" title="Contact form 1"]');
+                        ?>
+                        <!-- Custom form if not using contact form 7-->
+                         <?php
+                          } else {
+                         ?>
                         <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" id="nolaholi-contact-form">
                             <input type="hidden" name="action" value="nolaholi_contact_form">
                             <?php wp_nonce_field('nolaholi_contact_form', 'nolaholi_contact_nonce'); ?>
@@ -79,7 +83,8 @@ get_header();
                             <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
                         </form>
                     </div>
-                    
+                    <?php } ?>
+ 
                     <!-- Contact Information -->
                     <div class="contact-info">
                         <h3 style="color: var(--mardi-gras-purple); margin-bottom: 20px; font-size: 1.8rem;">
