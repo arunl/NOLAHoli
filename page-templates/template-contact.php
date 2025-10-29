@@ -33,8 +33,9 @@ get_header();
                         
                         <!-- WordPress Contact Form or custom form -->
                         <?php
+
                         // If using Contact Form 7, you can add shortcode here
-                        // echo do_shortcode('[contact-form-7 id="123" title="Contact form"]');
+                        echo do_shortcode('[contact-form-7 id="a531477" title="Contact form 1"]');
                         // Otherwise, here's a custom HTML form
                         ?>
                         <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" id="nolaholi-contact-form">
