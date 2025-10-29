@@ -31,7 +31,7 @@ get_header();
                             Have questions, ideas, or want to get involved? Fill out the form below and we'll get back to you soon!
                         </p>
                         <?php
-                          if (false) // Change to false if not using Contact Form 7
+                          if (true) // Change to false if not using Contact Form 7
                             {
                         ?>
                         <!-- WordPress Contact Form 7 -->
