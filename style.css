@@ -1409,3 +1409,11 @@ img {
       transform: translateY(-50%) rotate(180deg);
     }
   }
+
+  /* ===========================
+   Contact Form 7 Styles
+   =========================== */
+    input.wpcf7-submit {
+        width: 100%;
+        box-sizing: border-box; /* Ensures padding and border are included in the 100% width */
+    }
