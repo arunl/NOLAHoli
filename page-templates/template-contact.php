@@ -30,18 +30,39 @@ get_header();
                         <p style="color: var(--text-light); margin-bottom: 30px;">
                             Have questions, ideas, or want to get involved? Fill out the form below and we'll get back to you soon!
                         </p>
-                        <?php
-                          if (true) // Change to false if not using Contact Form 7
-                            {
+                        
+                        <?php 
+                        /**
+                         * Automatic Contact Form 7 Detection
+                         * 
+                         * This template automatically detects if Contact Form 7 is installed and configured.
+                         * It searches for forms with these names (in order of preference):
+                         * 1. "NOLA Holi Contact Form"
+                         * 2. "Contact form 1"
+                         * 3. "Contact Form 1"
+                         * 4. "Contact Form"
+                         * 
+                         * If Contact Form 7 is not available or no forms exist, 
+                         * it automatically falls back to the built-in custom form.
+                         * 
+                         * Administrators will see helpful notices when logged in about the form status.
+                         */
+                        
+                        // Display admin notice if CF7 is not properly configured
+                        nolaholi_display_cf7_admin_notice();
+                        
+                        // Check Contact Form 7 status
+                        $cf7_status = nolaholi_check_contact_form_7_status();
+                        
+                        if ($cf7_status['available'] && $cf7_status['form_id']) : 
+                            // Use Contact Form 7
                         ?>
-                        <!-- WordPress Contact Form 7 -->
-                        <?php
-                        echo do_shortcode('[contact-form-7 id="a531477" title="Contact form 1"]');
+                            <!-- Contact Form 7 -->
+                            <?php echo do_shortcode('[contact-form-7 id="' . esc_attr($cf7_status['form_id']) . '"]'); ?>
+                        
+                        <?php else : 
+                            // Use custom fallback form
                         ?>
-                        <!-- Custom form if not using contact form 7-->
-                         <?php
-                          } else {
-                         ?>
                         <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" id="nolaholi-contact-form">
                             <input type="hidden" name="action" value="nolaholi_contact_form">
                             <?php wp_nonce_field('nolaholi_contact_form', 'nolaholi_contact_nonce'); ?>
@@ -82,8 +103,9 @@ get_header();
                             
                             <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
                         </form>
+                        
+                        <?php endif; ?>
                     </div>
-                    <?php } ?>
  
                     <!-- Contact Information -->
                     <div class="contact-info">

@@ -444,6 +444,152 @@ function nolaholi_save_meta_boxes($post_id) {
 add_action('save_post', 'nolaholi_save_meta_boxes');
 
 /**
+ * Get Contact Form 7 form ID by title
+ * Searches for a Contact Form 7 form with a specific title and returns its ID
+ * 
+ * @param string $form_title The title of the form to search for
+ * @return int|false The form ID if found, false otherwise
+ */
+function nolaholi_get_contact_form_7_id($form_title = 'NOLA Holi Contact Form') {
+    // Check if Contact Form 7 is active
+    if (!function_exists('wpcf7')) {
+        return false;
+    }
+    
+    // Get all Contact Form 7 forms
+    $args = array(
+        'post_type'      => 'wpcf7_contact_form',
+        'post_status'    => 'publish',
+        'posts_per_page' => -1,
+        'orderby'        => 'date',
+        'order'          => 'DESC'
+    );
+    
+    $forms = get_posts($args);
+    
+    if (empty($forms)) {
+        return false;
+    }
+    
+    // Define acceptable form titles in order of preference
+    $acceptable_titles = array(
+        'NOLA Holi Contact Form',
+        'Contact form 1',
+        'Contact Form 1',
+        'Contact Form'
+    );
+    
+    // First, try to find a form matching the preferred titles
+    foreach ($acceptable_titles as $title) {
+        foreach ($forms as $form) {
+            if (strcasecmp(trim($form->post_title), trim($title)) === 0) {
+                return $form->ID;
+            }
+        }
+    }
+    
+    // If no exact match found, return the first available form as a fallback
+    // This ensures the site works even if the form is named differently
+    return $forms[0]->ID;
+}
+
+/**
+ * Check if Contact Form 7 is available and configured
+ * 
+ * @return array Array with 'available' (bool), 'form_id' (int|false), 'message' (string), 'form_name' (string)
+ */
+function nolaholi_check_contact_form_7_status() {
+    $status = array(
+        'available' => false,
+        'form_id'   => false,
+        'message'   => '',
+        'form_name' => ''
+    );
+    
+    // Check if Contact Form 7 plugin is active
+    if (!function_exists('wpcf7')) {
+        $status['message'] = 'Contact Form 7 plugin is not installed or activated.';
+        return $status;
+    }
+    
+    // Try to get the form ID
+    $form_id = nolaholi_get_contact_form_7_id();
+    
+    if ($form_id) {
+        $status['available'] = true;
+        $status['form_id'] = $form_id;
+        
+        // Get the form title
+        $form_post = get_post($form_id);
+        $status['form_name'] = $form_post ? $form_post->post_title : '';
+        
+        // Check if it's using the preferred name
+        $preferred_names = array('NOLA Holi Contact Form', 'Contact form 1', 'Contact Form 1');
+        $is_preferred_name = false;
+        
+        foreach ($preferred_names as $name) {
+            if (strcasecmp(trim($status['form_name']), trim($name)) === 0) {
+                $is_preferred_name = true;
+                break;
+            }
+        }
+        
+        if ($is_preferred_name) {
+            $status['message'] = 'Contact Form 7 is active and configured correctly.';
+        } else {
+            $status['message'] = 'Using Contact Form 7 form "' . $status['form_name'] . '". For best results, rename it to "NOLA Holi Contact Form" or "Contact form 1".';
+        }
+    } else {
+        $status['message'] = 'Contact Form 7 is installed but no contact forms found. Please create a form named "NOLA Holi Contact Form" or "Contact form 1".';
+    }
+    
+    return $status;
+}
+
+/**
+ * Display admin notice for Contact Form 7 configuration
+ * Only visible to administrators when viewing the contact page
+ */
+function nolaholi_display_cf7_admin_notice() {
+    // Only show to users who can manage options (admins)
+    if (!current_user_can('manage_options')) {
+        return;
+    }
+    
+    // Only show when logged in
+    if (!is_user_logged_in()) {
+        return;
+    }
+    
+    $cf7_status = nolaholi_check_contact_form_7_status();
+    
+    // Show different notices based on CF7 status
+    if (!function_exists('wpcf7')) {
+        // CF7 is not installed
+        echo '<div style="background: #d1ecf1; border: 2px solid #0c5460; border-radius: 8px; padding: 20px; margin: 0 0 20px 0; color: #0c5460;">';
+        echo '<strong>ℹ️ Administrator Notice:</strong> ';
+        echo 'Contact Form 7 plugin is not installed. Using the built-in custom contact form. ';
+        echo 'To use Contact Form 7, install the plugin and create a form named "NOLA Holi Contact Form".';
+        echo '</div>';
+    } elseif (!$cf7_status['available']) {
+        // CF7 is installed but no forms found
+        echo '<div style="background: #fff3cd; border: 2px solid #ffc107; border-radius: 8px; padding: 20px; margin: 0 0 20px 0; color: #856404;">';
+        echo '<strong>⚠️ Administrator Notice:</strong> ';
+        echo esc_html($cf7_status['message']);
+        echo ' Currently using the custom fallback form. ';
+        echo '<a href="' . esc_url(admin_url('admin.php?page=wpcf7-new')) . '" style="color: #0056b3; text-decoration: underline;">Create a Contact Form 7 form</a>';
+        echo '</div>';
+    } elseif ($cf7_status['available'] && strpos($cf7_status['message'], 'For best results') !== false) {
+        // CF7 is working but using a non-preferred form name
+        echo '<div style="background: #fff3cd; border: 2px solid #ffc107; border-radius: 8px; padding: 20px; margin: 0 0 20px 0; color: #856404;">';
+        echo '<strong>💡 Administrator Notice:</strong> ';
+        echo esc_html($cf7_status['message']);
+        echo '</div>';
+    }
+    // If everything is configured correctly, show no notice
+}
+
+/**
  * Customizer settings
  */
 function nolaholi_customize_register($wp_customize) {
