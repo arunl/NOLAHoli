@@ -1028,3 +1028,195 @@ function nolaholi_open_graph_meta_tags() {
 }
 add_action('wp_head', 'nolaholi_open_graph_meta_tags');
 
+/**
+ * ============================================================================
+ * CONTACT FORM SECURITY & SPAM PROTECTION
+ * ============================================================================
+ * 
+ * Multi-layered spam protection system for the custom contact form including:
+ * - Honeypot field detection
+ * - Time-based bot detection
+ * - Rate limiting by IP address
+ * - Math captcha verification
+ * - Input sanitization and XSS protection
+ * - Nonce verification (CSRF protection)
+ */
+
+/**
+ * Check if IP has exceeded submission rate limit
+ * 
+ * @param string $ip The IP address to check
+ * @return bool True if rate limit exceeded, false otherwise
+ */
+function nolaholi_check_rate_limit($ip) {
+    $transient_key = 'contact_rate_' . md5($ip);
+    $attempts = get_transient($transient_key);
+    
+    // Allow 3 submissions per 15 minutes per IP
+    if ($attempts && $attempts >= 3) {
+        return true; // Rate limit exceeded
+    }
+    
+    return false;
+}
+
+/**
+ * Update rate limit counter for IP
+ * 
+ * @param string $ip The IP address
+ */
+function nolaholi_update_rate_limit($ip) {
+    $transient_key = 'contact_rate_' . md5($ip);
+    $attempts = get_transient($transient_key);
+    
+    if (!$attempts) {
+        $attempts = 1;
+    } else {
+        $attempts++;
+    }
+    
+    // Store for 15 minutes
+    set_transient($transient_key, $attempts, 15 * MINUTE_IN_SECONDS);
+}
+
+/**
+ * Validate email address with enhanced security checks
+ * 
+ * @param string $email The email to validate
+ * @return bool True if valid, false otherwise
+ */
+function nolaholi_validate_email($email) {
+    // Basic email validation
+    if (!is_email($email)) {
+        return false;
+    }
+    
+    // Check for disposable email domains (common spam)
+    $disposable_domains = array(
+        'tempmail.com', 'throwaway.email', 'guerrillamail.com', 
+        'mailinator.com', '10minutemail.com', 'trashmail.com'
+    );
+    
+    $domain = substr(strrchr($email, "@"), 1);
+    if (in_array($domain, $disposable_domains)) {
+        return false;
+    }
+    
+    return true;
+}
+
+/**
+ * Handle custom contact form submission with security checks
+ */
+function nolaholi_handle_contact_form() {
+    // Security Check #1: Verify nonce (CSRF protection)
+    if (!isset($_POST['nolaholi_contact_nonce']) || 
+        !wp_verify_nonce($_POST['nolaholi_contact_nonce'], 'nolaholi_contact_form')) {
+        wp_die('Security check failed. Please try again.', 'Security Error', array('response' => 403));
+    }
+    
+    // Security Check #2: Honeypot field (bot detection)
+    if (!empty($_POST['contact_website'])) {
+        // Honeypot filled = bot detected
+        wp_die('Spam detected.', 'Security Error', array('response' => 403));
+    }
+    
+    // Security Check #3: Time-based bot detection (submission too fast)
+    if (isset($_POST['contact_timestamp'])) {
+        $time_elapsed = time() - intval($_POST['contact_timestamp']);
+        // If submitted in less than 3 seconds, likely a bot
+        if ($time_elapsed < 3) {
+            wp_die('Submission too fast. Please try again.', 'Security Error', array('response' => 403));
+        }
+        // If timestamp is too old (more than 1 hour), form might be stale
+        if ($time_elapsed > 3600) {
+            wp_die('Form expired. Please refresh the page and try again.', 'Form Expired', array('response' => 400));
+        }
+    }
+    
+    // Security Check #4: Rate limiting by IP
+    $ip_address = $_SERVER['REMOTE_ADDR'];
+    if (nolaholi_check_rate_limit($ip_address)) {
+        wp_die('Too many submissions. Please wait 15 minutes before trying again.', 'Rate Limit Exceeded', array('response' => 429));
+    }
+    
+    // Security Check #5: Captcha verification
+    if (!isset($_POST['contact_captcha']) || !isset($_POST['contact_captcha_answer'])) {
+        wp_die('Security question missing. Please try again.', 'Security Error', array('response' => 400));
+    }
+    
+    $user_answer = intval($_POST['contact_captcha']);
+    $correct_answer = intval(base64_decode($_POST['contact_captcha_answer']));
+    
+    if ($user_answer !== $correct_answer) {
+        wp_die('Incorrect answer to security question. Please try again.', 'Verification Failed', array('response' => 400));
+    }
+    
+    // Security Check #6: Sanitize and validate all input (XSS protection)
+    $name = sanitize_text_field($_POST['contact_name']);
+    $email = sanitize_email($_POST['contact_email']);
+    $phone = sanitize_text_field($_POST['contact_phone']);
+    $subject = sanitize_text_field($_POST['contact_subject']);
+    $message = sanitize_textarea_field($_POST['contact_message']);
+    
+    // Validate required fields
+    if (empty($name) || empty($email) || empty($subject) || empty($message)) {
+        wp_die('Please fill in all required fields.', 'Missing Information', array('response' => 400));
+    }
+    
+    // Validate email
+    if (!nolaholi_validate_email($email)) {
+        wp_die('Invalid email address.', 'Invalid Email', array('response' => 400));
+    }
+    
+    // Check message length (prevent abuse)
+    if (strlen($message) < 10) {
+        wp_die('Message is too short. Please provide more details.', 'Invalid Message', array('response' => 400));
+    }
+    
+    if (strlen($message) > 5000) {
+        wp_die('Message is too long. Please keep it under 5000 characters.', 'Invalid Message', array('response' => 400));
+    }
+    
+    // All security checks passed - update rate limit
+    nolaholi_update_rate_limit($ip_address);
+    
+    // Prepare email
+    $to = get_option('admin_email'); // Send to site admin
+    $email_subject = '[NOLA Holi Contact Form] ' . $subject;
+    
+    // Build email body
+    $email_body = "New contact form submission from NOLAHoli.org\n\n";
+    $email_body .= "Name: $name\n";
+    $email_body .= "Email: $email\n";
+    if (!empty($phone)) {
+        $email_body .= "Phone: $phone\n";
+    }
+    $email_body .= "Subject: $subject\n\n";
+    $email_body .= "Message:\n$message\n\n";
+    $email_body .= "---\n";
+    $email_body .= "Submitted: " . current_time('F j, Y g:i a') . "\n";
+    $email_body .= "IP Address: $ip_address\n";
+    
+    // Set email headers
+    $headers = array(
+        'Content-Type: text/plain; charset=UTF-8',
+        'From: NOLA Holi <noreply@nolaholi.org>',
+        'Reply-To: ' . $name . ' <' . $email . '>'
+    );
+    
+    // Send email
+    $sent = wp_mail($to, $email_subject, $email_body, $headers);
+    
+    if ($sent) {
+        // Redirect to success page or show success message
+        wp_redirect(add_query_arg('contact', 'success', home_url('/contact/')));
+        exit;
+    } else {
+        // Email failed to send
+        wp_die('There was an error sending your message. Please try again or contact us directly at info@nolaholi.org', 'Email Error', array('response' => 500));
+    }
+}
+add_action('admin_post_nolaholi_contact_form', 'nolaholi_handle_contact_form');
+add_action('admin_post_nopriv_nolaholi_contact_form', 'nolaholi_handle_contact_form');
+
