@@ -31,6 +31,17 @@ get_header();
                             Have questions, ideas, or want to get involved? Fill out the form below and we'll get back to you soon!
                         </p>
                         
+                        <?php
+                        // Display success message if form was submitted successfully
+                        if (isset($_GET['contact']) && $_GET['contact'] === 'success') : ?>
+                            <div style="background: #d4edda; border: 2px solid #28a745; color: #155724; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+                                <h3 style="margin: 0 0 10px 0; color: #155724;">✅ Message Sent Successfully!</h3>
+                                <p style="margin: 0;">
+                                    Thank you for contacting us! We've received your message and will get back to you as soon as possible.
+                                </p>
+                            </div>
+                        <?php endif; ?>
+                        
                         <?php 
                         /**
                          * Automatic Contact Form 7 Detection
@@ -67,6 +78,15 @@ get_header();
                             <input type="hidden" name="action" value="nolaholi_contact_form">
                             <?php wp_nonce_field('nolaholi_contact_form', 'nolaholi_contact_nonce'); ?>
                             
+                            <!-- Honeypot field - hidden from humans, visible to bots -->
+                            <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                                <label for="contact_website">Website</label>
+                                <input type="text" id="contact_website" name="contact_website" tabindex="-1" autocomplete="off">
+                            </div>
+                            
+                            <!-- Timestamp for bot detection -->
+                            <input type="hidden" name="contact_timestamp" value="<?php echo time(); ?>">
+                            
                             <div class="form-group">
                                 <label for="contact_name">Your Name *</label>
                                 <input type="text" id="contact_name" name="contact_name" required>
@@ -99,6 +119,23 @@ get_header();
                             <div class="form-group">
                                 <label for="contact_message">Your Message *</label>
                                 <textarea id="contact_message" name="contact_message" required></textarea>
+                            </div>
+                            
+                            <!-- Simple Math Captcha -->
+                            <?php
+                            $num1 = rand(1, 10);
+                            $num2 = rand(1, 10);
+                            $captcha_answer = $num1 + $num2;
+                            ?>
+                            <div class="form-group" style="background: var(--off-white); padding: 20px; border-radius: 8px; border: 2px solid var(--mardi-gras-purple);">
+                                <label for="contact_captcha" style="font-weight: 600; color: var(--mardi-gras-purple);">
+                                    Security Question: What is <?php echo $num1; ?> + <?php echo $num2; ?>? *
+                                </label>
+                                <input type="number" id="contact_captcha" name="contact_captcha" required style="max-width: 150px;">
+                                <input type="hidden" name="contact_captcha_answer" value="<?php echo base64_encode($captcha_answer); ?>">
+                                <small style="display: block; margin-top: 5px; color: var(--text-light);">
+                                    This helps us prevent spam submissions
+                                </small>
                             </div>
                             
                             <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
