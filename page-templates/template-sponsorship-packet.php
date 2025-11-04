@@ -104,72 +104,78 @@ get_header();
             </p>
             
             <div class="tier-grid">
-                <!-- Event Sponsor -->
+                <!-- Presenting Sponsor -->
                 <div class="sponsor-tier tier-event">
                     <div class="tier-header">
-                        <h3 class="tier-name" style="color: var(--mardi-gras-purple);">Event Sponsor</h3>
-                        <div class="tier-amount">$10,000+</div>
+                        <h3 class="tier-name" style="color: var(--mardi-gras-purple);">Presenting Sponsor</h3>
+                        <div class="tier-amount">$15,000</div>
+                        <div style="font-size: 0.9rem; color: var(--text-light); margin-top: 5px;">(Limit 1)</div>
+                    </div>
+                    <div style="text-align: center; font-style: italic; color: var(--mardi-gras-purple); margin-bottom: 15px; font-weight: 600;">
+                        "Exclusive Top Tier Partner"
                     </div>
                     <ul class="tier-benefits">
-                        <li>TBD - Please revisit</li>
-                        <!--
-                        <li>Title sponsorship recognition on all marketing materials</li>
-                        <li>Exclusive VIP tent at the festival</li>
-                        <li>Prime booth location</li>
-                        <li>Logo on main stage backdrop</li>
-                        <li>Featured in all press releases and media coverage</li>
-                        <li>Social media spotlight campaign</li>
-                        <li>Speaking opportunity at the event</li>
-                        <li>Company banner displayed prominently</li>
-                        <li>30 VIP passes for employees/guests</li>
-                        <li>Logo on event t-shirts</li>
-                        <li>Exclusive mention by MC throughout the day</li>
-                        <li>First right of refusal for following year</li>
--->
+                        <li>"NOLA Holi Festival presented by [Sponsor Name]" branding across all marketing, press, and stage signage</li>
+                        <li>Premier logo placement on all materials (digital, print, applicable press releases, website, parade banners)</li>
+                        <li>20 VIP passes + reserved table in the VIP Tent (no-Color area)</li>
+                        <li>Recognition during parade and stage emcee mentions throughout event</li>
+                        <li>Opportunity to address audience from the main stage</li>
+                        <li>Social Media Spotlight</li>
+                        <li>Inclusion in all post-event media + thank-you social spotlight</li>
+                        <li>Option for brand activation booth or custom experience (Photo-booth experience add-on for additional $5K)</li>
                     </ul>
                 </div>
                 
-                <!-- Diamond Sponsor -->
+                <!-- Parade Sponsor -->
                 <div class="sponsor-tier tier-diamond">
                     <div class="tier-header">
-                        <h3 class="tier-name" style="color: #4DB8FF;">Diamond Sponsor</h3>
-                        <div class="tier-amount">$5,000</div>
+                        <h3 class="tier-name" style="color: #4DB8FF;">Parade Sponsor</h3>
+                        <div class="tier-amount">$7,500</div>
+                        <div style="font-size: 0.9rem; color: var(--text-light); margin-top: 5px;">(Limit 1)</div>
+                    </div>
+                    <div style="text-align: center; font-style: italic; color: #4DB8FF; margin-bottom: 15px; font-weight: 600;">
+                        "Signature Cultural Element Sponsor"
                     </div>
                     <ul class="tier-benefits">
-                        <li> TBD - Please revisit</li>
-                        <!--
-                        <li>Prominent logo placement on website and all marketing</li>
-                        <li>Premium booth space at festival</li>
-                        <li>Logo on main stage backdrop</li>
-                        <li>Featured in press releases</li>
-                        <li>Social media recognition (5+ posts)</li>
-                        <li>Company banner at event</li>
-                        <li>20 VIP passes</li>
-                        <li>Logo in event program</li>
-                        <li>Mentioned by MC during event</li>
-                        <li>Recognition in email newsletters</li>
--->
+                        <li>Prominent logo and name on all parade signage, march banners, and parade float</li>
+                        <li>10 VIP passes + reserved seating in VIP tent</li>
+                        <li>Brand mention during parade route and at main stage</li>
+                        <li>Inclusion in press release and social media promotions</li>
+                        <li>Option for activation area or branded giveaways along the route</li>
                     </ul>
                 </div>
                 
-                <!-- Platinum Sponsor -->
+                <!-- Entertainment Sponsor -->
                 <div class="sponsor-tier tier-platinum">
                     <div class="tier-header">
-                        <h3 class="tier-name" style="color: #6C757D;">Platinum Sponsor</h3>
-                        <div class="tier-amount">$2,500</div>
+                        <h3 class="tier-name" style="color: var(--mardi-gras-purple);">Entertainment Sponsor</h3>
+                        <div class="tier-amount">$5,000</div>
+                        <div style="font-size: 0.9rem; color: var(--text-light); margin-top: 5px;">(Limit 4)</div>
                     </div>
                     <ul class="tier-benefits">
-                        <li>TBD - Please revisit</li>
-                        <!--
-                        <li>Logo on website and select marketing materials</li>
-                        <li>Booth space at festival</li>
-                        <li>Logo included on stage signage</li>
-                        <li>Social media recognition (3+ posts)</li>
-                        <li>15 VIP passes</li>
-                        <li>Logo in event program</li>
-                        <li>Recognition in email newsletter</li>
-                        <li>Company name announced at event</li>
--->
+                        <li>Prominent Logo placement on stage side banners and program schedule</li>
+                        <li>Verbal shoutout from emcee during headliner acts</li>
+                        <li>4 VIP passes + access to VIP tent</li>
+                        <li>Logo placement in all market materials – online and offline</li>
+                        <li>Logo on event T-shirts</li>
+                    </ul>
+                </div>
+                
+                <!-- VIP Experience Sponsor -->
+                <div class="sponsor-tier tier-vip">
+                    <div class="tier-header">
+                        <h3 class="tier-name" style="color: var(--mardi-gras-gold);">VIP Experience Sponsor</h3>
+                        <div class="tier-amount">$3,500 - $5,000</div>
+                        <div style="font-size: 0.9rem; color: var(--text-light); margin-top: 5px;">(Limit 4)</div>
+                    </div>
+                    <div style="text-align: center; font-style: italic; color: var(--mardi-gras-gold); margin-bottom: 15px; font-weight: 600;">
+                        "Luxury Guest & Hospitality Area"
+                    </div>
+                    <ul class="tier-benefits">
+                        <li>Logo featured at VIP tent entrance and tables</li>
+                        <li>6 VIP passes</li>
+                        <li>Opportunity to include product or collateral in VIP tent area</li>
+                        <li>Inclusion on website, signage, and select social posts</li>
                     </ul>
                 </div>
                 
@@ -177,19 +183,14 @@ get_header();
                 <div class="sponsor-tier tier-gold">
                     <div class="tier-header">
                         <h3 class="tier-name" style="color: var(--mardi-gras-gold);">Gold Sponsor</h3>
-                        <div class="tier-amount">$1,000</div>
+                        <div class="tier-amount">$2,500</div>
+                        <div style="font-size: 0.9rem; color: var(--text-light); margin-top: 5px;">(No Limit)</div>
                     </div>
                     <ul class="tier-benefits">
-                        <li>TBD - Please revisit</li>
-                        <!--
-                        <li>Logo on website sponsor page</li>
-                        <li>Booth space at festival (subject to availability)</li>
-                        <li>Social media recognition (2+ posts)</li>
-                        <li>10 VIP passes</li>
-                        <li>Logo in event program</li>
-                        <li>Recognition in email newsletter</li>
-                        <li>Company name announced at event</li>
--->
+                        <li>Name on event T-shirts</li>
+                        <li>Recognition by DJ at Festival</li>
+                        <li>Recognition on Social Media</li>
+                        <li>Name on NOLA Holi Website</li>
                     </ul>
                 </div>
                 
@@ -197,29 +198,24 @@ get_header();
                 <div class="sponsor-tier tier-silver">
                     <div class="tier-header">
                         <h3 class="tier-name" style="color: #95A5A6;">Silver Sponsor</h3>
-                        <div class="tier-amount">$500</div>
+                        <div class="tier-amount">$1,000</div>
+                        <div style="font-size: 0.9rem; color: var(--text-light); margin-top: 5px;">(No Limit)</div>
                     </div>
                     <ul class="tier-benefits">
-                        <li>TBD - Please revisit</li>
-                        <!--
-                        <li>Logo on website sponsor page</li>
-                        <li>Social media recognition (1+ posts)</li>
-                        <li>5 festival passes</li>
-                        <li>Name listed in event program</li>
-                        <li>Recognition in email newsletter</li>
--->
+                        <li>Recognition on Social Media</li>
+                        <li>Recognition on NOLA Holi Website</li>
                     </ul>
                 </div>
                 
                 <!-- Friends of NOLA Holi -->
                 <div class="sponsor-tier tier-friends">
                     <div class="tier-header">
-                        <h3 class="tier-name" style="color: var(--mardi-gras-green);">Friends of NOLA Holi</h3>
-                        <div class="tier-amount">$100 - $499</div>
+                        <h3 class="tier-name" style="color: var(--mardi-gras-green);">Friend of NOLA Holi</h3>
+                        <div class="tier-amount">$100+</div>
+                        <div style="font-size: 0.9rem; color: var(--text-light); margin-top: 5px;">(No Limit)</div>
                     </div>
                     <ul class="tier-benefits">
-                        <li>Name listed on website</li>
-                        <li>Social media thank you</li>
+                        <li>Recognition on NOLA Holi Website</li>
                         <li>Our eternal gratitude! 💜</li>
                     </ul>
                 </div>

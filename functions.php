@@ -347,13 +347,21 @@ function nolaholi_sponsor_meta_box($post) {
     <p>
         <label for="sponsor_tier"><?php _e('Sponsor Tier:', 'nolaholi'); ?></label><br>
         <select id="sponsor_tier" name="sponsor_tier" style="width: 100%;">
-            <option value="event" <?php selected($tier, 'event'); ?>>Event Sponsor</option>
-            <option value="diamond" <?php selected($tier, 'diamond'); ?>>Diamond</option>
-            <option value="platinum" <?php selected($tier, 'platinum'); ?>>Platinum</option>
-            <option value="gold" <?php selected($tier, 'gold'); ?>>Gold</option>
-            <option value="silver" <?php selected($tier, 'silver'); ?>>Silver</option>
-            <option value="friends" <?php selected($tier, 'friends'); ?>>Friends of NOLA Holi</option>
+            <optgroup label="2026+ Tiers (Current)">
+                <option value="event" <?php selected($tier, 'event'); ?>>Presenting Sponsor ($15,000)</option>
+                <option value="parade" <?php selected($tier, 'parade'); ?>>Parade Sponsor ($7,500)</option>
+                <option value="entertainment" <?php selected($tier, 'entertainment'); ?>>Entertainment Sponsor ($5,000)</option>
+                <option value="vip" <?php selected($tier, 'vip'); ?>>VIP Experience Sponsor ($3,500-$5,000)</option>
+                <option value="gold" <?php selected($tier, 'gold'); ?>>Gold Sponsor ($2,500)</option>
+                <option value="silver" <?php selected($tier, 'silver'); ?>>Silver Sponsor ($1,000)</option>
+                <option value="friends" <?php selected($tier, 'friends'); ?>>Friend of NOLA Holi ($100+)</option>
+            </optgroup>
+            <optgroup label="2025 Tiers (Historical)">
+                <option value="diamond" <?php selected($tier, 'diamond'); ?>>Diamond Sponsor (2025 - $5,000)</option>
+                <option value="platinum" <?php selected($tier, 'platinum'); ?>>Platinum Sponsor (2025 - $2,500)</option>
+            </optgroup>
         </select>
+        <br><small>Select the tier that was active for the sponsor's year. Historical tiers are preserved for past sponsors.</small>
     </p>
     <p>
         <label for="sponsor_year"><?php _e('Year:', 'nolaholi'); ?></label><br>

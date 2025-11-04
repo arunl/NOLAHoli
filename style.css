@@ -798,6 +798,10 @@ img {
     border-top-color: #E5E4E2;
 }
 
+.tier-vip {
+    border-top-color: var(--mardi-gras-gold);
+}
+
 .tier-gold {
     border-top-color: var(--mardi-gras-gold);
 }
