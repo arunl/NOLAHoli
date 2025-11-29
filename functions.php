@@ -253,6 +253,28 @@ function nolaholi_custom_post_types() {
         'supports'      => array('title', 'editor', 'thumbnail'),
         'show_in_rest'  => true,
     ));
+    
+    // News Post Type
+    register_post_type('news', array(
+        'labels' => array(
+            'name'               => __('News', 'nolaholi'),
+            'singular_name'      => __('News Item', 'nolaholi'),
+            'add_new'            => __('Add News Item', 'nolaholi'),
+            'add_new_item'       => __('Add New News Item', 'nolaholi'),
+            'edit_item'          => __('Edit News Item', 'nolaholi'),
+            'new_item'           => __('New News Item', 'nolaholi'),
+            'view_item'          => __('View News Item', 'nolaholi'),
+            'search_items'       => __('Search News', 'nolaholi'),
+            'not_found'          => __('No news items found', 'nolaholi'),
+            'not_found_in_trash' => __('No news items found in trash', 'nolaholi'),
+        ),
+        'public'        => true,
+        'has_archive'   => true,
+        'menu_icon'     => 'dashicons-megaphone',
+        'supports'      => array('title', 'editor', 'excerpt', 'thumbnail'),
+        'show_in_rest'  => true,
+        'rewrite'       => array('slug' => 'news'),
+    ));
 }
 add_action('init', 'nolaholi_custom_post_types');
 
@@ -326,6 +348,36 @@ function nolaholi_add_meta_boxes() {
         'normal',
         'high'
     );
+    
+    // News meta box
+    add_meta_box(
+        'news_details',
+        __('News Details', 'nolaholi'),
+        'nolaholi_news_meta_box',
+        'news',
+        'normal',
+        'high'
+    );
+    
+    // News images meta box
+    add_meta_box(
+        'news_images',
+        __('Additional Images (up to 3)', 'nolaholi'),
+        'nolaholi_news_images_meta_box',
+        'news',
+        'normal',
+        'default'
+    );
+    
+    // News popup meta box
+    add_meta_box(
+        'news_popup',
+        __('Popup/Highlight Settings', 'nolaholi'),
+        'nolaholi_news_popup_meta_box',
+        'news',
+        'side',
+        'high'
+    );
 }
 add_action('add_meta_boxes', 'nolaholi_add_meta_boxes');
 
@@ -396,11 +448,142 @@ function nolaholi_team_member_meta_box($post) {
 }
 
 /**
+ * News meta box callback
+ */
+function nolaholi_news_meta_box($post) {
+    wp_nonce_field('nolaholi_news_meta', 'nolaholi_news_nonce');
+    
+    $pub_date = get_post_meta($post->ID, '_news_publication_date', true);
+    $short_desc = get_post_meta($post->ID, '_news_short_description', true);
+    ?>
+    <p>
+        <label for="news_publication_date"><?php _e('Publication Date:', 'nolaholi'); ?></label><br>
+        <input type="date" id="news_publication_date" name="news_publication_date" value="<?php echo esc_attr($pub_date); ?>" style="width: 100%;">
+        <br><small>This date will be displayed on the news page. If left empty, the post publish date will be used.</small>
+    </p>
+    <p>
+        <label for="news_short_description"><?php _e('Short Description (for previews & sharing):', 'nolaholi'); ?></label><br>
+        <textarea id="news_short_description" name="news_short_description" rows="4" style="width: 100%;"><?php echo esc_textarea($short_desc); ?></textarea>
+        <br><small>This will be used in link previews on social media, email, and search engines. Keep it under 160 characters for best results.</small>
+    </p>
+    <?php
+}
+
+/**
+ * News images meta box callback
+ */
+function nolaholi_news_images_meta_box($post) {
+    $image_1 = get_post_meta($post->ID, '_news_image_1', true);
+    $image_2 = get_post_meta($post->ID, '_news_image_2', true);
+    $image_3 = get_post_meta($post->ID, '_news_image_3', true);
+    ?>
+    <div style="margin-bottom: 20px;">
+        <label><?php _e('Image 1:', 'nolaholi'); ?></label><br>
+        <input type="hidden" id="news_image_1" name="news_image_1" value="<?php echo esc_attr($image_1); ?>">
+        <button type="button" class="button news-image-upload" data-target="news_image_1">Select Image</button>
+        <button type="button" class="button news-image-remove" data-target="news_image_1">Remove</button>
+        <div class="news-image-preview" id="news_image_1_preview">
+            <?php if ($image_1) : ?>
+                <img src="<?php echo esc_url(wp_get_attachment_url($image_1)); ?>" style="max-width: 200px; height: auto; margin-top: 10px;">
+            <?php endif; ?>
+        </div>
+    </div>
+    
+    <div style="margin-bottom: 20px;">
+        <label><?php _e('Image 2:', 'nolaholi'); ?></label><br>
+        <input type="hidden" id="news_image_2" name="news_image_2" value="<?php echo esc_attr($image_2); ?>">
+        <button type="button" class="button news-image-upload" data-target="news_image_2">Select Image</button>
+        <button type="button" class="button news-image-remove" data-target="news_image_2">Remove</button>
+        <div class="news-image-preview" id="news_image_2_preview">
+            <?php if ($image_2) : ?>
+                <img src="<?php echo esc_url(wp_get_attachment_url($image_2)); ?>" style="max-width: 200px; height: auto; margin-top: 10px;">
+            <?php endif; ?>
+        </div>
+    </div>
+    
+    <div style="margin-bottom: 20px;">
+        <label><?php _e('Image 3:', 'nolaholi'); ?></label><br>
+        <input type="hidden" id="news_image_3" name="news_image_3" value="<?php echo esc_attr($image_3); ?>">
+        <button type="button" class="button news-image-upload" data-target="news_image_3">Select Image</button>
+        <button type="button" class="button news-image-remove" data-target="news_image_3">Remove</button>
+        <div class="news-image-preview" id="news_image_3_preview">
+            <?php if ($image_3) : ?>
+                <img src="<?php echo esc_url(wp_get_attachment_url($image_3)); ?>" style="max-width: 200px; height: auto; margin-top: 10px;">
+            <?php endif; ?>
+        </div>
+    </div>
+    
+    <script>
+    jQuery(document).ready(function($) {
+        // Media uploader
+        $('.news-image-upload').on('click', function(e) {
+            e.preventDefault();
+            var button = $(this);
+            var targetId = button.data('target');
+            
+            var mediaUploader = wp.media({
+                title: 'Select Image',
+                button: { text: 'Use this image' },
+                multiple: false
+            });
+            
+            mediaUploader.on('select', function() {
+                var attachment = mediaUploader.state().get('selection').first().toJSON();
+                $('#' + targetId).val(attachment.id);
+                $('#' + targetId + '_preview').html('<img src="' + attachment.url + '" style="max-width: 200px; height: auto; margin-top: 10px;">');
+            });
+            
+            mediaUploader.open();
+        });
+        
+        // Remove image
+        $('.news-image-remove').on('click', function(e) {
+            e.preventDefault();
+            var button = $(this);
+            var targetId = button.data('target');
+            
+            $('#' + targetId).val('');
+            $('#' + targetId + '_preview').html('');
+        });
+    });
+    </script>
+    <?php
+}
+
+/**
+ * News popup meta box callback
+ */
+function nolaholi_news_popup_meta_box($post) {
+    $enable_popup = get_post_meta($post->ID, '_news_enable_popup', true);
+    $popup_start = get_post_meta($post->ID, '_news_popup_start', true);
+    $popup_end = get_post_meta($post->ID, '_news_popup_end', true);
+    ?>
+    <p>
+        <label>
+            <input type="checkbox" id="news_enable_popup" name="news_enable_popup" value="1" <?php checked($enable_popup, '1'); ?>>
+            <?php _e('Show as popup above menu bar', 'nolaholi'); ?>
+        </label>
+    </p>
+    <p>
+        <label for="news_popup_start"><?php _e('Popup Start Date:', 'nolaholi'); ?></label><br>
+        <input type="date" id="news_popup_start" name="news_popup_start" value="<?php echo esc_attr($popup_start); ?>" style="width: 100%;">
+    </p>
+    <p>
+        <label for="news_popup_end"><?php _e('Popup End Date:', 'nolaholi'); ?></label><br>
+        <input type="date" id="news_popup_end" name="news_popup_end" value="<?php echo esc_attr($popup_end); ?>" style="width: 100%;">
+    </p>
+    <p>
+        <small><?php _e('The popup will only be displayed during the specified date range. Only one popup can be active at a time (the most recent one will be shown).', 'nolaholi'); ?></small>
+    </p>
+    <?php
+}
+
+/**
  * Save custom fields
  */
 function nolaholi_save_meta_boxes($post_id) {
     // Check if our nonce is set
-    if (!isset($_POST['nolaholi_sponsor_nonce']) && !isset($_POST['nolaholi_team_nonce'])) {
+    if (!isset($_POST['nolaholi_sponsor_nonce']) && !isset($_POST['nolaholi_team_nonce']) && !isset($_POST['nolaholi_news_nonce'])) {
         return;
     }
     
@@ -413,6 +596,12 @@ function nolaholi_save_meta_boxes($post_id) {
     
     if (isset($_POST['nolaholi_team_nonce'])) {
         if (!wp_verify_nonce($_POST['nolaholi_team_nonce'], 'nolaholi_team_meta')) {
+            return;
+        }
+    }
+    
+    if (isset($_POST['nolaholi_news_nonce'])) {
+        if (!wp_verify_nonce($_POST['nolaholi_news_nonce'], 'nolaholi_news_meta')) {
             return;
         }
     }
@@ -447,6 +636,34 @@ function nolaholi_save_meta_boxes($post_id) {
     }
     if (isset($_POST['team_order'])) {
         update_post_meta($post_id, '_team_order', intval($_POST['team_order']));
+    }
+    
+    // Save news fields
+    if (isset($_POST['news_publication_date'])) {
+        update_post_meta($post_id, '_news_publication_date', sanitize_text_field($_POST['news_publication_date']));
+    }
+    if (isset($_POST['news_short_description'])) {
+        update_post_meta($post_id, '_news_short_description', sanitize_textarea_field($_POST['news_short_description']));
+    }
+    if (isset($_POST['news_image_1'])) {
+        update_post_meta($post_id, '_news_image_1', intval($_POST['news_image_1']));
+    }
+    if (isset($_POST['news_image_2'])) {
+        update_post_meta($post_id, '_news_image_2', intval($_POST['news_image_2']));
+    }
+    if (isset($_POST['news_image_3'])) {
+        update_post_meta($post_id, '_news_image_3', intval($_POST['news_image_3']));
+    }
+    if (isset($_POST['news_enable_popup'])) {
+        update_post_meta($post_id, '_news_enable_popup', '1');
+    } else {
+        update_post_meta($post_id, '_news_enable_popup', '0');
+    }
+    if (isset($_POST['news_popup_start'])) {
+        update_post_meta($post_id, '_news_popup_start', sanitize_text_field($_POST['news_popup_start']));
+    }
+    if (isset($_POST['news_popup_end'])) {
+        update_post_meta($post_id, '_news_popup_end', sanitize_text_field($_POST['news_popup_end']));
     }
 }
 add_action('save_post', 'nolaholi_save_meta_boxes');
@@ -849,6 +1066,84 @@ function nolaholi_clear_sponsor_cache($post_id) {
 add_action('save_post', 'nolaholi_clear_sponsor_cache');
 
 /**
+ * Get active popup news item
+ * 
+ * @return array|false Array with news data or false if no active popup
+ */
+function nolaholi_get_active_popup_news() {
+    // Check for cached popup news
+    $cached_popup = get_transient('nolaholi_active_popup_news');
+    if ($cached_popup !== false) {
+        return $cached_popup;
+    }
+    
+    // Get current date
+    $current_date = date('Y-m-d');
+    
+    // Query for active popup news
+    $args = array(
+        'post_type' => 'news',
+        'posts_per_page' => 1,
+        'post_status' => 'publish',
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'meta_query' => array(
+            'relation' => 'AND',
+            array(
+                'key' => '_news_enable_popup',
+                'value' => '1',
+                'compare' => '='
+            ),
+            array(
+                'key' => '_news_popup_start',
+                'value' => $current_date,
+                'compare' => '<=',
+                'type' => 'DATE'
+            ),
+            array(
+                'key' => '_news_popup_end',
+                'value' => $current_date,
+                'compare' => '>=',
+                'type' => 'DATE'
+            )
+        )
+    );
+    
+    $popup_query = new WP_Query($args);
+    
+    if (!$popup_query->have_posts()) {
+        // No active popup, cache for 1 hour
+        set_transient('nolaholi_active_popup_news', false, HOUR_IN_SECONDS);
+        return false;
+    }
+    
+    $popup_query->the_post();
+    $popup_data = array(
+        'id' => get_the_ID(),
+        'title' => get_the_title(),
+        'url' => get_permalink(),
+        'short_description' => get_post_meta(get_the_ID(), '_news_short_description', true),
+        'excerpt' => get_the_excerpt()
+    );
+    wp_reset_postdata();
+    
+    // Cache for 1 hour
+    set_transient('nolaholi_active_popup_news', $popup_data, HOUR_IN_SECONDS);
+    
+    return $popup_data;
+}
+
+/**
+ * Clear news cache when news post is saved
+ */
+function nolaholi_clear_news_cache($post_id) {
+    if (get_post_type($post_id) === 'news') {
+        delete_transient('nolaholi_active_popup_news');
+    }
+}
+add_action('save_post', 'nolaholi_clear_news_cache');
+
+/**
  * Generate Open Graph and Twitter Card meta tags
  * Creates rich preview cards when URLs are shared on social media, email, and text messages
  */
@@ -894,11 +1189,23 @@ function nolaholi_open_graph_meta_tags() {
         $og_url = get_permalink();
         $og_type = 'article';
         
-        // Get excerpt or content for description
-        if (has_excerpt()) {
-            $og_description = wp_strip_all_tags(get_the_excerpt());
+        // Check if this is a news post
+        if (get_post_type() === 'news') {
+            $short_desc = get_post_meta(get_the_ID(), '_news_short_description', true);
+            if (!empty($short_desc)) {
+                $og_description = wp_strip_all_tags($short_desc);
+            } elseif (has_excerpt()) {
+                $og_description = wp_strip_all_tags(get_the_excerpt());
+            } else {
+                $og_description = wp_trim_words(wp_strip_all_tags(get_the_content()), 30, '...');
+            }
         } else {
-            $og_description = wp_trim_words(wp_strip_all_tags(get_the_content()), 30, '...');
+            // Get excerpt or content for description
+            if (has_excerpt()) {
+                $og_description = wp_strip_all_tags(get_the_excerpt());
+            } else {
+                $og_description = wp_trim_words(wp_strip_all_tags(get_the_content()), 30, '...');
+            }
         }
         
         // Get featured image if available
@@ -1219,4 +1526,221 @@ function nolaholi_handle_contact_form() {
 }
 add_action('admin_post_nolaholi_contact_form', 'nolaholi_handle_contact_form');
 add_action('admin_post_nopriv_nolaholi_contact_form', 'nolaholi_handle_contact_form');
+
+/**
+ * ============================================================================
+ * NEWS MANAGEMENT ADMIN INTERFACE
+ * ============================================================================
+ * 
+ * Custom admin page for managing news items
+ * Provides an alternative to the standard WordPress post editor
+ */
+
+/**
+ * Add News Management admin menu
+ */
+function nolaholi_add_news_admin_menu() {
+    add_submenu_page(
+        'edit.php?post_type=news',
+        __('Manage News', 'nolaholi'),
+        __('Manage News', 'nolaholi'),
+        'manage_options',
+        'nolaholi-manage-news',
+        'nolaholi_render_news_admin_page'
+    );
+}
+add_action('admin_menu', 'nolaholi_add_news_admin_menu');
+
+/**
+ * Render News Management admin page
+ */
+function nolaholi_render_news_admin_page() {
+    // Check user capabilities
+    if (!current_user_can('manage_options')) {
+        wp_die(__('You do not have sufficient permissions to access this page.'));
+    }
+    
+    // Handle form submission for quick edit
+    if (isset($_POST['nolaholi_quick_edit_news']) && check_admin_referer('nolaholi_quick_edit_news')) {
+        $news_id = intval($_POST['news_id']);
+        $enable_popup = isset($_POST['enable_popup']) ? '1' : '0';
+        
+        update_post_meta($news_id, '_news_enable_popup', $enable_popup);
+        update_post_meta($news_id, '_news_popup_start', sanitize_text_field($_POST['popup_start']));
+        update_post_meta($news_id, '_news_popup_end', sanitize_text_field($_POST['popup_end']));
+        
+        delete_transient('nolaholi_active_popup_news');
+        
+        echo '<div class="notice notice-success"><p>News item updated successfully!</p></div>';
+    }
+    
+    // Get all news items
+    $args = array(
+        'post_type' => 'news',
+        'posts_per_page' => -1,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'post_status' => array('publish', 'draft', 'pending')
+    );
+    
+    $news_query = new WP_Query($args);
+    
+    ?>
+    <div class="wrap">
+        <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+        
+        <div class="card" style="max-width: none; margin-top: 20px;">
+            <h2>News Management</h2>
+            <p>Manage all news items, control popup visibility, and edit content. This interface provides quick access to key news features.</p>
+            
+            <p>
+                <a href="<?php echo admin_url('post-new.php?post_type=news'); ?>" class="button button-primary">
+                    Add New News Item
+                </a>
+                <a href="<?php echo home_url('/news/'); ?>" class="button" target="_blank">
+                    View News Archive
+                </a>
+            </p>
+        </div>
+        
+        <?php if ($news_query->have_posts()) : ?>
+            <table class="wp-list-table widefat fixed striped" style="margin-top: 20px;">
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">Title</th>
+                        <th style="width: 10%;">Status</th>
+                        <th style="width: 12%;">Publication Date</th>
+                        <th style="width: 10%;">Popup Active</th>
+                        <th style="width: 13%;">Popup Duration</th>
+                        <th style="width: 15%;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($news_query->have_posts()) : $news_query->the_post(); 
+                        $news_id = get_the_ID();
+                        $pub_date = get_post_meta($news_id, '_news_publication_date', true);
+                        $enable_popup = get_post_meta($news_id, '_news_enable_popup', true);
+                        $popup_start = get_post_meta($news_id, '_news_popup_start', true);
+                        $popup_end = get_post_meta($news_id, '_news_popup_end', true);
+                        $short_desc = get_post_meta($news_id, '_news_short_description', true);
+                        
+                        // Check if popup is currently active
+                        $current_date = date('Y-m-d');
+                        $is_active_popup = false;
+                        if ($enable_popup == '1' && !empty($popup_start) && !empty($popup_end)) {
+                            if ($current_date >= $popup_start && $current_date <= $popup_end) {
+                                $is_active_popup = true;
+                            }
+                        }
+                    ?>
+                        <tr>
+                            <td>
+                                <strong><a href="<?php echo get_edit_post_link($news_id); ?>"><?php the_title(); ?></a></strong>
+                                <?php if ($short_desc) : ?>
+                                    <br><small style="color: #666;"><?php echo esc_html(wp_trim_words($short_desc, 15)); ?></small>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?php 
+                                $status = get_post_status();
+                                $status_colors = array(
+                                    'publish' => '#46b450',
+                                    'draft' => '#999',
+                                    'pending' => '#f0b849'
+                                );
+                                $color = isset($status_colors[$status]) ? $status_colors[$status] : '#999';
+                                ?>
+                                <span style="color: <?php echo $color; ?>; font-weight: bold;">
+                                    <?php echo ucfirst($status); ?>
+                                </span>
+                            </td>
+                            <td>
+                                <?php echo $pub_date ? esc_html($pub_date) : esc_html(get_the_date('Y-m-d')); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?php if ($is_active_popup) : ?>
+                                    <span style="color: #46b450; font-weight: bold;">✓ Active</span>
+                                <?php elseif ($enable_popup == '1') : ?>
+                                    <span style="color: #999;">Scheduled</span>
+                                <?php else : ?>
+                                    <span style="color: #ccc;">No</span>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?php if ($enable_popup == '1' && !empty($popup_start) && !empty($popup_end)) : ?>
+                                    <?php echo esc_html($popup_start); ?> to<br><?php echo esc_html($popup_end); ?>
+                                <?php else : ?>
+                                    <span style="color: #999;">—</span>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <a href="<?php echo get_edit_post_link($news_id); ?>" class="button button-small">Edit</a>
+                                <a href="<?php echo get_permalink($news_id); ?>" class="button button-small" target="_blank">View</a>
+                                <button type="button" class="button button-small" onclick="toggleQuickEdit(<?php echo $news_id; ?>)">Quick Edit</button>
+                            </td>
+                        </tr>
+                        <tr id="quick-edit-<?php echo $news_id; ?>" style="display: none;">
+                            <td colspan="6" style="background: #f9f9f9; padding: 20px;">
+                                <h3>Quick Edit: <?php the_title(); ?></h3>
+                                <form method="post">
+                                    <?php wp_nonce_field('nolaholi_quick_edit_news'); ?>
+                                    <input type="hidden" name="nolaholi_quick_edit_news" value="1">
+                                    <input type="hidden" name="news_id" value="<?php echo $news_id; ?>">
+                                    
+                                    <table class="form-table">
+                                        <tr>
+                                            <th><label for="enable_popup_<?php echo $news_id; ?>">Enable Popup:</label></th>
+                                            <td>
+                                                <label>
+                                                    <input type="checkbox" id="enable_popup_<?php echo $news_id; ?>" name="enable_popup" value="1" <?php checked($enable_popup, '1'); ?>>
+                                                    Show this news item as a popup above the menu bar
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="popup_start_<?php echo $news_id; ?>">Popup Start Date:</label></th>
+                                            <td>
+                                                <input type="date" id="popup_start_<?php echo $news_id; ?>" name="popup_start" value="<?php echo esc_attr($popup_start); ?>" style="width: 200px;">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="popup_end_<?php echo $news_id; ?>">Popup End Date:</label></th>
+                                            <td>
+                                                <input type="date" id="popup_end_<?php echo $news_id; ?>" name="popup_end" value="<?php echo esc_attr($popup_end); ?>" style="width: 200px;">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    
+                                    <p>
+                                        <button type="submit" class="button button-primary">Save Changes</button>
+                                        <button type="button" class="button" onclick="toggleQuickEdit(<?php echo $news_id; ?>)">Cancel</button>
+                                    </p>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        <?php else : ?>
+            <div class="notice notice-info" style="margin-top: 20px;">
+                <p>No news items found. <a href="<?php echo admin_url('post-new.php?post_type=news'); ?>">Create your first news item</a>.</p>
+            </div>
+        <?php endif; ?>
+        
+        <?php wp_reset_postdata(); ?>
+        
+        <script>
+        function toggleQuickEdit(newsId) {
+            var row = document.getElementById('quick-edit-' + newsId);
+            if (row.style.display === 'none') {
+                row.style.display = 'table-row';
+            } else {
+                row.style.display = 'none';
+            }
+        }
+        </script>
+    </div>
+    <?php
+}
+
 
