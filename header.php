@@ -70,9 +70,11 @@
                                 <a href="<?php echo esc_url($item['url']); ?>" class="btn carousel-read-more" style="background: white; color: var(--mardi-gras-purple); padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: 600; white-space: nowrap; transition: transform 0.3s ease;">
                                     Read More →
                                 </a>
-                                <button onclick="dismissNewsCarousel()" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; padding: 5px 10px; opacity: 0.8; transition: opacity 0.3s ease;" aria-label="Close" title="Close">
-                                    ×
-                                </button>
+                                <?php if ($index === $item_count - 1) : // Only show close on last slide ?>
+                                    <button onclick="dismissNewsCarousel()" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; padding: 5px 10px; opacity: 0.8; transition: opacity 0.3s ease;" aria-label="Close" title="Close">
+                                        ×
+                                    </button>
+                                <?php endif; ?>
                             </div>
                         </div>
                     <?php endforeach; ?>
