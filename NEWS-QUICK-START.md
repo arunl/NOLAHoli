@@ -50,6 +50,8 @@ Done! Your news is now live.
 
 Done! Your popup will appear on all pages during the date range.
 
+**💡 Multiple Popups**: You can enable multiple news items as popups. They'll automatically display as a carousel that rotates every 5 seconds!
+
 ## 📊 Managing Multiple News Items
 
 Go to **News → Manage News** to see:
@@ -65,7 +67,9 @@ Go to **News → Manage News** to see:
 - **Duration**: 3-7 days is ideal
 - **Timing**: Start showing 1 week before event
 - **Content**: Keep titles short and action-oriented
-- **Active**: Only ONE popup shows at a time (most recent)
+- **Multiple Items**: Enable multiple news for auto-rotating carousel
+- **Thumbnails**: Featured images appear as thumbnails in the carousel
+- **Auto-Rotation**: Carousel switches every 5 seconds (pauses on hover)
 
 ### Social Sharing
 - Add a **Short Description** (under 160 characters)
@@ -125,7 +129,7 @@ A: Unlimited! The system handles pagination automatically.
 A: Currently admins only. The manage interface is admin-only, but standard WordPress news creation works for editors.
 
 **Q: Can I have multiple popups at once?**
-A: No, only one popup shows at a time (the most recently published one).
+A: Yes! Enable popup on multiple news items with overlapping dates. They'll display as an auto-rotating carousel.
 
 **Q: How long are dismissed popups remembered?**
 A: 7 days. After that, they'll show again if still active.

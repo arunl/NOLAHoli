@@ -1066,9 +1066,9 @@ function nolaholi_clear_sponsor_cache($post_id) {
 add_action('save_post', 'nolaholi_clear_sponsor_cache');
 
 /**
- * Get active popup news item
+ * Get active popup news items (multiple items for carousel)
  * 
- * @return array|false Array with news data or false if no active popup
+ * @return array|false Array of news items or false if no active popups
  */
 function nolaholi_get_active_popup_news() {
     // Check for cached popup news
@@ -1080,10 +1080,10 @@ function nolaholi_get_active_popup_news() {
     // Get current date
     $current_date = date('Y-m-d');
     
-    // Query for active popup news
+    // Query for active popup news (get ALL active ones, not just 1)
     $args = array(
         'post_type' => 'news',
-        'posts_per_page' => 1,
+        'posts_per_page' => -1, // Get all active popup news
         'post_status' => 'publish',
         'orderby' => 'date',
         'order' => 'DESC',
@@ -1117,20 +1117,25 @@ function nolaholi_get_active_popup_news() {
         return false;
     }
     
-    $popup_query->the_post();
-    $popup_data = array(
-        'id' => get_the_ID(),
-        'title' => get_the_title(),
-        'url' => get_permalink(),
-        'short_description' => get_post_meta(get_the_ID(), '_news_short_description', true),
-        'excerpt' => get_the_excerpt()
-    );
+    // Build array of all active popup news items
+    $popup_items = array();
+    while ($popup_query->have_posts()) {
+        $popup_query->the_post();
+        $popup_items[] = array(
+            'id' => get_the_ID(),
+            'title' => get_the_title(),
+            'url' => get_permalink(),
+            'short_description' => get_post_meta(get_the_ID(), '_news_short_description', true),
+            'excerpt' => get_the_excerpt(),
+            'thumbnail' => get_the_post_thumbnail_url(get_the_ID(), 'thumbnail')
+        );
+    }
     wp_reset_postdata();
     
     // Cache for 1 hour
-    set_transient('nolaholi_active_popup_news', $popup_data, HOUR_IN_SECONDS);
+    set_transient('nolaholi_active_popup_news', $popup_items, HOUR_IN_SECONDS);
     
-    return $popup_data;
+    return $popup_items;
 }
 
 /**
