@@ -51,16 +51,11 @@
                                         <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; margin-bottom: 3px;">
                                             Latest News <?php if ($item_count > 1) : ?>(<?php echo (int)$index + 1; ?>/<?php echo $item_count; ?>)<?php endif; ?>
                                         </div>
-                                        <div style="font-weight: 600; font-size: 1.1rem; margin-bottom: 5px;">
+                                        <div style="font-weight: 600; font-size: 1.1rem;">
                                             <a href="<?php echo esc_url($item['url']); ?>" style="color: white; text-decoration: none; transition: opacity 0.3s ease;">
                                                 <?php echo esc_html($item['title']); ?>
                                             </a>
                                         </div>
-                                        <?php if (!empty($item['short_description'])) : ?>
-                                            <div style="font-size: 0.9rem; opacity: 0.95; line-height: 1.4;">
-                                                <?php echo esc_html(wp_trim_words($item['short_description'], 12)); ?>
-                                            </div>
-                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
