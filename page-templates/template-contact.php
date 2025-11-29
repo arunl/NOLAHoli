@@ -156,13 +156,22 @@ get_header();
                         
                         <div class="contact-info-item">
                             <h3>📧 Email</h3>
-                            <p><strong>General:</strong> <a href="mailto:info@nolaholi.org">info@nolaholi.org</a></p>
-                            <p><strong>Volunteers:</strong> <a href="mailto:volunteers@nolaholi.org">volunteers@nolaholi.org</a></p>
-                            <p><strong>Sponsors:</strong> <a href="mailto:sponsors@nolaholi.org">sponsors@nolaholi.org</a></p>
-                            <p><strong>Vendors:</strong> <a href="mailto:vendors@nolaholi.org">vendors@nolaholi.org</a></p>
-                            <p><strong>Media:</strong> <a href="mailto:media@nolaholi.org">media@nolaholi.org</a></p>
+                            <p><strong>General:</strong>
+                                <script>
+                                const p2 = "gro.ilohalon";
+                                const p1 = "ofni";
+                                const p3 = String.fromCharCode(16*4);
+                                const _em = (p2+p3+p1).split("").reverse().join("");
+
+                                document.currentScript.replaceWith(
+                                    Object.assign(document.createElement("a"), {
+                                    href: "ma"+"ilto:" + _em,
+                                    textContent: _em
+                                    })
+                                );
+                                </script>
                         </div>
-                        
+
                         <div class="contact-info-item">
                             <h3>🌐 Website</h3>
                             <p><a href="https://www.nolaholi.org" target="_blank" rel="noopener noreferrer">www.nolaholi.org</a></p>
