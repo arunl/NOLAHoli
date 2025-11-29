@@ -573,8 +573,35 @@ function nolaholi_news_popup_meta_box($post) {
         <input type="date" id="news_popup_end" name="news_popup_end" value="<?php echo esc_attr($popup_end); ?>" style="width: 100%;">
     </p>
     <p>
-        <small><?php _e('The popup will only be displayed during the specified date range. Only one popup can be active at a time (the most recent one will be shown).', 'nolaholi'); ?></small>
+        <small><?php _e('When enabled, dates will auto-fill if empty (today to +7 days). Multiple news items with overlapping dates will display as a carousel. Leave dates empty to show indefinitely.', 'nolaholi'); ?></small>
     </p>
+    
+    <script>
+    jQuery(document).ready(function($) {
+        $('#news_enable_popup').on('change', function() {
+            if ($(this).is(':checked')) {
+                var startDate = $('#news_popup_start').val();
+                var endDate = $('#news_popup_end').val();
+                
+                // Auto-fill dates if they're empty
+                if (!startDate) {
+                    // Set start date to today
+                    var today = new Date();
+                    var todayStr = today.toISOString().split('T')[0];
+                    $('#news_popup_start').val(todayStr);
+                }
+                
+                if (!endDate) {
+                    // Set end date to today + 7 days
+                    var sevenDaysLater = new Date();
+                    sevenDaysLater.setDate(sevenDaysLater.getDate() + 7);
+                    var sevenDaysStr = sevenDaysLater.toISOString().split('T')[0];
+                    $('#news_popup_end').val(sevenDaysStr);
+                }
+            }
+        });
+    });
+    </script>
     <?php
 }
 
@@ -1080,31 +1107,18 @@ function nolaholi_get_active_popup_news() {
     // Get current date
     $current_date = date('Y-m-d');
     
-    // Query for active popup news (get ALL active ones, not just 1)
+    // Query for news with popup enabled
     $args = array(
         'post_type' => 'news',
-        'posts_per_page' => -1, // Get all active popup news
+        'posts_per_page' => -1,
         'post_status' => 'publish',
         'orderby' => 'date',
         'order' => 'DESC',
         'meta_query' => array(
-            'relation' => 'AND',
             array(
                 'key' => '_news_enable_popup',
                 'value' => '1',
                 'compare' => '='
-            ),
-            array(
-                'key' => '_news_popup_start',
-                'value' => $current_date,
-                'compare' => '<=',
-                'type' => 'DATE'
-            ),
-            array(
-                'key' => '_news_popup_end',
-                'value' => $current_date,
-                'compare' => '>=',
-                'type' => 'DATE'
             )
         )
     );
@@ -1117,20 +1131,49 @@ function nolaholi_get_active_popup_news() {
         return false;
     }
     
-    // Build array of all active popup news items
+    // Build array of all active popup news items, filtering by date
     $popup_items = array();
     while ($popup_query->have_posts()) {
         $popup_query->the_post();
-        $popup_items[] = array(
-            'id' => get_the_ID(),
-            'title' => get_the_title(),
-            'url' => get_permalink(),
-            'short_description' => get_post_meta(get_the_ID(), '_news_short_description', true),
-            'excerpt' => get_the_excerpt(),
-            'thumbnail' => get_the_post_thumbnail_url(get_the_ID(), 'thumbnail')
-        );
+        
+        $popup_start = get_post_meta(get_the_ID(), '_news_popup_start', true);
+        $popup_end = get_post_meta(get_the_ID(), '_news_popup_end', true);
+        
+        // Determine if this news item should be shown
+        $should_show = false;
+        
+        if (empty($popup_start) && empty($popup_end)) {
+            // No dates specified - show indefinitely
+            $should_show = true;
+        } elseif (empty($popup_start) && !empty($popup_end)) {
+            // Only end date specified - show until end date
+            $should_show = ($current_date <= $popup_end);
+        } elseif (!empty($popup_start) && empty($popup_end)) {
+            // Only start date specified - show from start date onward
+            $should_show = ($current_date >= $popup_start);
+        } else {
+            // Both dates specified - show within date range
+            $should_show = ($current_date >= $popup_start && $current_date <= $popup_end);
+        }
+        
+        if ($should_show) {
+            $popup_items[] = array(
+                'id' => get_the_ID(),
+                'title' => get_the_title(),
+                'url' => get_permalink(),
+                'short_description' => get_post_meta(get_the_ID(), '_news_short_description', true),
+                'excerpt' => get_the_excerpt(),
+                'thumbnail' => get_the_post_thumbnail_url(get_the_ID(), 'thumbnail')
+            );
+        }
     }
     wp_reset_postdata();
+    
+    // If no items passed the date filter, return false
+    if (empty($popup_items)) {
+        set_transient('nolaholi_active_popup_news', false, HOUR_IN_SECONDS);
+        return false;
+    }
     
     // Cache for 1 hour
     set_transient('nolaholi_active_popup_news', $popup_items, HOUR_IN_SECONDS);
