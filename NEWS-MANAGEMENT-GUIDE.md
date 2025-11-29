@@ -69,9 +69,11 @@ Each news article can include:
 
 5. **Configure Popup Settings** (right sidebar)
    - Check "Show as popup above menu bar" to enable
-   - Set **Popup Start Date** - when the banner should start appearing
-   - Set **Popup End Date** - when the banner should stop appearing
-   - Note: Only one popup can be active at a time
+   - **Dates auto-fill**: When you check the box, dates auto-fill if empty (today to +7 days)
+   - Set **Popup Start Date** - when the banner should start appearing (optional)
+   - Set **Popup End Date** - when the banner should stop appearing (optional)
+   - **Leave dates empty** for indefinite display
+   - Note: Multiple popups display as a rotating carousel
 
 6. **Publish**
    - Click "Publish" when ready to go live
@@ -100,12 +102,14 @@ Each news article can include:
 ### Managing Popup News
 
 #### Best Practices
-- **Timing**: Set popup to show 3-7 days before an event
+- **Quick Setup**: Just check the popup box - dates auto-fill automatically!
+- **Timing**: Default 7-day period is good for most announcements
 - **Content**: Keep titles short and action-oriented (especially with multiple items)
 - **Updates**: Check "Manage News" regularly to see active popups
 - **Multiple Items**: Enable 2-4 news items for engaging carousel experience
 - **Thumbnails**: Use featured images for better visual appeal in carousel
 - **Rotation**: Carousel automatically switches every 5 seconds
+- **Indefinite Display**: Clear both dates to show until manually disabled
 
 #### Example Popup Scenarios
 
@@ -200,10 +204,10 @@ Custom meta fields stored for each news item:
 
 ### Popup Not Showing
 1. Check that "Show as popup above menu bar" is enabled
-2. Verify start and end dates include today's date
+2. If dates are set, verify they include today's date (or leave empty for indefinite)
 3. Make sure the article is published (not draft)
 4. Clear your browser cookies if you dismissed it recently
-5. Check that there isn't a more recent published popup taking precedence
+5. Clear site cache (Settings → Permalinks → Save Changes)
 
 ### Images Not Appearing
 1. Ensure featured image is set in the right sidebar

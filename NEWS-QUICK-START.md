@@ -39,18 +39,24 @@
 
 Done! Your news is now live.
 
-## 🎯 Creating a Popup Banner (45 seconds)
+## 🎯 Creating a Popup Banner (30 seconds)
 
 1. Create or edit a news article (see above)
 2. Scroll to **Popup/Highlight Settings** (right sidebar)
 3. Check **"Show as popup above menu bar"**
-4. Set **Popup Start Date**: When to start showing
-5. Set **Popup End Date**: When to stop showing
+4. ✨ **Dates auto-fill!** Start = today, End = +7 days (if empty)
+5. Adjust dates as needed, or leave empty for indefinite display
 6. Click **Publish** or **Update**
 
 Done! Your popup will appear on all pages during the date range.
 
 **💡 Multiple Popups**: You can enable multiple news items as popups. They'll automatically display as a carousel that rotates every 5 seconds!
+
+### Date Behavior Options:
+- **Both dates filled**: Shows only during that period
+- **Both dates empty**: Shows indefinitely (until unchecked)
+- **Only start date**: Shows from start date onward
+- **Only end date**: Shows until end date
 
 ## 📊 Managing Multiple News Items
 
