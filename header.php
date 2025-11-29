@@ -49,7 +49,7 @@
                                     <!-- Content -->
                                     <div style="flex: 1; min-width: 200px;">
                                         <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; margin-bottom: 3px;">
-                                            Latest News <?php if ($item_count > 1) : ?>(<?php echo $index + 1; ?>/<?php echo $item_count; ?>)<?php endif; ?>
+                                            Latest News <?php if ($item_count > 1) : ?>(<?php echo (int)$index + 1; ?>/<?php echo $item_count; ?>)<?php endif; ?>
                                         </div>
                                         <div style="font-weight: 600; font-size: 1.1rem; margin-bottom: 5px;">
                                             <a href="<?php echo esc_url($item['url']); ?>" style="color: white; text-decoration: none; transition: opacity 0.3s ease;">
@@ -84,7 +84,7 @@
                 <?php if ($item_count > 1) : ?>
                     <div class="carousel-dots" style="display: flex; justify-content: center; gap: 8px; margin-top: 12px;">
                         <?php for ($i = 0; $i < $item_count; $i++) : ?>
-                            <button class="carousel-dot" data-slide="<?php echo $i; ?>" onclick="goToSlide(<?php echo $i; ?>)" style="width: 10px; height: 10px; border-radius: 50%; border: 2px solid white; background: <?php echo $i === 0 ? 'white' : 'transparent'; ?>; cursor: pointer; transition: all 0.3s ease; padding: 0;" aria-label="Go to slide <?php echo $i + 1; ?>">
+                            <button class="carousel-dot" data-slide="<?php echo $i; ?>" onclick="goToSlide(<?php echo $i; ?>)" style="width: 10px; height: 10px; border-radius: 50%; border: 2px solid white; background: <?php echo $i === 0 ? 'white' : 'transparent'; ?>; cursor: pointer; transition: all 0.3s ease; padding: 0;" aria-label="Go to slide <?php echo (int)$i + 1; ?>">
                             </button>
                         <?php endfor; ?>
                     </div>
