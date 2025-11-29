@@ -20,11 +20,14 @@ Each news article can include:
 - **Long Description** - Full article content (using WordPress editor)
 - **Additional Images** - Up to 3 extra images displayed in a gallery at the bottom
 
-### 2. **Popup/Banner Display**
+### 2. **Popup/Banner Carousel**
 - News items can be displayed as a prominent banner above the menu bar
+- **Multiple active items** display as an auto-rotating carousel
+- Automatic rotation every 5 seconds (pauses on hover)
+- Featured images appear as thumbnails in the carousel
+- Navigation dots for manual control
 - Configurable display duration (start and end dates)
-- Visitors can dismiss the banner (remembered for 7 days via cookie)
-- Only one news item can be active at a time (most recent is shown)
+- Visitors can dismiss the entire carousel (remembered for 7 days via cookie)
 - Mobile-responsive design
 
 ### 3. **Social Media Preview**
@@ -98,26 +101,26 @@ Each news article can include:
 
 #### Best Practices
 - **Timing**: Set popup to show 3-7 days before an event
-- **Content**: Keep titles short and action-oriented
+- **Content**: Keep titles short and action-oriented (especially with multiple items)
 - **Updates**: Check "Manage News" regularly to see active popups
-- **One at a Time**: Only one popup can be active - the most recent published item takes precedence
+- **Multiple Items**: Enable 2-4 news items for engaging carousel experience
+- **Thumbnails**: Use featured images for better visual appeal in carousel
+- **Rotation**: Carousel automatically switches every 5 seconds
 
 #### Example Popup Scenarios
 
-**Scenario 1: Event Announcement**
-- Title: "NOLA Holi 2026 Date Announced!"
-- Short Description: "Join us March 7, 2026 at Washington Square Park for the biggest celebration yet!"
-- Popup Duration: January 15 - March 7, 2026
+**Scenario 1: Multiple Active Announcements (Carousel)**
+Enable all 3 with overlapping dates:
+- News 1: "NOLA Holi 2026 Date Announced!" (Jan 15 - Mar 7)
+- News 2: "Vendor Registration Now Open" (Feb 1 - Feb 28)
+- News 3: "Volunteer Sign-up Available" (Feb 15 - Mar 1)
+Result: All 3 rotate automatically in the carousel during overlapping periods
 
-**Scenario 2: Registration Opening**
-- Title: "Vendor Registration Now Open"
-- Short Description: "Apply now to be a vendor at NOLA Holi 2026. Limited spots available!"
-- Popup Duration: February 1 - February 28, 2026
-
-**Scenario 3: Last-Minute Update**
+**Scenario 2: Single Urgent Notice**
 - Title: "Rain Date Change"
 - Short Description: "Due to weather, we've moved to our rain date. See you March 8!"
 - Popup Duration: March 6 - March 8, 2026 (short urgent notice)
+Result: Shows as single item (no carousel) when only one is active
 
 ### Viewing News
 
