@@ -1201,13 +1201,18 @@ function nolaholi_open_graph_meta_tags() {
     $site_description = get_bloginfo('description');
     $site_url = home_url('/');
     
+    // Override site name for Open Graph (site title is "-" to save header space)
+    // Use proper name for social media previews
+    $is_staging = (strpos($site_url, 'staging') !== false);
+    $og_site_name = $is_staging ? 'NOLA Holi (Staging)' : 'NOLA Holi Festival';
+    
     // Get event information
     $event_date = get_theme_mod('nolaholi_event_date', 'March 7, 2026');
     $event_time = get_theme_mod('nolaholi_event_time', 'TBD');
     $location = get_theme_mod('nolaholi_location', 'Washington Square Park, New Orleans');
     
     // Default values
-    $og_title = $site_name;
+    $og_title = $og_site_name;
     $og_description = $site_description;
     $og_type = 'website';
     $og_url = $site_url;
@@ -1224,10 +1229,9 @@ function nolaholi_open_graph_meta_tags() {
     
     // Customize based on page type
     if (is_front_page() || is_home()) {
-        $og_title = $site_name . ' - ' . $site_description;
+        $og_title = $og_site_name;
         $og_description = sprintf(
-            'Join us for %s on %s at %s. Experience the vibrant colors and joy of Holi in New Orleans!',
-            $site_name,
+            'Join us for NOLA Holi on %s at %s. Experience the vibrant colors and joy of Holi in New Orleans!',
             $event_date,
             $location
         );
@@ -1264,7 +1268,7 @@ function nolaholi_open_graph_meta_tags() {
             }
         }
     } elseif (is_page()) {
-        $og_title = get_the_title() . ' - ' . $site_name;
+        $og_title = get_the_title() . ' - ' . $og_site_name;
         $og_url = get_permalink();
         
         // Custom descriptions for specific pages
@@ -1321,7 +1325,7 @@ function nolaholi_open_graph_meta_tags() {
     $og_description = esc_attr($og_description);
     $og_url = esc_url($og_url);
     $og_image = esc_url($og_image);
-    $site_name = esc_attr($site_name);
+    $og_site_name = esc_attr($og_site_name);
     
     // Output Open Graph meta tags
     ?>
@@ -1330,7 +1334,7 @@ function nolaholi_open_graph_meta_tags() {
     <meta property="og:description" content="<?php echo $og_description; ?>" />
     <meta property="og:type" content="<?php echo $og_type; ?>" />
     <meta property="og:url" content="<?php echo $og_url; ?>" />
-    <meta property="og:site_name" content="<?php echo $site_name; ?>" />
+    <meta property="og:site_name" content="<?php echo $og_site_name; ?>" />
     <?php if (!empty($og_image)) : ?>
     <meta property="og:image" content="<?php echo $og_image; ?>" />
     <meta property="og:image:secure_url" content="<?php echo $og_image; ?>" />
