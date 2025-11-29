@@ -14,6 +14,92 @@
     $event_date = get_theme_mod('nolaholi_event_date', 'March 7, 2026');
     $event_time = get_theme_mod('nolaholi_event_time', 'TBD');
     ?>
+    
+    <?php
+    // Display popup news banner if active
+    $popup_news = nolaholi_get_active_popup_news();
+    if ($popup_news && !isset($_COOKIE['nolaholi_news_dismissed_' . $popup_news['id']])) :
+    ?>
+        <div class="news-popup-banner" id="news-popup-<?php echo esc_attr($popup_news['id']); ?>" style="background: linear-gradient(135deg, var(--mardi-gras-purple) 0%, var(--mardi-gras-gold) 100%); color: white; padding: 15px 0; position: relative; z-index: 1001;">
+            <div class="container" style="display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span style="font-size: 2rem; line-height: 1;">📰</span>
+                        <div>
+                            <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; margin-bottom: 3px;">Latest News</div>
+                            <div style="font-weight: 600; font-size: 1.1rem;">
+                                <a href="<?php echo esc_url($popup_news['url']); ?>" style="color: white; text-decoration: none; transition: opacity 0.3s ease;">
+                                    <?php echo esc_html($popup_news['title']); ?>
+                                </a>
+                            </div>
+                            <?php if (!empty($popup_news['short_description'])) : ?>
+                                <div style="font-size: 0.9rem; opacity: 0.95; margin-top: 5px; line-height: 1.4;">
+                                    <?php echo esc_html(wp_trim_words($popup_news['short_description'], 15)); ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <a href="<?php echo esc_url($popup_news['url']); ?>" class="btn" style="background: white; color: var(--mardi-gras-purple); padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: 600; white-space: nowrap; transition: transform 0.3s ease;">
+                        Read More →
+                    </a>
+                    <button onclick="dismissNewsPopup(<?php echo esc_js($popup_news['id']); ?>)" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; padding: 5px 10px; opacity: 0.8; transition: opacity 0.3s ease;" aria-label="Close" title="Close">
+                        ×
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+        function dismissNewsPopup(newsId) {
+            // Set cookie to remember dismissal for 7 days
+            var expiryDate = new Date();
+            expiryDate.setDate(expiryDate.getDate() + 7);
+            document.cookie = 'nolaholi_news_dismissed_' + newsId + '=1; expires=' + expiryDate.toUTCString() + '; path=/';
+            
+            // Hide the banner with animation
+            var banner = document.getElementById('news-popup-' + newsId);
+            if (banner) {
+                banner.style.transition = 'opacity 0.3s ease, max-height 0.3s ease';
+                banner.style.opacity = '0';
+                banner.style.maxHeight = '0';
+                banner.style.padding = '0';
+                banner.style.overflow = 'hidden';
+                
+                setTimeout(function() {
+                    banner.style.display = 'none';
+                }, 300);
+            }
+        }
+        </script>
+        
+        <style>
+        .news-popup-banner a:hover {
+            opacity: 0.9;
+        }
+        
+        .news-popup-banner .btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .news-popup-banner button:hover {
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .news-popup-banner .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .news-popup-banner .container > div:first-child {
+                justify-content: center;
+            }
+        }
+        </style>
+    <?php endif; ?>
+    
     <div class="header-top">
         <p>🎨 <?php echo esc_html($event_date); ?> | <?php echo esc_html($event_time); ?> | Washington Square Park, NOLA 🎉</p>
     </div>
