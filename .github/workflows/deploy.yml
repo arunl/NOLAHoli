@@ -124,8 +124,8 @@ jobs:
             echo "Checking out branch: ${DEPLOY_BRANCH}"
             git checkout ${DEPLOY_BRANCH}
             
-            echo "Pulling latest changes..."
-            git pull origin ${DEPLOY_BRANCH}
+            echo "Pulling latest changes; overwriting any branch divergence"
+            git reset --hard origin ${DEPLOY_BRANCH}
             
             # Apply stashed changes if any
             if git stash list | grep -q "Auto-stash"; then
