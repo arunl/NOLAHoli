@@ -18,7 +18,7 @@ get_header();
         <div class="hero-cta">
             <a href="#about" class="btn btn-primary">Learn More</a>
             <a href="<?php echo esc_url(home_url('/volunteers/')); ?>" class="btn btn-gold">Volunteer</a>
-            <a href="<?php echo esc_url(home_url('/sponsors/')); ?>" class="btn btn-secondary">Become a Sponsor</a>
+            <a href="<?php echo esc_url(home_url('/sponsorship-packet/')); ?>" class="btn btn-secondary">Sponsor</a>
         </div>
     </div>
 </section>
