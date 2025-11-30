@@ -31,14 +31,6 @@ get_header();
                     an unforgettable experience for thousands. Whether you can help for a few hours or the whole day, 
                     we'd love to have you on our team!
                 </p>
-                
-                <div style="background: var(--gradient-festival); padding: 40px; border-radius: 15px; margin-top: 40px; color: white;">
-                    <h3 style="font-size: 2rem; margin-bottom: 15px;">Join Our 2026 Volunteer Team!</h3>
-                    <p style="font-size: 1.1rem; opacity: 0.95; margin-bottom: 20px;">
-                        Help us make NOLA Holi 2026 the best one yet. Sign up now!
-                    </p>
-                    <a href="#volunteer-form" class="btn btn-gold" style="display: inline-block;">Sign Up to Volunteer</a>
-                </div>
             </div>
         </div>
     </section>
@@ -282,10 +274,10 @@ get_header();
     <section id="volunteer-form" class="content-section bg-purple">
         <div class="container">
             <div style="max-width: 700px; margin: 0 auto;">
-                <h2 class="section-title text-center" style="color: white;">Sign Up to Volunteer</h2>
+                <h2 class="section-title text-center" style="color: white;">Join Our 2026 Volunteer Team!</h2>
                 <div class="section-divider"></div>
                 <p style="text-align: center; font-size: 1.1rem; color: var(--off-white); margin-bottom: 40px; line-height: 1.8;">
-                    Ready to join our amazing volunteer team? Fill out the form below or use our Google Form link.
+                    Ready to join our amazing volunteer team? Sign up now and help us make NOLA Holi 2026 the best one yet!
                 </p>
                 
                 <div style="background: var(--white); padding: 40px; border-radius: 15px;">
@@ -294,9 +286,9 @@ get_header();
                         <p style="color: var(--text-light); margin-bottom: 30px; font-size: 1.1rem;">
                             We use Google Forms to collect volunteer information securely.
                         </p>
-                        <a href="https://forms.google.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="display: inline-block; margin-bottom: 20px;">
-                            Open Volunteer Form
-                        </a>
+                        <button id="open-volunteer-form-btn" class="btn btn-primary" style="display: inline-block; margin-bottom: 20px;">
+                            Sign Up to Volunteer
+                        </button>
                         <p style="color: var(--text-light); font-size: 0.95rem;">
                             Or scan the QR code at the event to sign up!
                         </p>
@@ -331,6 +323,34 @@ get_header();
             </div>
         </div>
     </section>
+    
+    <!-- Volunteer Form Modal -->
+    <div id="volunteer-form-modal" class="volunteer-modal" style="display: none;">
+        <div class="volunteer-modal-overlay"></div>
+        <div class="volunteer-modal-content">
+            <button class="volunteer-modal-close" id="close-volunteer-modal" aria-label="Close volunteer form">
+                <span>&times;</span>
+            </button>
+            <div class="volunteer-modal-header">
+                <h2>Join Our 2026 Volunteer Team!</h2>
+                <p class="volunteer-modal-event-info">
+                    <strong>Event Date:</strong> <?php echo esc_html(get_theme_mod('nolaholi_event_date', 'March 7, 2026')); ?> | 
+                    <strong>Time:</strong> <?php echo esc_html(get_theme_mod('nolaholi_event_time', 'TBD')); ?>
+                </p>
+            </div>
+            <div class="volunteer-modal-body">
+                <iframe 
+                    src="https://docs.google.com/forms/d/e/1FAIpQLSeU82Cs0MJaVBFH80fkY8TnB9OBO6o2wBEFaDuHTliOo6_IuA/viewform?embedded=true" 
+                    width="100%" 
+                    height="1191" 
+                    frameborder="0" 
+                    marginheight="0" 
+                    marginwidth="0">
+                    Loading…
+                </iframe>
+            </div>
+        </div>
+    </div>
 </main>
 
 <?php

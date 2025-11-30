@@ -781,5 +781,57 @@
         $(window).trigger('scroll');
     });
 
+    /**
+     * Volunteer Form Modal
+     */
+    function openVolunteerModal() {
+        var modal = $('#volunteer-form-modal');
+        modal.css('display', 'flex');
+        $('body').addClass('modal-open');
+        
+        // Trigger animation after display is set
+        setTimeout(function() {
+            modal.addClass('show');
+        }, 10);
+    }
+
+    function closeVolunteerModal() {
+        var modal = $('#volunteer-form-modal');
+        modal.removeClass('show');
+        
+        // Wait for animation to complete before hiding
+        setTimeout(function() {
+            modal.css('display', 'none');
+            $('body').removeClass('modal-open');
+        }, 300);
+    }
+
+    // Open modal when button is clicked
+    $(document).on('click', '#open-volunteer-form-btn', function(e) {
+        e.preventDefault();
+        openVolunteerModal();
+    });
+
+    // Close modal when close button is clicked
+    $(document).on('click', '#close-volunteer-modal', function(e) {
+        e.preventDefault();
+        closeVolunteerModal();
+    });
+
+    // Close modal when clicking on overlay
+    $(document).on('click', '.volunteer-modal-overlay', function(e) {
+        e.preventDefault();
+        closeVolunteerModal();
+    });
+
+    // Close modal when pressing Escape key
+    $(document).on('keydown', function(e) {
+        if (e.key === 'Escape' || e.keyCode === 27) {
+            if ($('#volunteer-form-modal').hasClass('show')) {
+                closeVolunteerModal();
+            }
+        }
+    });
+
 })(jQuery);
 
