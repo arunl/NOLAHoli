@@ -830,7 +830,53 @@
             if ($('#volunteer-form-modal').hasClass('show')) {
                 closeVolunteerModal();
             }
+            if ($('#performer-form-modal').hasClass('show')) {
+                closePerformerModal();
+            }
         }
+    });
+
+    /**
+     * Performer Form Modal
+     */
+    function openPerformerModal() {
+        var modal = $('#performer-form-modal');
+        modal.css('display', 'flex');
+        $('body').addClass('modal-open');
+        
+        // Trigger animation after display is set
+        setTimeout(function() {
+            modal.addClass('show');
+        }, 10);
+    }
+
+    function closePerformerModal() {
+        var modal = $('#performer-form-modal');
+        modal.removeClass('show');
+        
+        // Wait for animation to complete before hiding
+        setTimeout(function() {
+            modal.css('display', 'none');
+            $('body').removeClass('modal-open');
+        }, 300);
+    }
+
+    // Open modal when button is clicked
+    $(document).on('click', '#open-performer-form-btn', function(e) {
+        e.preventDefault();
+        openPerformerModal();
+    });
+
+    // Close modal when close button is clicked
+    $(document).on('click', '#close-performer-modal', function(e) {
+        e.preventDefault();
+        closePerformerModal();
+    });
+
+    // Close modal when clicking on overlay
+    $(document).on('click', '#performer-form-modal .volunteer-modal-overlay', function(e) {
+        e.preventDefault();
+        closePerformerModal();
     });
 
 })(jQuery);
