@@ -15,7 +15,7 @@ get_header();
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1 class="hero-title">Perform at NOLA Holi</h1>
-            <p class="hero-subtitle">Share Your Talent on Our Stage</p>
+            <p class="hero-subtitle">Share the Rich Cultural Heritage of India with New Orleans</p>
         </div>
     </section>
     
@@ -27,9 +27,10 @@ get_header();
                 <div class="section-divider"></div>
                 
                 <p style="font-size: 1.2rem; line-height: 2; color: var(--text-light); margin-bottom: 30px;">
-                    During Holi we have stage performances by community members of all ages — from children to adults. 
-                    We welcome performances across all styles — classical Indian dances, Bhajans & Devotional Music, Bollywood dances, and more! 
-                    Join us in celebrating the rich Cultural Heritage of India on the NOLA Holi stage.
+                    NOLA Holi features stage performances by community members. 
+                    We welcome performances across all styles — classical Indian dances, Bhajans & Devotional Music, Bollywood dances, and more!
+                    The performances are open to Indophiles of all pursuasions and all ages from children to adults.
+                    Performances are limited and subject to scheduling.
                 </p>
             </div>
         </div>
@@ -43,7 +44,7 @@ get_header();
             
             <div class="feature-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">🕉️</div>
+                    <div class="feature-icon">🎵</div>
                     <h3 class="feature-title">Classical Indian Dance</h3>
                     <p class="feature-description">
                         Showcase traditional dance forms like Bharatanatyam, Kathak, Odissi, Kuchipudi, 
@@ -52,7 +53,7 @@ get_header();
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">🎵</div>
+                    <div class="feature-icon">🕉️</div>
                     <h3 class="feature-title">Bhajans & Devotional Music</h3>
                     <p class="feature-description">
                         Share spiritual songs and devotional music that honor the sacred traditions 
@@ -144,28 +145,8 @@ get_header();
         </div>
     </section>
     
-    <!-- Mission Statement -->
-    <section class="content-section bg-purple">
-        <div class="container">
-            <div style="max-width: 900px; margin: 0 auto; text-align: center;">
-                <h2 class="section-title" style="color: white;">Our Mission</h2>
-                <div class="section-divider"></div>
-                <p style="font-size: 1.2rem; line-height: 1.8; color: var(--off-white); margin-bottom: 20px;">
-                    The mission of NOLA Holi is to provide a forum for people of Indian origin and Indophiles 
-                    to perform activities that help preserve and promote the rich cultural heritage of India, 
-                    and to enhance intercultural understanding and eliminate prejudice and discrimination by 
-                    educating the public of Louisiana about the culture, food, music, religions, and traditions of India.
-                </p>
-                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--off-white);">
-                    Towards this end, we invite individuals and groups to perform at the event. We will provide 
-                    the stage and DJ to play recorded music.
-                </p>
-            </div>
-        </div>
-    </section>
-    
     <!-- Selection Process -->
-    <section class="content-section bg-light">
+    <section class="content-section bg-purple">
         <div class="container">
             <h2 class="section-title text-center">Selection Process</h2>
             <div class="section-divider"></div>
@@ -178,8 +159,7 @@ get_header();
                         will be at the sole discretion of the Board of Directors of NOLA Holi.
                     </p>
                     <p style="color: var(--text-light); line-height: 1.8; font-size: 1.1rem;">
-                        <strong style="color: var(--mardi-gras-purple);">Important:</strong> Please fill one form per performance. 
-                        If you are a dance group with multiple performances, please fill one form per performance.
+                        <strong style="color: var(--mardi-gras-purple);">Important:</strong> Please fill follow instructions below and fill one form per performance (whether you are an individual or a group).
                     </p>
                 </div>
             </div>
@@ -292,25 +272,11 @@ get_header();
                 <br>
                 <strong>Rain Date:</strong> <?php echo esc_html(get_theme_mod('nolaholi_rain_date', 'March 8, 2026')); ?>
             </p>
-            <div style="background: var(--off-white); padding: 20px; border-radius: 8px; margin-top: 20px; text-align: left;">
-                <p style="color: var(--text-light); line-height: 1.8; font-size: 0.95rem; margin-bottom: 10px;">
-                    <strong>Our Mission:</strong> The mission of NOLA Holi is to provide a forum for people of Indian origin 
-                    and Indophiles to perform activities that help preserve and promote the rich cultural heritage of India, 
-                    and to enhance intercultural understanding and eliminate prejudice and discrimination by educating the 
-                    public of Louisiana about the culture, food, music, religions, and traditions of India.
-                </p>
-                <p style="color: var(--text-light); line-height: 1.8; font-size: 0.95rem; margin-bottom: 10px;">
-                    Towards this end, we invite individuals and groups to perform at the event. We will provide the stage 
-                    and DJ to play recorded music.
-                </p>
-                <p style="color: var(--text-light); line-height: 1.8; font-size: 0.95rem;">
-                    <strong>Selection Process:</strong> Though we would love to have everyone who is interested perform, 
-                    we are limited by the number of slots allocated for performances. Therefore, the selection of the 
-                    performances will be at the sole discretion of the Board of Directors of NOLA Holi.
-                </p>
                 <p style="color: var(--text-light); line-height: 1.8; font-size: 0.95rem; margin-top: 10px;">
-                    <strong>Important:</strong> Please fill one form per performance. If you are a dance group with multiple 
-                    performances, please fill one form per performance.
+                    <strong>IMPORTANT:</strong> Please fill one form per performance (whether you are an individual or a group).
+                    Performances are limited and subject to scheduling.
+                    Selected performers will receive confirmation with their performance time slot, 
+                    stage requirements, and any additional information needed.
                 </p>
             </div>
         </div>
