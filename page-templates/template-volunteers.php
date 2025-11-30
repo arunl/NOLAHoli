@@ -276,34 +276,24 @@ get_header();
             <div style="max-width: 700px; margin: 0 auto;">
                 <h2 class="section-title text-center" style="color: white;">Join Our 2026 Volunteer Team!</h2>
                 <div class="section-divider"></div>
-                <p style="text-align: center; font-size: 1.1rem; color: var(--off-white); margin-bottom: 40px; line-height: 1.8;">
+                <p style="text-align: center; font-size: 1.1rem; color: var(--off-white); margin-bottom: 30px; line-height: 1.8;">
                     Ready to join our amazing volunteer team? Sign up now and help us make NOLA Holi 2026 the best one yet!
                 </p>
                 
-                <div style="background: var(--white); padding: 40px; border-radius: 15px;">
-                    <!-- Embed Google Form or create custom form -->
-                    <div style="text-align: center; padding: 40px 0;">
-                        <p style="color: var(--text-light); margin-bottom: 30px; font-size: 1.1rem;">
-                            We use Google Forms to collect volunteer information securely.
-                        </p>
-                        <button id="open-volunteer-form-btn" class="btn btn-primary" style="display: inline-block; margin-bottom: 20px;">
-                            Sign Up to Volunteer
-                        </button>
-                        <p style="color: var(--text-light); font-size: 0.95rem;">
-                            Or scan the QR code at the event to sign up!
-                        </p>
-                    </div>
-                    
-                    <!-- Alternative: Contact info -->
-                    <div style="border-top: 2px solid var(--off-white); padding-top: 30px; margin-top: 30px; text-align: center;">
-                        <h4 style="color: var(--mardi-gras-purple); margin-bottom: 15px;">Questions?</h4>
-                        <p style="color: var(--text-light); margin-bottom: 10px;">
-                            <strong>Email:</strong> <a href="mailto:volunteers@nolaholi.org" style="color: var(--mardi-gras-green);">volunteers@nolaholi.org</a>
-                        </p>
-                        <p style="color: var(--text-light); font-size: 0.95rem; font-style: italic;">
-                            We'll respond within 48 hours and send you orientation details!
-                        </p>
-                    </div>
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <button id="open-volunteer-form-btn" class="btn btn-gold" style="display: inline-block;">
+                        Sign Up to Volunteer
+                    </button>
+                </div>
+                
+                <div style="text-align: center; border-top: 2px solid rgba(255, 255, 255, 0.3); padding-top: 30px; margin-top: 30px;">
+                    <h4 style="color: white; margin-bottom: 15px;">Questions?</h4>
+                    <p style="color: var(--off-white); margin-bottom: 10px;">
+                        <strong>Email:</strong> <a href="mailto:info@nolaholi.org" style="color: var(--mardi-gras-gold);">info@nolaholi.org</a>
+                    </p>
+                    <p style="color: var(--off-white); font-size: 0.95rem; font-style: italic;">
+                        We'll be in touch with you soon and send you orientation details about a week before the event!
+                    </p>
                 </div>
             </div>
         </div>
@@ -336,6 +326,8 @@ get_header();
                 <p class="volunteer-modal-event-info">
                     <strong>Event Date:</strong> <?php echo esc_html(get_theme_mod('nolaholi_event_date', 'March 7, 2026')); ?> | 
                     <strong>Time:</strong> <?php echo esc_html(get_theme_mod('nolaholi_event_time', 'TBD')); ?>
+                    <br>
+                    <strong>Rain Date:</strong> <?php echo esc_html(get_theme_mod('nolaholi_rain_date', 'March 8, 2026')); ?>
                 </p>
             </div>
             <div class="volunteer-modal-body">
