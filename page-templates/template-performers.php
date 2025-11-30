@@ -272,6 +272,7 @@ get_header();
                 <br>
                 <strong>Rain Date:</strong> <?php echo esc_html(get_theme_mod('nolaholi_rain_date', 'March 8, 2026')); ?>
             </p>
+            <div style="background: var(--off-white); padding: 20px; border-radius: 8px; margin-top: 20px; text-align: left;">
                 <p style="color: var(--text-light); line-height: 1.8; font-size: 0.95rem; margin-top: 10px;">
                     <strong>IMPORTANT:</strong> Please fill one form per performance (whether you are an individual or a group).
                     Performances are limited and subject to scheduling.
