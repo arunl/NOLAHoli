@@ -15,12 +15,6 @@ get_header();
     <div class="hero-content">
         <h1 class="hero-title">NOLA Holi Festival 2026</h1>
         <p class="hero-subtitle">Celebrating the Festival of Colors in the Heart of New Orleans</p>
-        <div class="hero-cta">
-            <a href="#about" class="btn btn-primary">Learn More</a>
-            <a href="<?php echo esc_url(home_url('/volunteers/')); ?>" class="btn btn-gold">Volunteer</a>
-            <a href="<?php echo esc_url(home_url('/performers/')); ?>" class="btn btn-gold">Perform</a>
-            <a href="<?php echo esc_url(home_url('/sponsorship-packet/')); ?>" class="btn btn-secondary">Sponsor</a>
-        </div>
     </div>
 </section>
 
@@ -205,6 +199,16 @@ get_header();
                     Join our amazing team and be part of NOLA Holi.
                 </p>
                 <a href="<?php echo esc_url(home_url('/volunteers/')); ?>" class="btn btn-primary mt-2">Sign Up to Volunteer</a>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🎭</div>
+                <h3 class="feature-title">Perform</h3>
+                <p class="feature-description">
+                    Share your talent on our stage! We welcome performances of all styles — classical Indian dances, 
+                    bhajans, Bollywood dances, and more. All ages welcome!
+                </p>
+                <a href="<?php echo esc_url(home_url('/performers/')); ?>" class="btn btn-gold mt-2">Apply to Perform</a>
             </div>
             
             <div class="feature-card">
