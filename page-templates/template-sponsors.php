@@ -11,7 +11,7 @@ get_header();
 
 <main id="primary" class="site-main">
     <!-- Hero Section -->
-    <section class="hero-section" style="min-height: 400px; background: linear-gradient(135deg, var(--mardi-gras-gold) 0%, var(--mardi-gras-purple) 100%);">
+    <section class="hero-section" style="<?php echo nolaholi_get_hero_background_style('linear-gradient(135deg, var(--mardi-gras-gold) 0%, var(--mardi-gras-purple) 100%)'); ?>">
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1 class="hero-title">Our Sponsors</h1>
@@ -49,95 +49,148 @@ get_header();
             </p>
             
             <?php
-            // Define tier order and styling
-            $tiers = array(
+            // Year-aware tier naming function
+            // Maps tier keys to display names based on the year
+            function nolaholi_get_tier_name($tier_key, $year) {
+                // 2025 tier names (original structure)
+                $tiers_2025 = array(
+                    'event' => 'Event Sponsors',
+                    'diamond' => 'Diamond Sponsors',
+                    'platinum' => 'Platinum Sponsors',
+                    'gold' => 'Gold Sponsors',
+                    'silver' => 'Silver Sponsors',
+                    'friends' => 'Friends of NOLA Holi'
+                );
+                
+                // 2026+ tier names (new structure)
+                $tiers_2026_plus = array(
+                    'event' => 'Presenting Sponsors',
+                    'parade' => 'Parade Sponsors',
+                    'entertainment' => 'Entertainment Sponsors',
+                    'vip' => 'VIP Experience Sponsors',
+                    'gold' => 'Gold Sponsors',
+                    'silver' => 'Silver Sponsors',
+                    'friends' => 'Friends of NOLA Holi'
+                );
+                
+                // Select appropriate tier structure based on year
+                if ($year <= 2025) {
+                    return isset($tiers_2025[$tier_key]) ? $tiers_2025[$tier_key] : ucfirst($tier_key) . ' Sponsors';
+                } else {
+                    return isset($tiers_2026_plus[$tier_key]) ? $tiers_2026_plus[$tier_key] : ucfirst($tier_key) . ' Sponsors';
+                }
+            }
+            
+            // Define all possible tiers with their styling and order
+            // Order represents display priority (lower numbers appear first)
+            $all_tier_config = array(
                 'event' => array(
-                    'name' => 'Event Sponsors',
                     'color' => 'var(--mardi-gras-purple)',
                     'order' => 1
                 ),
-                'diamond' => array(
-                    'name' => 'Diamond Sponsors',
+                'parade' => array(
                     'color' => '#4DB8FF',
                     'order' => 2
                 ),
+                'diamond' => array(
+                    'color' => '#4DB8FF',
+                    'order' => 2
+                ),
+                'entertainment' => array(
+                    'color' => 'var(--mardi-gras-purple)',
+                    'order' => 3
+                ),
                 'platinum' => array(
-                    'name' => 'Platinum Sponsors',
                     'color' => '#6C757D',
                     'order' => 3
                 ),
-                'gold' => array(
-                    'name' => 'Gold Sponsors',
+                'vip' => array(
                     'color' => 'var(--mardi-gras-gold)',
                     'order' => 4
                 ),
-                'silver' => array(
-                    'name' => 'Silver Sponsors',
-                    'color' => '#95A5A6',
+                'gold' => array(
+                    'color' => 'var(--mardi-gras-gold)',
                     'order' => 5
                 ),
-                'friends' => array(
-                    'name' => 'Friends of NOLA Holi',
-                    'color' => 'var(--mardi-gras-green)',
+                'silver' => array(
+                    'color' => '#95A5A6',
                     'order' => 6
+                ),
+                'friends' => array(
+                    'color' => 'var(--mardi-gras-green)',
+                    'order' => 7
                 )
             );
             
-            // Loop through each tier
-            foreach ($tiers as $tier_key => $tier_data) :
-                // Query sponsors for this tier
-                $args = array(
-                    'post_type' => 'sponsor',
-                    'posts_per_page' => -1,
-                    'meta_query' => array(
-                        'relation' => 'AND',
-                        array(
-                            'key' => '_sponsor_year',
-                            'value' => '2025',
-                            'compare' => '='
-                        ),
-                        array(
-                            'key' => '_sponsor_tier',
-                            'value' => $tier_key,
-                            'compare' => '='
-                        )
+            // Get all sponsors for the year
+            $year = '2025'; // This could be made dynamic
+            $args = array(
+                'post_type' => 'sponsor',
+                'posts_per_page' => -1,
+                'meta_query' => array(
+                    array(
+                        'key' => '_sponsor_year',
+                        'value' => $year,
+                        'compare' => '='
                     )
-                );
-                
-                $sponsors_query = new WP_Query($args);
-                
-                // Sort sponsors manually with display_order (default 0) as primary key and title as secondary
-                $sponsors_array = array();
-                if ($sponsors_query->have_posts()) {
-                    while ($sponsors_query->have_posts()) {
-                        $sponsors_query->the_post();
-                        $display_order = get_post_meta(get_the_ID(), '_sponsor_display_order', true);
-                        $display_order = ($display_order === '' || $display_order === false) ? 0 : intval($display_order);
-                        
-                        $sponsors_array[] = array(
-                            'id' => get_the_ID(),
-                            'title' => get_the_title(),
-                            'display_order' => $display_order,
-                            'website' => get_post_meta(get_the_ID(), '_sponsor_website', true),
-                            'has_thumbnail' => has_post_thumbnail()
-                        );
-                    }
-                    wp_reset_postdata();
+                )
+            );
+            
+            $all_sponsors_query = new WP_Query($args);
+            
+            // Group sponsors by tier
+            $sponsors_by_tier = array();
+            if ($all_sponsors_query->have_posts()) {
+                while ($all_sponsors_query->have_posts()) {
+                    $all_sponsors_query->the_post();
+                    $tier_key = get_post_meta(get_the_ID(), '_sponsor_tier', true);
+                    $display_order = get_post_meta(get_the_ID(), '_sponsor_display_order', true);
+                    $display_order = ($display_order === '' || $display_order === false) ? 0 : intval($display_order);
                     
-                    // Sort by display_order first, then by title
-                    usort($sponsors_array, function($a, $b) {
-                        if ($a['display_order'] === $b['display_order']) {
-                            return strcmp($a['title'], $b['title']);
-                        }
-                        return $a['display_order'] - $b['display_order'];
-                    });
+                    if (!isset($sponsors_by_tier[$tier_key])) {
+                        $sponsors_by_tier[$tier_key] = array();
+                    }
+                    
+                    $sponsors_by_tier[$tier_key][] = array(
+                        'id' => get_the_ID(),
+                        'title' => get_the_title(),
+                        'display_order' => $display_order,
+                        'website' => get_post_meta(get_the_ID(), '_sponsor_website', true),
+                        'has_thumbnail' => has_post_thumbnail()
+                    );
                 }
+                wp_reset_postdata();
+            }
+            
+            // Sort tiers by their order before displaying
+            uksort($sponsors_by_tier, function($a, $b) use ($all_tier_config) {
+                $order_a = isset($all_tier_config[$a]['order']) ? $all_tier_config[$a]['order'] : 999;
+                $order_b = isset($all_tier_config[$b]['order']) ? $all_tier_config[$b]['order'] : 999;
+                return $order_a - $order_b;
+            });
+            
+            // Sort and display each tier
+            foreach ($sponsors_by_tier as $tier_key => $sponsors_array) :
+                // Skip if tier config doesn't exist
+                if (!isset($all_tier_config[$tier_key])) continue;
+                
+                // Get tier configuration
+                $tier_config = $all_tier_config[$tier_key];
+                $tier_name = nolaholi_get_tier_name($tier_key, intval($year));
+                
+                // Sort sponsors by display_order first, then by title
+                usort($sponsors_array, function($a, $b) {
+                    if ($a['display_order'] === $b['display_order']) {
+                        return strcmp($a['title'], $b['title']);
+                    }
+                    return $a['display_order'] - $b['display_order'];
+                });
                 
                 if (!empty($sponsors_array)) : ?>
                     <!-- Tier Section -->
                     <div class="sponsor-tier-section" style="margin-bottom: 60px;">
-                        <h3 class="tier-title" style="color: <?php echo $tier_data['color']; ?>; text-align: center; font-size: 2rem; margin-bottom: 30px;">
-                            <?php echo $tier_data['name']; ?>
+                        <h3 class="tier-title" style="color: <?php echo $tier_config['color']; ?>; text-align: center; font-size: 2rem; margin-bottom: 30px;">
+                            <?php echo esc_html($tier_name); ?>
                         </h3>
                         
                         <div class="sponsor-logos" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; align-items: center; justify-items: center;">
@@ -153,7 +206,7 @@ get_header();
                                                     <?php echo get_the_post_thumbnail($sponsor['id'], 'medium', array('style' => 'max-width: 100%; max-height: 150px; height: auto; object-fit: contain;')); ?>
                                                 </div>
                                             <?php else : ?>
-                                                <h4 style="color: <?php echo $tier_data['color']; ?>; margin: 0; font-size: 1.2rem;">
+                                                <h4 style="color: <?php echo $tier_config['color']; ?>; margin: 0; font-size: 1.2rem;">
                                                     <?php echo esc_html($sponsor['title']); ?>
                                                 </h4>
                                             <?php endif; ?>
@@ -164,7 +217,7 @@ get_header();
                                                 <?php echo get_the_post_thumbnail($sponsor['id'], 'medium', array('style' => 'max-width: 100%; max-height: 150px; height: auto; object-fit: contain;')); ?>
                                             </div>
                                         <?php else : ?>
-                                            <h4 style="color: <?php echo $tier_data['color']; ?>; margin: 0; font-size: 1.2rem;">
+                                            <h4 style="color: <?php echo $tier_config['color']; ?>; margin: 0; font-size: 1.2rem;">
                                                 <?php echo esc_html($sponsor['title']); ?>
                                             </h4>
                                         <?php endif; ?>
