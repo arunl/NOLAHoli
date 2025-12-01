@@ -11,7 +11,7 @@ get_header();
 
 <main id="primary" class="site-main">
     <!-- Hero Section -->
-    <section class="hero-section" style="min-height: 400px; background: linear-gradient(135deg, var(--mardi-gras-gold) 0%, var(--mardi-gras-purple) 100%);">
+    <section class="hero-section" style="<?php echo nolaholi_get_hero_background_style('linear-gradient(135deg, var(--mardi-gras-gold) 0%, var(--mardi-gras-purple) 100%)'); ?>">
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1 class="hero-title">Perform at NOLA Holi</h1>
@@ -272,14 +272,6 @@ get_header();
                 <br>
                 <strong>Rain Date:</strong> <?php echo esc_html(get_theme_mod('nolaholi_rain_date', 'March 8, 2026')); ?>
             </p>
-            <div style="background: var(--off-white); padding: 20px; border-radius: 8px; margin-top: 20px; text-align: left;">
-                <p style="color: var(--text-light); line-height: 1.8; font-size: 0.95rem; margin-top: 10px;">
-                    <strong>IMPORTANT:</strong> Please fill one form per performance (whether you are an individual or a group).
-                    Performances are limited and subject to scheduling.
-                    Selected performers will receive confirmation with their performance time slot, 
-                    stage requirements, and any additional information needed.
-                </p>
-            </div>
         </div>
         <div class="volunteer-modal-body">
             <iframe 

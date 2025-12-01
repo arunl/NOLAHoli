@@ -21,7 +21,7 @@ $google_photos = new NOLA_Holi_Google_Photos();
 
 <main id="primary" class="site-main">
     <!-- Hero Section -->
-    <section class="hero-section" style="min-height: 400px; background: var(--gradient-festival);">
+    <section class="hero-section" style="<?php echo nolaholi_get_hero_background_style('var(--gradient-festival)'); ?>">
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1 class="hero-title">Photo & Video Gallery</h1>

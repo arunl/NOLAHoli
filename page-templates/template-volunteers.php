@@ -11,7 +11,7 @@ get_header();
 
 <main id="primary" class="site-main">
     <!-- Hero Section -->
-    <section class="hero-section" style="min-height: 400px; background: linear-gradient(135deg, var(--mardi-gras-purple) 0%, var(--mardi-gras-gold) 100%);">
+    <section class="hero-section" style="<?php echo nolaholi_get_hero_background_style('linear-gradient(135deg, var(--mardi-gras-purple) 0%, var(--mardi-gras-gold) 100%)'); ?>">
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1 class="hero-title">Volunteer with Us</h1>

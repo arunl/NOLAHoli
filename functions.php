@@ -147,6 +147,36 @@ function nolaholi_body_classes($classes) {
 add_filter('body_class', 'nolaholi_body_classes');
 
 /**
+ * Get hero section background style with featured image support
+ * 
+ * @param string $fallback_gradient Fallback gradient CSS if no featured image
+ * @return string Inline style string for hero section
+ */
+function nolaholi_get_hero_background_style($fallback_gradient = 'linear-gradient(135deg, var(--mardi-gras-purple) 0%, var(--mardi-gras-gold) 100%)') {
+    $style = 'min-height: 400px;';
+    
+    // Check if page has featured image
+    if (has_post_thumbnail()) {
+        $featured_image_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
+        if ($featured_image_url) {
+            // Use featured image as background
+            $style .= ' background-image: url(' . esc_url($featured_image_url) . ');';
+            $style .= ' background-size: cover;';
+            $style .= ' background-position: center;';
+            $style .= ' background-repeat: no-repeat;';
+        } else {
+            // Fallback to gradient if image URL is empty
+            $style .= ' background: ' . $fallback_gradient . ';';
+        }
+    } else {
+        // No featured image, use gradient
+        $style .= ' background: ' . $fallback_gradient . ';';
+    }
+    
+    return $style;
+}
+
+/**
  * Custom template tags
  */
 function nolaholi_posted_on() {

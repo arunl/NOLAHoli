@@ -11,7 +11,11 @@ get_header();
 
 <main id="primary" class="site-main">
     <!-- Hero Section - Why Sponsor -->
-    <section class="hero-section" style="min-height: 500px; background: linear-gradient(135deg, var(--mardi-gras-purple) 0%, var(--mardi-gras-gold) 100%);">
+    <section class="hero-section" style="<?php 
+        $style = nolaholi_get_hero_background_style('linear-gradient(135deg, var(--mardi-gras-purple) 0%, var(--mardi-gras-gold) 100%)');
+        $style = str_replace('min-height: 400px;', 'min-height: 500px;', $style);
+        echo $style;
+    ?>">
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1 class="hero-title">Become a Sponsor</h1>
