@@ -155,9 +155,19 @@ add_filter('body_class', 'nolaholi_body_classes');
 function nolaholi_get_hero_background_style($fallback_gradient = 'linear-gradient(135deg, var(--mardi-gras-purple) 0%, var(--mardi-gras-gold) 100%)') {
     $style = 'min-height: 400px;';
     
+    // Get the post/page ID - handle front page specially
+    $post_id = null;
+    if (is_front_page() && get_option('page_on_front')) {
+        // If this is a static front page, get its ID
+        $post_id = get_option('page_on_front');
+    } elseif (is_singular() || is_page()) {
+        // Regular page or post
+        $post_id = get_the_ID();
+    }
+    
     // Check if page has featured image
-    if (has_post_thumbnail()) {
-        $featured_image_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
+    if ($post_id && has_post_thumbnail($post_id)) {
+        $featured_image_url = get_the_post_thumbnail_url($post_id, 'full');
         if ($featured_image_url) {
             // Use featured image as background
             $style .= ' background-image: url(' . esc_url($featured_image_url) . ');';

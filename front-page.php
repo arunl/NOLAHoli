@@ -10,7 +10,7 @@ get_header();
 ?>
 
 <!-- Hero Section -->
-<section class="hero-section">
+<section class="hero-section" style="<?php echo nolaholi_get_hero_background_style('var(--gradient-festival)'); ?>">
     <div class="hero-overlay"></div>
     <div class="hero-content">
         <h1 class="hero-title">NOLA Holi Festival 2026</h1>
