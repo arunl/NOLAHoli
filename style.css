@@ -1396,7 +1396,7 @@ img {
    =========================== */
 .save-the-date-sticky {
     position: fixed;
-    top: 200px;
+    top: 160px;
     right: 20px;
     width: 200px;
     background: linear-gradient(145deg, #fff566 0%, #ffeb3b 50%, #fdd835 100%);
@@ -1407,7 +1407,7 @@ img {
         -1px -1px 5px rgba(255, 255, 255, 0.5) inset,
         2px 2px 10px rgba(0, 0, 0, 0.1) inset;
     transform: rotate(3deg);
-    z-index: 999;
+    z-index: 900;
     font-family: 'Patrick Hand', 'Comic Sans MS', 'Segoe UI', cursive, sans-serif;
     transition: all 0.3s ease;
     cursor: default;
@@ -1578,7 +1578,7 @@ img {
    =========================== */
 .save-the-date-mini {
     position: fixed;
-    top: 200px;
+    top: 160px;
     right: 0;
     background: linear-gradient(145deg, #fff566 0%, #ffeb3b 50%, #fdd835 100%);
     padding: 10px 12px 10px 14px;
@@ -1586,7 +1586,7 @@ img {
     box-shadow: 
         -2px 2px 10px rgba(0, 0, 0, 0.2),
         -1px -1px 3px rgba(255, 255, 255, 0.5) inset;
-    z-index: 999;
+    z-index: 900;
     font-family: 'Patrick Hand', 'Comic Sans MS', 'Segoe UI', cursive, sans-serif;
     cursor: pointer;
     transition: all 0.3s ease;
