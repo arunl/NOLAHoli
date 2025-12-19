@@ -1396,7 +1396,7 @@ img {
    =========================== */
 .save-the-date-sticky {
     position: fixed;
-    top: 220px;
+    top: 300px;
     right: 20px;
     width: 200px;
     background: linear-gradient(145deg, #fff566 0%, #ffeb3b 50%, #fdd835 100%);
@@ -1578,7 +1578,7 @@ img {
    =========================== */
 .save-the-date-mini {
     position: fixed;
-    top: 220px;
+    top: 300px;
     right: 0;
     background: linear-gradient(145deg, #fff566 0%, #ffeb3b 50%, #fdd835 100%);
     padding: 10px 12px 10px 14px;
