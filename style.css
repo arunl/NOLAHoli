@@ -1391,6 +1391,343 @@ img {
 .p-2 { padding: 2rem; }
 .p-3 { padding: 3rem; }
 
+/* ===========================
+   Save the Date Sticky Note
+   =========================== */
+.save-the-date-sticky {
+    position: fixed;
+    top: 300px;
+    right: 20px;
+    width: 200px;
+    background: linear-gradient(145deg, #fff566 0%, #ffeb3b 50%, #fdd835 100%);
+    padding: 25px 20px 20px;
+    border-radius: 3px;
+    box-shadow: 
+        4px 4px 15px rgba(0, 0, 0, 0.25),
+        -1px -1px 5px rgba(255, 255, 255, 0.5) inset,
+        2px 2px 10px rgba(0, 0, 0, 0.1) inset;
+    transform: rotate(3deg);
+    z-index: 900;
+    font-family: 'Patrick Hand', 'Comic Sans MS', 'Segoe UI', cursive, sans-serif;
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.save-the-date-sticky.hidden {
+    display: none;
+}
+
+.save-the-date-sticky.hiding {
+    transform: rotate(3deg) translateX(250px);
+    opacity: 0;
+}
+
+.save-the-date-sticky.showing {
+    animation: slideInSticky 0.4s ease;
+}
+
+@keyframes slideInSticky {
+    from {
+        transform: rotate(3deg) translateX(250px);
+        opacity: 0;
+    }
+    to {
+        transform: rotate(3deg) translateX(0);
+        opacity: 1;
+    }
+}
+
+.save-the-date-sticky::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+.save-the-date-sticky::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, transparent, rgba(0,0,0,0.1), transparent);
+}
+
+.save-the-date-sticky:hover {
+    transform: rotate(0deg) scale(1.05);
+    box-shadow: 
+        6px 6px 20px rgba(0, 0, 0, 0.3),
+        -1px -1px 5px rgba(255, 255, 255, 0.5) inset;
+}
+
+.sticky-pin {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 24px;
+    background: radial-gradient(circle at 30% 30%, #ff5722, #d32f2f);
+    border-radius: 50%;
+    box-shadow: 
+        2px 2px 6px rgba(0, 0, 0, 0.4),
+        -1px -1px 3px rgba(255, 255, 255, 0.3) inset;
+}
+
+.sticky-pin::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    transform: translate(-70%, -70%);
+}
+
+.sticky-minimize {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 22px;
+    height: 22px;
+    background: rgba(0, 0, 0, 0.15);
+    border: none;
+    border-radius: 50%;
+    color: #666;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.sticky-minimize:hover {
+    background: rgba(0, 0, 0, 0.3);
+    color: #333;
+    transform: scale(1.1);
+}
+
+.sticky-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+}
+
+.sticky-label {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #d32f2f;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.sticky-date {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #1a1a1a;
+    line-height: 1.1;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.sticky-event {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--mardi-gras-purple);
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.sticky-location {
+    font-size: 0.85rem;
+    color: #555;
+    margin-top: 4px;
+}
+
+/* Bounce animation for attention */
+.save-the-date-sticky.bounce {
+    animation: stickyBounce 1s ease;
+}
+
+@keyframes stickyBounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: rotate(3deg) translateY(0);
+    }
+    40% {
+        transform: rotate(1deg) translateY(-15px);
+    }
+    60% {
+        transform: rotate(5deg) translateY(-8px);
+    }
+}
+
+/* ===========================
+   Minimized Sticky Tab
+   =========================== */
+.save-the-date-mini {
+    position: fixed;
+    top: 300px;
+    right: 0;
+    background: linear-gradient(145deg, #fff566 0%, #ffeb3b 50%, #fdd835 100%);
+    padding: 10px 12px 10px 14px;
+    border-radius: 8px 0 0 8px;
+    box-shadow: 
+        -2px 2px 10px rgba(0, 0, 0, 0.2),
+        -1px -1px 3px rgba(255, 255, 255, 0.5) inset;
+    z-index: 900;
+    font-family: 'Patrick Hand', 'Comic Sans MS', 'Segoe UI', cursive, sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.save-the-date-mini.hidden {
+    display: none;
+}
+
+.save-the-date-mini.hiding {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.save-the-date-mini.showing {
+    animation: slideInMini 0.3s ease;
+}
+
+@keyframes slideInMini {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.save-the-date-mini:hover {
+    padding-right: 18px;
+    box-shadow: 
+        -4px 4px 15px rgba(0, 0, 0, 0.25),
+        -1px -1px 3px rgba(255, 255, 255, 0.5) inset;
+}
+
+.save-the-date-mini .mini-icon {
+    font-size: 1.3rem;
+}
+
+.save-the-date-mini .mini-text {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    white-space: nowrap;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .save-the-date-sticky {
+        position: fixed;
+        top: auto;
+        bottom: 20px;
+        right: 10px;
+        left: auto;
+        width: 150px;
+        padding: 18px 14px 14px;
+        transform: rotate(2deg);
+    }
+    
+    .sticky-label {
+        font-size: 0.85rem;
+    }
+    
+    .sticky-date {
+        font-size: 1.1rem;
+    }
+    
+    .sticky-event {
+        font-size: 0.8rem;
+    }
+    
+    .sticky-location {
+        font-size: 0.7rem;
+    }
+    
+    .sticky-pin {
+        width: 20px;
+        height: 20px;
+        top: -6px;
+    }
+    
+    .save-the-date-sticky.bounce {
+        animation: stickyBounceMobile 1s ease;
+    }
+    
+    @keyframes stickyBounceMobile {
+        0%, 20%, 50%, 80%, 100% {
+            transform: rotate(2deg) translateY(0);
+        }
+        40% {
+            transform: rotate(0deg) translateY(-10px);
+        }
+        60% {
+            transform: rotate(4deg) translateY(-5px);
+        }
+    }
+    
+    /* Mini tab on mobile */
+    .save-the-date-mini {
+        position: fixed;
+        top: auto;
+        bottom: 20px;
+        right: 0;
+        padding: 8px 10px 8px 12px;
+    }
+    
+    .save-the-date-mini .mini-icon {
+        font-size: 1.1rem;
+    }
+    
+    .save-the-date-mini .mini-text {
+        font-size: 0.75rem;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 380px) {
+    .save-the-date-sticky {
+        width: 130px;
+        padding: 16px 12px 12px;
+        right: 5px;
+        bottom: 15px;
+    }
+    
+    .sticky-label {
+        font-size: 0.75rem;
+    }
+    
+    .sticky-date {
+        font-size: 1rem;
+    }
+    
+    .save-the-date-mini {
+        bottom: 15px;
+    }
+}
+
 @media (max-width: 768px) {
     .main-navigation #primary-menu > li.menu-item-has-children > a {
       position: relative;

@@ -280,6 +280,92 @@
 </header>
 
 <?php
+// Save the Date Sticky Note - Check if enabled in theme settings
+$show_sticky = get_theme_mod('nolaholi_show_save_date_sticky', true);
+
+if ($show_sticky) :
+    $event_date_sticky = get_theme_mod('nolaholi_event_date', 'March 7, 2026');
+    $event_location_sticky = get_theme_mod('nolaholi_location', 'Washington Square Park, New Orleans');
+    // Extract year from event date for dynamic display
+    $event_year = '';
+    if (preg_match('/\b(20\d{2})\b/', $event_date_sticky, $matches)) {
+        $event_year = $matches[1];
+    }
+    $sticky_minimized = isset($_COOKIE['nolaholi_save_date_minimized']);
+?>
+
+<!-- Save the Date Sticky Note -->
+<div class="save-the-date-sticky <?php echo $sticky_minimized ? 'hidden' : ''; ?>" id="save-the-date-sticky">
+    <button class="sticky-minimize" onclick="minimizeSaveTheDate()" aria-label="Minimize save the date notice" title="Minimize">−</button>
+    <div class="sticky-pin"></div>
+    <div class="sticky-content">
+        <span class="sticky-label">📌 SAVE THE DATE!</span>
+        <span class="sticky-date"><?php echo esc_html($event_date_sticky); ?></span>
+        <span class="sticky-event">NOLA Holi <?php echo esc_html($event_year); ?></span>
+        <span class="sticky-location">📍 <?php echo esc_html($event_location_sticky); ?></span>
+    </div>
+</div>
+
+<!-- Minimized Sticky Tab -->
+<div class="save-the-date-mini <?php echo $sticky_minimized ? '' : 'hidden'; ?>" id="save-the-date-mini" onclick="expandSaveTheDate()" title="Click to show Save the Date">
+    <span class="mini-icon">🗓</span>
+    <span class="mini-text"><?php echo esc_html($event_date_sticky); ?></span>
+</div>
+
+<script>
+function minimizeSaveTheDate() {
+    var sticky = document.getElementById('save-the-date-sticky');
+    var mini = document.getElementById('save-the-date-mini');
+    
+    if (sticky && mini) {
+        sticky.classList.add('hiding');
+        document.cookie = 'nolaholi_save_date_minimized=1; path=/';
+        
+        setTimeout(function() {
+            sticky.classList.add('hidden');
+            sticky.classList.remove('hiding');
+            mini.classList.remove('hidden');
+            mini.classList.add('showing');
+        }, 300);
+    }
+}
+
+function expandSaveTheDate() {
+    var sticky = document.getElementById('save-the-date-sticky');
+    var mini = document.getElementById('save-the-date-mini');
+    
+    if (sticky && mini) {
+        mini.classList.add('hiding');
+        document.cookie = 'nolaholi_save_date_minimized=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+        
+        setTimeout(function() {
+            mini.classList.add('hidden');
+            mini.classList.remove('hiding', 'showing');
+            sticky.classList.remove('hidden');
+            sticky.classList.add('showing');
+            
+            setTimeout(function() {
+                sticky.classList.remove('showing');
+            }, 500);
+        }, 200);
+    }
+}
+
+// Bounce animation every 8 seconds
+setInterval(function() {
+    var sticky = document.getElementById('save-the-date-sticky');
+    if (sticky && !sticky.classList.contains('hidden')) {
+        sticky.classList.add('bounce');
+        setTimeout(function() {
+            sticky.classList.remove('bounce');
+        }, 1000);
+    }
+}, 8000);
+</script>
+
+<?php endif; ?>
+
+<?php
 /**
  * Default menu fallback if no menu is assigned
  */

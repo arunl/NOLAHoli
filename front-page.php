@@ -22,7 +22,7 @@ get_header();
 <section class="event-info-bar">
     <div class="event-info-grid">
         <div class="info-item">
-            <div class="info-icon">📅</div>
+            <div class="info-icon">🗓</div>
             <div class="info-label">Date</div>
             <div class="info-value"><?php echo esc_html(get_theme_mod('nolaholi_event_date', 'March 7, 2026')); ?></div>
         </div>

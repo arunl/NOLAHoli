@@ -65,7 +65,7 @@ function nolaholi_scripts() {
     wp_enqueue_style('nolaholi-style', get_stylesheet_uri(), array(), $css_version);
     
     // Google Fonts
-    wp_enqueue_style('nolaholi-fonts', 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap', array(), null);
+    wp_enqueue_style('nolaholi-fonts', 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Patrick+Hand&display=swap', array(), null);
     
     // Main JavaScript
     wp_enqueue_script('nolaholi-script', get_template_directory_uri() . '/js/main.js', array('jquery'), $js_version, true);
@@ -937,6 +937,19 @@ function nolaholi_customize_register($wp_customize) {
         'label'   => __('Event Location', 'nolaholi'),
         'section' => 'nolaholi_event_info',
         'type'    => 'text',
+    ));
+    
+    // Show Save the Date Sticky
+    $wp_customize->add_setting('nolaholi_show_save_date_sticky', array(
+        'default'           => true,
+        'sanitize_callback' => 'wp_validate_boolean',
+    ));
+    
+    $wp_customize->add_control('nolaholi_show_save_date_sticky', array(
+        'label'       => __('Show "Save the Date" Sticky Note', 'nolaholi'),
+        'description' => __('Display a floating sticky note with the event date on all pages', 'nolaholi'),
+        'section'     => 'nolaholi_event_info',
+        'type'        => 'checkbox',
     ));
     
     // Social Media Section
