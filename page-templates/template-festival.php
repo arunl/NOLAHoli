@@ -35,7 +35,7 @@ get_header();
                 <div style="background: var(--gradient-festival); padding: 40px; border-radius: 15px; margin-top: 40px; color: white;">
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px;">
                         <div>
-                            <div style="font-size: 2.5rem; margin-bottom: 10px;">📅</div>
+                            <div style="font-size: 2.5rem; margin-bottom: 10px;">🗓</div>
                             <div style="font-weight: 600; opacity: 0.9;">DATE</div>
                             <div style="font-size: 1.2rem; font-weight: 700;">
                                 <?php echo esc_html(get_theme_mod('nolaholi_event_date', 'March 7, 2026')); ?>
