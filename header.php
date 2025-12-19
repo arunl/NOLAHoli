@@ -288,11 +288,11 @@ $event_year = '';
 if (preg_match('/\b(20\d{2})\b/', $event_date_sticky, $matches)) {
     $event_year = $matches[1];
 }
-$sticky_dismissed = isset($_COOKIE['nolaholi_save_date_dismissed']);
+$sticky_minimized = isset($_COOKIE['nolaholi_save_date_minimized']);
 ?>
-<?php if (!$sticky_dismissed) : ?>
-<div class="save-the-date-sticky" id="save-the-date-sticky">
-    <button class="sticky-close" onclick="dismissSaveTheDate()" aria-label="Close save the date notice">&times;</button>
+<!-- Full Sticky Note -->
+<div class="save-the-date-sticky <?php echo $sticky_minimized ? 'hidden' : ''; ?>" id="save-the-date-sticky">
+    <button class="sticky-minimize" onclick="minimizeSaveTheDate()" aria-label="Minimize save the date notice" title="Minimize">−</button>
     <div class="sticky-pin"></div>
     <div class="sticky-content">
         <span class="sticky-label">📌 SAVE THE DATE!</span>
@@ -301,26 +301,60 @@ $sticky_dismissed = isset($_COOKIE['nolaholi_save_date_dismissed']);
         <span class="sticky-location">📍 <?php echo esc_html($event_location_sticky); ?></span>
     </div>
 </div>
+
+<!-- Minimized Sticky (small reminder tab) -->
+<div class="save-the-date-mini <?php echo $sticky_minimized ? '' : 'hidden'; ?>" id="save-the-date-mini" onclick="expandSaveTheDate()" title="Click to show Save the Date">
+    <span class="mini-icon">📅</span>
+    <span class="mini-text"><?php echo esc_html($event_date_sticky); ?></span>
+</div>
+
 <script>
-function dismissSaveTheDate() {
+function minimizeSaveTheDate() {
     var sticky = document.getElementById('save-the-date-sticky');
-    if (sticky) {
-        sticky.classList.add('dismissed');
-        // Set cookie to remember dismissal for 3 days
-        var expiryDate = new Date();
-        expiryDate.setDate(expiryDate.getDate() + 3);
-        document.cookie = 'nolaholi_save_date_dismissed=1; expires=' + expiryDate.toUTCString() + '; path=/';
+    var mini = document.getElementById('save-the-date-mini');
+    
+    if (sticky && mini) {
+        sticky.classList.add('hiding');
+        
+        // Set cookie to remember minimized state for this session only
+        document.cookie = 'nolaholi_save_date_minimized=1; path=/';
         
         setTimeout(function() {
-            sticky.style.display = 'none';
-        }, 500);
+            sticky.classList.add('hidden');
+            sticky.classList.remove('hiding');
+            mini.classList.remove('hidden');
+            mini.classList.add('showing');
+        }, 300);
     }
 }
 
-// Add bounce animation periodically to attract attention
+function expandSaveTheDate() {
+    var sticky = document.getElementById('save-the-date-sticky');
+    var mini = document.getElementById('save-the-date-mini');
+    
+    if (sticky && mini) {
+        mini.classList.add('hiding');
+        
+        // Remove the minimized cookie
+        document.cookie = 'nolaholi_save_date_minimized=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+        
+        setTimeout(function() {
+            mini.classList.add('hidden');
+            mini.classList.remove('hiding', 'showing');
+            sticky.classList.remove('hidden');
+            sticky.classList.add('showing');
+            
+            setTimeout(function() {
+                sticky.classList.remove('showing');
+            }, 500);
+        }, 200);
+    }
+}
+
+// Add bounce animation periodically to attract attention (only when expanded)
 setInterval(function() {
     var sticky = document.getElementById('save-the-date-sticky');
-    if (sticky && !sticky.classList.contains('dismissed')) {
+    if (sticky && !sticky.classList.contains('hidden')) {
         sticky.classList.add('bounce');
         setTimeout(function() {
             sticky.classList.remove('bounce');
@@ -328,7 +362,6 @@ setInterval(function() {
     }
 }, 8000);
 </script>
-<?php endif; ?>
 
 <?php
 /**

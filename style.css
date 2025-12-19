@@ -1396,7 +1396,7 @@ img {
    =========================== */
 .save-the-date-sticky {
     position: fixed;
-    top: 180px;
+    top: 220px;
     right: 20px;
     width: 200px;
     background: linear-gradient(145deg, #fff566 0%, #ffeb3b 50%, #fdd835 100%);
@@ -1407,10 +1407,34 @@ img {
         -1px -1px 5px rgba(255, 255, 255, 0.5) inset,
         2px 2px 10px rgba(0, 0, 0, 0.1) inset;
     transform: rotate(3deg);
-    z-index: 9998;
+    z-index: 999;
     font-family: 'Patrick Hand', 'Comic Sans MS', 'Segoe UI', cursive, sans-serif;
     transition: all 0.3s ease;
     cursor: default;
+}
+
+.save-the-date-sticky.hidden {
+    display: none;
+}
+
+.save-the-date-sticky.hiding {
+    transform: rotate(3deg) translateX(250px);
+    opacity: 0;
+}
+
+.save-the-date-sticky.showing {
+    animation: slideInSticky 0.4s ease;
+}
+
+@keyframes slideInSticky {
+    from {
+        transform: rotate(3deg) translateX(250px);
+        opacity: 0;
+    }
+    to {
+        transform: rotate(3deg) translateX(0);
+        opacity: 1;
+    }
 }
 
 .save-the-date-sticky::before {
@@ -1467,7 +1491,7 @@ img {
     transform: translate(-70%, -70%);
 }
 
-.sticky-close {
+.sticky-minimize {
     position: absolute;
     top: 5px;
     right: 5px;
@@ -1477,7 +1501,8 @@ img {
     border: none;
     border-radius: 50%;
     color: #666;
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: bold;
     line-height: 1;
     cursor: pointer;
     display: flex;
@@ -1487,10 +1512,10 @@ img {
     padding: 0;
 }
 
-.sticky-close:hover {
+.sticky-minimize:hover {
     background: rgba(0, 0, 0, 0.3);
     color: #333;
-    transform: rotate(90deg);
+    transform: scale(1.1);
 }
 
 .sticky-content {
@@ -1531,13 +1556,6 @@ img {
     margin-top: 4px;
 }
 
-/* Dismiss animation */
-.save-the-date-sticky.dismissed {
-    transform: rotate(3deg) translateX(300px);
-    opacity: 0;
-    pointer-events: none;
-}
-
 /* Bounce animation for attention */
 .save-the-date-sticky.bounce {
     animation: stickyBounce 1s ease;
@@ -1553,6 +1571,70 @@ img {
     60% {
         transform: rotate(5deg) translateY(-8px);
     }
+}
+
+/* ===========================
+   Minimized Sticky Tab
+   =========================== */
+.save-the-date-mini {
+    position: fixed;
+    top: 220px;
+    right: 0;
+    background: linear-gradient(145deg, #fff566 0%, #ffeb3b 50%, #fdd835 100%);
+    padding: 10px 12px 10px 14px;
+    border-radius: 8px 0 0 8px;
+    box-shadow: 
+        -2px 2px 10px rgba(0, 0, 0, 0.2),
+        -1px -1px 3px rgba(255, 255, 255, 0.5) inset;
+    z-index: 999;
+    font-family: 'Patrick Hand', 'Comic Sans MS', 'Segoe UI', cursive, sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.save-the-date-mini.hidden {
+    display: none;
+}
+
+.save-the-date-mini.hiding {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.save-the-date-mini.showing {
+    animation: slideInMini 0.3s ease;
+}
+
+@keyframes slideInMini {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.save-the-date-mini:hover {
+    padding-right: 18px;
+    box-shadow: 
+        -4px 4px 15px rgba(0, 0, 0, 0.25),
+        -1px -1px 3px rgba(255, 255, 255, 0.5) inset;
+}
+
+.save-the-date-mini .mini-icon {
+    font-size: 1.3rem;
+}
+
+.save-the-date-mini .mini-text {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    white-space: nowrap;
 }
 
 /* Mobile responsive */
@@ -1605,6 +1687,22 @@ img {
             transform: rotate(4deg) translateY(5px);
         }
     }
+    
+    /* Mini tab on mobile - bottom right */
+    .save-the-date-mini {
+        top: auto;
+        bottom: 20px;
+        right: 0;
+        padding: 8px 10px 8px 12px;
+    }
+    
+    .save-the-date-mini .mini-icon {
+        font-size: 1.1rem;
+    }
+    
+    .save-the-date-mini .mini-text {
+        font-size: 0.75rem;
+    }
 }
 
 /* Extra small screens */
@@ -1622,6 +1720,10 @@ img {
     
     .sticky-date {
         font-size: 1.1rem;
+    }
+    
+    .save-the-date-mini {
+        bottom: 15px;
     }
 }
 
