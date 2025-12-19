@@ -1395,9 +1395,9 @@ img {
    Save the Date Sticky Note
    =========================== */
 .save-the-date-sticky {
-    position: fixed;
-    top: 220px;
-    right: 20px;
+    position: absolute;
+    top: 50px;
+    right: 30px;
     width: 200px;
     background: linear-gradient(145deg, #fff566 0%, #ffeb3b 50%, #fdd835 100%);
     padding: 25px 20px 20px;
@@ -1407,7 +1407,7 @@ img {
         -1px -1px 5px rgba(255, 255, 255, 0.5) inset,
         2px 2px 10px rgba(0, 0, 0, 0.1) inset;
     transform: rotate(3deg);
-    z-index: 999;
+    z-index: 10;
     font-family: 'Patrick Hand', 'Comic Sans MS', 'Segoe UI', cursive, sans-serif;
     transition: all 0.3s ease;
     cursor: default;
@@ -1577,8 +1577,8 @@ img {
    Minimized Sticky Tab
    =========================== */
 .save-the-date-mini {
-    position: fixed;
-    top: 220px;
+    position: absolute;
+    top: 50px;
     right: 0;
     background: linear-gradient(145deg, #fff566 0%, #ffeb3b 50%, #fdd835 100%);
     padding: 10px 12px 10px 14px;
@@ -1586,7 +1586,7 @@ img {
     box-shadow: 
         -2px 2px 10px rgba(0, 0, 0, 0.2),
         -1px -1px 3px rgba(255, 255, 255, 0.5) inset;
-    z-index: 999;
+    z-index: 10;
     font-family: 'Patrick Hand', 'Comic Sans MS', 'Segoe UI', cursive, sans-serif;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -1640,30 +1640,30 @@ img {
 /* Mobile responsive */
 @media (max-width: 768px) {
     .save-the-date-sticky {
-        position: fixed;
+        position: absolute;
         top: auto;
-        bottom: 20px;
+        bottom: 30px;
         right: 10px;
         left: auto;
-        width: 160px;
-        padding: 20px 15px 15px;
+        width: 150px;
+        padding: 18px 14px 14px;
         transform: rotate(2deg);
     }
     
     .sticky-label {
-        font-size: 0.9rem;
-    }
-    
-    .sticky-date {
-        font-size: 1.2rem;
-    }
-    
-    .sticky-event {
         font-size: 0.85rem;
     }
     
+    .sticky-date {
+        font-size: 1.1rem;
+    }
+    
+    .sticky-event {
+        font-size: 0.8rem;
+    }
+    
     .sticky-location {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
     }
     
     .sticky-pin {
@@ -1681,17 +1681,17 @@ img {
             transform: rotate(2deg) translateY(0);
         }
         40% {
-            transform: rotate(0deg) translateY(10px);
+            transform: rotate(0deg) translateY(-10px);
         }
         60% {
-            transform: rotate(4deg) translateY(5px);
+            transform: rotate(4deg) translateY(-5px);
         }
     }
     
-    /* Mini tab on mobile - bottom right */
+    /* Mini tab on mobile */
     .save-the-date-mini {
         top: auto;
-        bottom: 20px;
+        bottom: 30px;
         right: 0;
         padding: 8px 10px 8px 12px;
     }
@@ -1708,22 +1708,22 @@ img {
 /* Extra small screens */
 @media (max-width: 380px) {
     .save-the-date-sticky {
-        width: 140px;
-        padding: 18px 12px 12px;
+        width: 130px;
+        padding: 16px 12px 12px;
         right: 5px;
-        bottom: 15px;
+        bottom: 20px;
     }
     
     .sticky-label {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
     }
     
     .sticky-date {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
     
     .save-the-date-mini {
-        bottom: 15px;
+        bottom: 20px;
     }
 }
 
