@@ -279,6 +279,57 @@
     </div>
 </header>
 
+<!-- Save the Date Sticky Note -->
+<?php
+$event_date_sticky = get_theme_mod('nolaholi_event_date', 'March 7, 2026');
+$event_location_sticky = get_theme_mod('nolaholi_location', 'Washington Square Park, New Orleans');
+// Extract year from event date for dynamic display
+$event_year = '';
+if (preg_match('/\b(20\d{2})\b/', $event_date_sticky, $matches)) {
+    $event_year = $matches[1];
+}
+$sticky_dismissed = isset($_COOKIE['nolaholi_save_date_dismissed']);
+?>
+<?php if (!$sticky_dismissed) : ?>
+<div class="save-the-date-sticky" id="save-the-date-sticky">
+    <button class="sticky-close" onclick="dismissSaveTheDate()" aria-label="Close save the date notice">&times;</button>
+    <div class="sticky-pin"></div>
+    <div class="sticky-content">
+        <span class="sticky-label">📌 SAVE THE DATE!</span>
+        <span class="sticky-date"><?php echo esc_html($event_date_sticky); ?></span>
+        <span class="sticky-event">NOLA Holi <?php echo esc_html($event_year); ?></span>
+        <span class="sticky-location">📍 <?php echo esc_html($event_location_sticky); ?></span>
+    </div>
+</div>
+<script>
+function dismissSaveTheDate() {
+    var sticky = document.getElementById('save-the-date-sticky');
+    if (sticky) {
+        sticky.classList.add('dismissed');
+        // Set cookie to remember dismissal for 3 days
+        var expiryDate = new Date();
+        expiryDate.setDate(expiryDate.getDate() + 3);
+        document.cookie = 'nolaholi_save_date_dismissed=1; expires=' + expiryDate.toUTCString() + '; path=/';
+        
+        setTimeout(function() {
+            sticky.style.display = 'none';
+        }, 500);
+    }
+}
+
+// Add bounce animation periodically to attract attention
+setInterval(function() {
+    var sticky = document.getElementById('save-the-date-sticky');
+    if (sticky && !sticky.classList.contains('dismissed')) {
+        sticky.classList.add('bounce');
+        setTimeout(function() {
+            sticky.classList.remove('bounce');
+        }, 1000);
+    }
+}, 8000);
+</script>
+<?php endif; ?>
+
 <?php
 /**
  * Default menu fallback if no menu is assigned

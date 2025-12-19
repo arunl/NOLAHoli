@@ -65,7 +65,7 @@ function nolaholi_scripts() {
     wp_enqueue_style('nolaholi-style', get_stylesheet_uri(), array(), $css_version);
     
     // Google Fonts
-    wp_enqueue_style('nolaholi-fonts', 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap', array(), null);
+    wp_enqueue_style('nolaholi-fonts', 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Patrick+Hand&display=swap', array(), null);
     
     // Main JavaScript
     wp_enqueue_script('nolaholi-script', get_template_directory_uri() . '/js/main.js', array('jquery'), $js_version, true);
