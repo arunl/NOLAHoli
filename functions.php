@@ -939,6 +939,19 @@ function nolaholi_customize_register($wp_customize) {
         'type'    => 'text',
     ));
     
+    // Show Save the Date Sticky
+    $wp_customize->add_setting('nolaholi_show_save_date_sticky', array(
+        'default'           => true,
+        'sanitize_callback' => 'wp_validate_boolean',
+    ));
+    
+    $wp_customize->add_control('nolaholi_show_save_date_sticky', array(
+        'label'       => __('Show "Save the Date" Sticky Note', 'nolaholi'),
+        'description' => __('Display a floating sticky note with the event date on all pages', 'nolaholi'),
+        'section'     => 'nolaholi_event_info',
+        'type'        => 'checkbox',
+    ));
+    
     // Social Media Section
     $wp_customize->add_section('nolaholi_social', array(
         'title'    => __('Social Media', 'nolaholi'),
