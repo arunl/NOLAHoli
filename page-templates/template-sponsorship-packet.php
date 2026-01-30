@@ -159,7 +159,7 @@ get_header();
                     <ul class="tier-benefits">
                         <li>Prominent Logo placement on stage side banners and program schedule</li>
                         <li>Verbal shoutout from emcee during headliner acts</li>
-                        <li>4 VIP passes + access to VIP tent</li>
+                        <li>8 VIP passes + access to VIP tent</li>
                         <li>Logo placement in all market materials – online and offline</li>
                         <li>Logo on event T-shirts</li>
                     </ul>
@@ -177,7 +177,7 @@ get_header();
                     </div>
                     <ul class="tier-benefits">
                         <li>Logo featured at VIP tent entrance and tables</li>
-                        <li>6 VIP passes</li>
+                        <li>6-8 VIP passes</li>
                         <li>Opportunity to include product or collateral in VIP tent area</li>
                         <li>Inclusion on website, signage, and select social posts</li>
                     </ul>
@@ -192,6 +192,7 @@ get_header();
                     </div>
                     <ul class="tier-benefits">
                         <li>Name on event T-shirts</li>
+                        <li>4 VIP passes</li>
                         <li>Recognition by DJ at Festival</li>
                         <li>Recognition on Social Media</li>
                         <li>Name on NOLA Holi Website</li>
@@ -206,6 +207,7 @@ get_header();
                         <div style="font-size: 0.9rem; color: var(--text-light); margin-top: 5px;">(No Limit)</div>
                     </div>
                     <ul class="tier-benefits">
+                        <li>2 VIP passes</li>
                         <li>Recognition on Social Media</li>
                         <li>Recognition on NOLA Holi Website</li>
                     </ul>
