@@ -57,11 +57,35 @@ jobs:
       - name: Setup SSH key
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          
+          # Verify secrets are set
+          if [ -z "$SSH_HOST" ]; then
+            echo "ERROR: SSH_HOST secret is not set!"
+            exit 1
+          fi
+          
+          # Add host key with retry (Dreamhost can be slow to respond)
+          echo "Scanning SSH host: $SSH_HOST"
+          for i in 1 2 3; do
+            if ssh-keyscan -T 30 -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null; then
+              echo "Host key added successfully"
+              break
+            fi
+            echo "Attempt $i failed, retrying in 5 seconds..."
+            sleep 5
+          done
+          
+          # Verify known_hosts has content
+          if [ ! -s ~/.ssh/known_hosts ]; then
+            echo "ERROR: Failed to get host key after 3 attempts"
+            echo "This may be a network issue or Dreamhost blocking GitHub Actions IPs"
+            exit 1
+          fi
       
       - name: Set deployment path and branch
         id: path
