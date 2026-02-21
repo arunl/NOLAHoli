@@ -149,10 +149,18 @@ $selected_year = isset($_GET['year']) && in_array($_GET['year'], $available_year
             
             // Group sponsors by tier
             $sponsors_by_tier = array();
+            $has_valid_sponsors = false;
+            
             if ($all_sponsors_query->have_posts()) {
                 while ($all_sponsors_query->have_posts()) {
                     $all_sponsors_query->the_post();
                     $tier_key = get_post_meta(get_the_ID(), '_sponsor_tier', true);
+                    
+                    // Skip sponsors without a valid tier
+                    if (empty($tier_key) || !isset($all_tier_config[$tier_key])) {
+                        continue;
+                    }
+                    
                     $display_order = get_post_meta(get_the_ID(), '_sponsor_display_order', true);
                     $display_order = ($display_order === '' || $display_order === false) ? 0 : intval($display_order);
                     
@@ -167,6 +175,7 @@ $selected_year = isset($_GET['year']) && in_array($_GET['year'], $available_year
                         'website' => get_post_meta(get_the_ID(), '_sponsor_website', true),
                         'has_thumbnail' => has_post_thumbnail()
                     );
+                    $has_valid_sponsors = true;
                 }
                 wp_reset_postdata();
             }
@@ -238,8 +247,8 @@ $selected_year = isset($_GET['year']) && in_array($_GET['year'], $available_year
                 <?php endif;
             endforeach;
             
-            // Check if there are ANY sponsors for the selected year
-            if (empty($sponsors_by_tier)) : ?>
+            // Check if there are ANY valid sponsors for the selected year
+            if (!$has_valid_sponsors) : ?>
                 <div style="text-align: center; padding: 60px 20px; background: white; border-radius: 15px;">
                     <div style="font-size: 3rem; margin-bottom: 20px;">🎉</div>
                     <h3 style="color: var(--mardi-gras-purple); margin-bottom: 15px; font-size: 1.8rem;">
