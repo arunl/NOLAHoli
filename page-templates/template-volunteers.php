@@ -7,6 +7,10 @@
  */
 
 get_header();
+
+// Get event year from theme customizer
+$event_date = get_theme_mod('nolaholi_event_date', '');
+$event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
 ?>
 
 <main id="primary" class="site-main">
@@ -274,10 +278,10 @@ get_header();
     <section id="volunteer-form" class="content-section bg-purple">
         <div class="container">
             <div style="max-width: 700px; margin: 0 auto;">
-                <h2 class="section-title text-center" style="color: white;">Join Our 2026 Volunteer Team!</h2>
+                <h2 class="section-title text-center" style="color: white;">Join Our <?php echo esc_html($event_year); ?> Volunteer Team!</h2>
                 <div class="section-divider"></div>
                 <p style="text-align: center; font-size: 1.1rem; color: var(--off-white); margin-bottom: 30px; line-height: 1.8;">
-                    Ready to join our amazing volunteer team? Sign up now and help us make NOLA Holi 2026 the best one yet!
+                    Ready to join our amazing volunteer team? Sign up now and help us make NOLA Holi <?php echo esc_html($event_year); ?> the best one yet!
                 </p>
                 
                 <div style="text-align: center; margin-bottom: 40px;">
@@ -322,7 +326,7 @@ get_header();
                 <span>&times;</span>
             </button>
             <div class="volunteer-modal-header">
-                <h2>Join Our 2026 Volunteer Team!</h2>
+                <h2>Join Our <?php echo esc_html($event_year); ?> Volunteer Team!</h2>
                 <p class="volunteer-modal-event-info">
                     <strong>Event Date:</strong> <?php echo esc_html(get_theme_mod('nolaholi_event_date', 'March 7, 2026')); ?> | 
                     <strong>Time:</strong> <?php echo esc_html(get_theme_mod('nolaholi_event_time', 'TBD')); ?>

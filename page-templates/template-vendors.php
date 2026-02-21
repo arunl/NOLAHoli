@@ -7,6 +7,10 @@
  */
 
 get_header();
+
+// Get event year from theme customizer
+$event_date = get_theme_mod('nolaholi_event_date', '');
+$event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
 ?>
 
 <main id="primary" class="site-main">
@@ -15,7 +19,7 @@ get_header();
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1 class="hero-title">Vendors</h1>
-            <p class="hero-subtitle">Join Us at NOLA Holi Festival 2026</p>
+            <p class="hero-subtitle">Join Us at NOLA Holi Festival <?php echo esc_html($event_year); ?></p>
         </div>
     </section>
     
@@ -165,7 +169,7 @@ get_header();
                     <li><strong>Setup:</strong> Vendors must arrive by designated setup time (TBD)</li>
                     <li><strong>Breakdown:</strong> Vendors must remain for entire event and clean up their space</li>
                     <li><strong>Electricity:</strong> Limited power available; request during application</li>
-                    <li><strong>Weather:</strong> Event is rain or shine (rain date: March 8, 2026)</li>
+                    <li><strong>Weather:</strong> Event is rain or shine (rain date: <?php echo esc_html(get_theme_mod('nolaholi_rain_date', 'TBD')); ?>)</li>
                 </ul>
                 
                 <h3 style="color: var(--mardi-gras-green); margin-bottom: 20px; font-size: 1.5rem;">What Vendors Must Provide</h3>
@@ -278,7 +282,7 @@ get_header();
                 <h2 class="section-title" style="color: white;">Ready to Be a Vendor?</h2>
                 <div class="section-divider"></div>
                 <p style="font-size: 1.1rem; color: var(--off-white); line-height: 1.8; margin-bottom: 30px;">
-                    Join us at NOLA Holi 2026 and be part of New Orleans' most colorful celebration! 
+                    Join us at NOLA Holi <?php echo esc_html($event_year); ?> and be part of New Orleans' most colorful celebration! 
                     Whether you serve delicious food or sell unique artisan goods, we'd love to have you.
                 </p>
                 <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">

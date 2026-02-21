@@ -7,13 +7,17 @@
  */
 
 get_header();
+
+// Get event year from theme customizer
+$event_date = get_theme_mod('nolaholi_event_date', '');
+$event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
 ?>
 
 <!-- Hero Section -->
 <section class="hero-section" style="<?php echo nolaholi_get_hero_background_style('var(--gradient-festival)'); ?>">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-        <h1 class="hero-title">NOLA Holi Festival 2026</h1>
+        <h1 class="hero-title">NOLA Holi Festival <?php echo esc_html($event_year); ?></h1>
         <p class="hero-subtitle">Celebrating the Festival of Colors in the Heart of New Orleans</p>
     </div>
 </section>

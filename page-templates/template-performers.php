@@ -7,6 +7,10 @@
  */
 
 get_header();
+
+// Get event year from theme customizer
+$event_date = get_theme_mod('nolaholi_event_date', '');
+$event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
 ?>
 
 <main id="primary" class="site-main">
@@ -265,7 +269,7 @@ get_header();
             <span>&times;</span>
         </button>
         <div class="volunteer-modal-header">
-            <h2>Apply to Perform at NOLA Holi 2026</h2>
+            <h2>Apply to Perform at NOLA Holi <?php echo esc_html($event_year); ?></h2>
             <p class="volunteer-modal-event-info">
                 <strong>Event Date:</strong> <?php echo esc_html(get_theme_mod('nolaholi_event_date', 'March 7, 2026')); ?> | 
                 <strong>Time:</strong> <?php echo esc_html(get_theme_mod('nolaholi_event_time', 'TBD')); ?>

@@ -7,6 +7,10 @@
  */
 
 get_header();
+
+// Get event year from theme customizer
+$event_date = get_theme_mod('nolaholi_event_date', '');
+$event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
 ?>
 
 <main id="primary" class="site-main">
@@ -104,7 +108,7 @@ get_header();
             <h2 class="section-title text-center">Sponsorship Packages</h2>
             <div class="section-divider"></div>
             <p style="text-align: center; max-width: 700px; margin: 20px auto 40px; font-size: 1.1rem; color: var(--text-light);">
-                Join us in making NOLA Holi 2026 bigger and better! Choose a sponsorship level that works for you.
+                Join us in making NOLA Holi <?php echo esc_html($event_year); ?> bigger and better! Choose a sponsorship level that works for you.
             </p>
             
             <div class="tier-grid">
@@ -275,7 +279,7 @@ get_header();
                 <h2 class="section-title" style="color: white;">Ready to Partner With Us?</h2>
                 <div class="section-divider"></div>
                 <p style="font-size: 1.1rem; color: var(--off-white); line-height: 1.8; margin-bottom: 30px;">
-                    We'd love to discuss how your organization can be part of NOLA Holi 2026! Sponsorship packages can be 
+                    We'd love to discuss how your organization can be part of NOLA Holi <?php echo esc_html($event_year); ?>! Sponsorship packages can be 
                     customized to meet your organization's goals and budget.
                 </p>
                 <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">

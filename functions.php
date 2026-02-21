@@ -323,6 +323,9 @@ add_action('init', 'nolaholi_custom_post_types');
  */
 function nolaholi_custom_taxonomies() {
     // Sponsor Tier Taxonomy
+    // Note: Sponsor Tiers taxonomy is registered but NOT used by the theme.
+    // Tiers are stored as post meta (_sponsor_tier) instead.
+    // Keeping registration for backwards compatibility but hiding from UI.
     register_taxonomy('sponsor_tier', 'sponsor', array(
         'labels' => array(
             'name'              => __('Sponsor Tiers', 'nolaholi'),
@@ -336,8 +339,8 @@ function nolaholi_custom_taxonomies() {
             'menu_name'         => __('Sponsor Tiers', 'nolaholi'),
         ),
         'hierarchical'      => true,
-        'show_ui'           => true,
-        'show_admin_column' => true,
+        'show_ui'           => false,  // Hidden - theme uses post meta instead
+        'show_admin_column' => false,  // Hidden - custom column added via filter
         'query_var'         => true,
         'show_in_rest'      => true,
     ));
@@ -1070,7 +1073,11 @@ function nolaholi_get_first_event_sponsor() {
         return $cached_sponsor;
     }
     
-    // Query for event sponsors in 2025
+    // Get event year from theme customizer (extract year from date like "March 7, 2026")
+    $event_date = get_theme_mod('nolaholi_event_date', '');
+    $current_event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
+    
+    // Query for event/presenting sponsors for the current event year
     $args = array(
         'post_type' => 'sponsor',
         'posts_per_page' => -1,  // Get all to sort properly
@@ -1078,7 +1085,7 @@ function nolaholi_get_first_event_sponsor() {
             'relation' => 'AND',
             array(
                 'key' => '_sponsor_year',
-                'value' => '2025',
+                'value' => $current_event_year,
                 'compare' => '='
             ),
             array(
@@ -1144,6 +1151,85 @@ function nolaholi_clear_sponsor_cache($post_id) {
     }
 }
 add_action('save_post', 'nolaholi_clear_sponsor_cache');
+
+/**
+ * Add custom columns to Sponsors admin list
+ */
+function nolaholi_sponsor_admin_columns($columns) {
+    $new_columns = array();
+    foreach ($columns as $key => $value) {
+        $new_columns[$key] = $value;
+        // Add Tier and Year columns after Title
+        if ($key === 'title') {
+            $new_columns['sponsor_tier'] = __('Tier', 'nolaholi');
+            $new_columns['sponsor_year'] = __('Year', 'nolaholi');
+        }
+    }
+    return $new_columns;
+}
+add_filter('manage_sponsor_posts_columns', 'nolaholi_sponsor_admin_columns');
+
+/**
+ * Populate custom columns in Sponsors admin list
+ */
+function nolaholi_sponsor_admin_column_content($column, $post_id) {
+    if ($column === 'sponsor_tier') {
+        $tier = get_post_meta($post_id, '_sponsor_tier', true);
+        $tier_labels = array(
+            'event' => 'Presenting',
+            'parade' => 'Parade',
+            'entertainment' => 'Entertainment',
+            'vip' => 'VIP Experience',
+            'diamond' => 'Diamond (2025)',
+            'platinum' => 'Platinum (2025)',
+            'gold' => 'Gold',
+            'silver' => 'Silver',
+            'friends' => 'Friend'
+        );
+        echo isset($tier_labels[$tier]) ? esc_html($tier_labels[$tier]) : esc_html(ucfirst($tier));
+    }
+    if ($column === 'sponsor_year') {
+        $year = get_post_meta($post_id, '_sponsor_year', true);
+        echo $year ? esc_html($year) : '—';
+    }
+}
+add_action('manage_sponsor_posts_custom_column', 'nolaholi_sponsor_admin_column_content', 10, 2);
+
+/**
+ * Make Tier and Year columns sortable
+ */
+function nolaholi_sponsor_sortable_columns($columns) {
+    $columns['sponsor_tier'] = 'sponsor_tier';
+    $columns['sponsor_year'] = 'sponsor_year';
+    return $columns;
+}
+add_filter('manage_edit-sponsor_sortable_columns', 'nolaholi_sponsor_sortable_columns');
+
+/**
+ * Handle sorting by custom meta fields
+ */
+function nolaholi_sponsor_column_orderby($query) {
+    if (!is_admin() || !$query->is_main_query()) {
+        return;
+    }
+    
+    if ($query->get('post_type') !== 'sponsor') {
+        return;
+    }
+    
+    $orderby = $query->get('orderby');
+    
+    if ($orderby === 'sponsor_tier') {
+        $query->set('meta_key', '_sponsor_tier');
+        $query->set('orderby', 'meta_value');
+    }
+    
+    if ($orderby === 'sponsor_year') {
+        $query->set('meta_key', '_sponsor_year');
+        $query->set('orderby', 'meta_value_num');
+    }
+}
+add_action('pre_get_posts', 'nolaholi_sponsor_column_orderby');
 
 /**
  * Get active popup news items (multiple items for carousel)
