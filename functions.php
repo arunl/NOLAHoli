@@ -1440,13 +1440,21 @@ function nolaholi_open_graph_meta_tags() {
         }
     }
     
+    // Get sponsor information for additional context (fetch early so we can use in descriptions)
+    $event_sponsor = nolaholi_get_first_event_sponsor();
+    $sponsor_text = '';
+    if ($event_sponsor && !empty($event_sponsor['name'])) {
+        $sponsor_text = ' Presented by ' . $event_sponsor['name'] . '.';
+    }
+    
     // Customize based on page type
     if (is_front_page() || is_home()) {
         $og_title = $og_site_name;
         $og_description = sprintf(
-            'Join us for NOLA Holi on %s at %s. Experience the vibrant colors and joy of Holi in New Orleans!',
+            'Join us for NOLA Holi on %s at %s.%s Experience the vibrant colors and joy of Holi in New Orleans!',
             $event_date,
-            $location
+            $location,
+            $sponsor_text
         );
     } elseif (is_singular()) {
         global $post;
@@ -1529,9 +1537,6 @@ function nolaholi_open_graph_meta_tags() {
         $default_image = get_template_directory_uri() . '/images/celebration-photo-1.jpg';
         $og_image = $default_image;
     }
-    
-    // Get sponsor information for additional context
-    $event_sponsor = nolaholi_get_first_event_sponsor();
     
     // Sanitize all values
     $og_title = esc_attr($og_title);
