@@ -68,8 +68,9 @@ $available_years = $wpdb->get_col(
 );
 
 // Determine selected year: from URL parameter, or default to most recent
-$selected_year = isset($_GET['year']) && in_array($_GET['year'], $available_years) 
-    ? sanitize_text_field($_GET['year']) 
+// Note: Using 'sponsor_year' instead of 'year' because 'year' is a reserved WordPress query variable
+$selected_year = isset($_GET['sponsor_year']) && in_array($_GET['sponsor_year'], $available_years) 
+    ? sanitize_text_field($_GET['sponsor_year']) 
     : (!empty($available_years) ? $available_years[0] : date('Y'));
 ?>
 
@@ -111,7 +112,7 @@ $selected_year = isset($_GET['year']) && in_array($_GET['year'], $available_year
             <!-- Year Selector Tabs -->
             <div class="sponsor-year-selector" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; flex-wrap: wrap;">
                 <?php foreach ($available_years as $year) : ?>
-                    <a href="<?php echo esc_url(add_query_arg('year', $year)); ?>" 
+                    <a href="<?php echo esc_url(add_query_arg('sponsor_year', $year)); ?>" 
                        class="year-tab <?php echo ($year == $selected_year) ? 'active' : ''; ?>"
                        style="padding: 12px 24px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;
                               <?php if ($year == $selected_year) : ?>
