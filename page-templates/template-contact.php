@@ -7,6 +7,10 @@
  */
 
 get_header();
+
+// Get event year from theme customizer
+$event_date = get_theme_mod('nolaholi_event_date', '');
+$event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
 ?>
 
 <main id="primary" class="site-main">
@@ -271,10 +275,10 @@ get_header();
                 <div style="display: grid; gap: 20px;">
                     <div style="background: var(--off-white); padding: 30px; border-radius: 10px;">
                         <h4 style="color: var(--mardi-gras-purple); margin-bottom: 10px; font-size: 1.2rem;">
-                            When is NOLA Holi 2026?
+                            When is NOLA Holi <?php echo esc_html($event_year); ?>?
                         </h4>
                         <p style="color: var(--text-light); line-height: 1.8;">
-                            NOLA Holi 2026 is scheduled for <strong><?php echo esc_html(get_theme_mod('nolaholi_event_date', 'March 7, 2026')); ?></strong>, 
+                            NOLA Holi <?php echo esc_html($event_year); ?> is scheduled for <strong><?php echo esc_html(get_theme_mod('nolaholi_event_date', 'TBD')); ?></strong>, 
                             with a rain date of <strong><?php echo esc_html(get_theme_mod('nolaholi_rain_date', 'March 8, 2026')); ?></strong>. 
                             Specific times will be announced closer to the event date.
                         </p>

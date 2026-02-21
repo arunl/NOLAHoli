@@ -7,6 +7,71 @@
  */
 
 get_header();
+
+// Year-aware tier naming function
+// Maps tier keys to display names based on the year
+if (!function_exists('nolaholi_get_tier_name')) {
+    function nolaholi_get_tier_name($tier_key, $year) {
+        // 2025 tier names (original structure)
+        $tiers_2025 = array(
+            'event' => 'Event Sponsors',
+            'diamond' => 'Diamond Sponsors',
+            'platinum' => 'Platinum Sponsors',
+            'gold' => 'Gold Sponsors',
+            'silver' => 'Silver Sponsors',
+            'friends' => 'Friends of NOLA Holi'
+        );
+        
+        // 2026+ tier names (new structure)
+        $tiers_2026_plus = array(
+            'event' => 'Presenting Sponsors',
+            'parade' => 'Parade Sponsors',
+            'entertainment' => 'Entertainment Sponsors',
+            'vip' => 'VIP Experience Sponsors',
+            'gold' => 'Gold Sponsors',
+            'silver' => 'Silver Sponsors',
+            'friends' => 'Friends of NOLA Holi'
+        );
+        
+        // Select appropriate tier structure based on year
+        if ($year <= 2025) {
+            return isset($tiers_2025[$tier_key]) ? $tiers_2025[$tier_key] : ucfirst($tier_key) . ' Sponsors';
+        } else {
+            return isset($tiers_2026_plus[$tier_key]) ? $tiers_2026_plus[$tier_key] : ucfirst($tier_key) . ' Sponsors';
+        }
+    }
+}
+
+// Define all possible tiers with their styling and order
+$all_tier_config = array(
+    'event' => array('color' => 'var(--mardi-gras-purple)', 'order' => 1),
+    'parade' => array('color' => '#4DB8FF', 'order' => 2),
+    'diamond' => array('color' => '#4DB8FF', 'order' => 2),
+    'entertainment' => array('color' => 'var(--mardi-gras-purple)', 'order' => 3),
+    'platinum' => array('color' => '#6C757D', 'order' => 3),
+    'vip' => array('color' => 'var(--mardi-gras-gold)', 'order' => 4),
+    'gold' => array('color' => 'var(--mardi-gras-gold)', 'order' => 5),
+    'silver' => array('color' => '#95A5A6', 'order' => 6),
+    'friends' => array('color' => 'var(--mardi-gras-green)', 'order' => 7)
+);
+
+// Get all unique years that have sponsors (sorted descending - most recent first)
+global $wpdb;
+$available_years = $wpdb->get_col(
+    "SELECT DISTINCT meta_value FROM {$wpdb->postmeta} pm
+     INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
+     WHERE pm.meta_key = '_sponsor_year' 
+     AND p.post_type = 'sponsor' 
+     AND p.post_status = 'publish'
+     AND pm.meta_value != ''
+     ORDER BY meta_value DESC"
+);
+
+// Determine selected year: from URL parameter, or default to most recent
+// Note: Using 'sponsor_year' instead of 'year' because 'year' is a reserved WordPress query variable
+$selected_year = isset($_GET['sponsor_year']) && in_array($_GET['sponsor_year'], $available_years) 
+    ? sanitize_text_field($_GET['sponsor_year']) 
+    : (!empty($available_years) ? $available_years[0] : date('Y'));
 ?>
 
 <main id="primary" class="site-main">
@@ -39,98 +104,43 @@ get_header();
         </div>
     </section>
     
-    <!-- 2025 Sponsors by Tier -->
+    <!-- Sponsors by Tier -->
     <section class="content-section bg-light">
         <div class="container">
-            <h2 class="section-title text-center">2025 Sponsors</h2>
+            
+            <?php if (count($available_years) > 1) : ?>
+            <!-- Year Selector Tabs -->
+            <div class="sponsor-year-selector" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; flex-wrap: wrap;">
+                <?php foreach ($available_years as $year) : ?>
+                    <a href="<?php echo esc_url(add_query_arg('sponsor_year', $year)); ?>" 
+                       class="year-tab <?php echo ($year == $selected_year) ? 'active' : ''; ?>"
+                       style="padding: 12px 24px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;
+                              <?php if ($year == $selected_year) : ?>
+                                  background: var(--mardi-gras-purple); color: white;
+                              <?php else : ?>
+                                  background: white; color: var(--mardi-gras-purple); border: 2px solid var(--mardi-gras-purple);
+                              <?php endif; ?>">
+                        <?php echo esc_html($year); ?>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
+            
+            <h2 class="section-title text-center"><?php echo esc_html($selected_year); ?> Sponsors</h2>
             <div class="section-divider"></div>
             <p style="text-align: center; font-size: 1.1rem; color: var(--text-light); margin-bottom: 50px;">
-                We are grateful to our 2025 sponsors who help make the festival possible!
+                We are grateful to our <?php echo esc_html($selected_year); ?> sponsors who help make the festival possible!
             </p>
             
             <?php
-            // Year-aware tier naming function
-            // Maps tier keys to display names based on the year
-            function nolaholi_get_tier_name($tier_key, $year) {
-                // 2025 tier names (original structure)
-                $tiers_2025 = array(
-                    'event' => 'Event Sponsors',
-                    'diamond' => 'Diamond Sponsors',
-                    'platinum' => 'Platinum Sponsors',
-                    'gold' => 'Gold Sponsors',
-                    'silver' => 'Silver Sponsors',
-                    'friends' => 'Friends of NOLA Holi'
-                );
-                
-                // 2026+ tier names (new structure)
-                $tiers_2026_plus = array(
-                    'event' => 'Presenting Sponsors',
-                    'parade' => 'Parade Sponsors',
-                    'entertainment' => 'Entertainment Sponsors',
-                    'vip' => 'VIP Experience Sponsors',
-                    'gold' => 'Gold Sponsors',
-                    'silver' => 'Silver Sponsors',
-                    'friends' => 'Friends of NOLA Holi'
-                );
-                
-                // Select appropriate tier structure based on year
-                if ($year <= 2025) {
-                    return isset($tiers_2025[$tier_key]) ? $tiers_2025[$tier_key] : ucfirst($tier_key) . ' Sponsors';
-                } else {
-                    return isset($tiers_2026_plus[$tier_key]) ? $tiers_2026_plus[$tier_key] : ucfirst($tier_key) . ' Sponsors';
-                }
-            }
-            
-            // Define all possible tiers with their styling and order
-            // Order represents display priority (lower numbers appear first)
-            $all_tier_config = array(
-                'event' => array(
-                    'color' => 'var(--mardi-gras-purple)',
-                    'order' => 1
-                ),
-                'parade' => array(
-                    'color' => '#4DB8FF',
-                    'order' => 2
-                ),
-                'diamond' => array(
-                    'color' => '#4DB8FF',
-                    'order' => 2
-                ),
-                'entertainment' => array(
-                    'color' => 'var(--mardi-gras-purple)',
-                    'order' => 3
-                ),
-                'platinum' => array(
-                    'color' => '#6C757D',
-                    'order' => 3
-                ),
-                'vip' => array(
-                    'color' => 'var(--mardi-gras-gold)',
-                    'order' => 4
-                ),
-                'gold' => array(
-                    'color' => 'var(--mardi-gras-gold)',
-                    'order' => 5
-                ),
-                'silver' => array(
-                    'color' => '#95A5A6',
-                    'order' => 6
-                ),
-                'friends' => array(
-                    'color' => 'var(--mardi-gras-green)',
-                    'order' => 7
-                )
-            );
-            
-            // Get all sponsors for the year
-            $year = '2025'; // This could be made dynamic
+            // Get all sponsors for the selected year
             $args = array(
                 'post_type' => 'sponsor',
                 'posts_per_page' => -1,
                 'meta_query' => array(
                     array(
                         'key' => '_sponsor_year',
-                        'value' => $year,
+                        'value' => $selected_year,
                         'compare' => '='
                     )
                 )
@@ -140,10 +150,18 @@ get_header();
             
             // Group sponsors by tier
             $sponsors_by_tier = array();
+            $has_valid_sponsors = false;
+            
             if ($all_sponsors_query->have_posts()) {
                 while ($all_sponsors_query->have_posts()) {
                     $all_sponsors_query->the_post();
                     $tier_key = get_post_meta(get_the_ID(), '_sponsor_tier', true);
+                    
+                    // Skip sponsors without a valid tier
+                    if (empty($tier_key) || !isset($all_tier_config[$tier_key])) {
+                        continue;
+                    }
+                    
                     $display_order = get_post_meta(get_the_ID(), '_sponsor_display_order', true);
                     $display_order = ($display_order === '' || $display_order === false) ? 0 : intval($display_order);
                     
@@ -158,6 +176,7 @@ get_header();
                         'website' => get_post_meta(get_the_ID(), '_sponsor_website', true),
                         'has_thumbnail' => has_post_thumbnail()
                     );
+                    $has_valid_sponsors = true;
                 }
                 wp_reset_postdata();
             }
@@ -176,7 +195,7 @@ get_header();
                 
                 // Get tier configuration
                 $tier_config = $all_tier_config[$tier_key];
-                $tier_name = nolaholi_get_tier_name($tier_key, intval($year));
+                $tier_name = nolaholi_get_tier_name($tier_key, intval($selected_year));
                 
                 // Sort sponsors by display_order first, then by title
                 usort($sponsors_array, function($a, $b) {
@@ -229,39 +248,20 @@ get_header();
                 <?php endif;
             endforeach;
             
-            // Check if there are ANY sponsors at all
-            $all_sponsors_args = array(
-                'post_type' => 'sponsor',
-                'posts_per_page' => 1,
-                'meta_query' => array(
-                    array(
-                        'key' => '_sponsor_year',
-                        'value' => '2025',
-                        'compare' => '='
-                    )
-                )
-            );
-            $check_query = new WP_Query($all_sponsors_args);
-            
-            if (!$check_query->have_posts()) : ?>
+            // Check if there are ANY valid sponsors for the selected year
+            if (!$has_valid_sponsors) : ?>
                 <div style="text-align: center; padding: 60px 20px; background: white; border-radius: 15px;">
                     <div style="font-size: 3rem; margin-bottom: 20px;">🎉</div>
                     <h3 style="color: var(--mardi-gras-purple); margin-bottom: 15px; font-size: 1.8rem;">
-                        Be Our First Sponsor!
+                        <?php echo esc_html($selected_year); ?> Sponsors Coming Soon!
                     </h3>
                     <p style="color: var(--text-light); line-height: 1.8; margin-bottom: 25px; max-width: 600px; margin-left: auto; margin-right: auto;">
-                        Our 2025 sponsors will be announced soon. Want to be first? Join us in making NOLA Holi 2026 
-                        the biggest celebration yet!
+                        Our <?php echo esc_html($selected_year); ?> sponsors will be announced soon. Want to be part of NOLA Holi <?php echo esc_html($selected_year); ?>? 
+                        Join us in making it the biggest celebration yet!
                     </p>
                     <a href="<?php echo esc_url(home_url('/sponsorship-packet/')); ?>" class="btn btn-primary">
                         View Sponsorship Opportunities
                     </a>
-                    <div class="feature-icon">💜</div>
-                    <h3 class="feature-title">Feel Good</h3>
-                    <p class="feature-description">
-                        Be part of bringing together communities and creating joyful memories for thousands 
-                        of festival-goers.
-                    </p>
                 </div>
             <?php endif;
             wp_reset_postdata();
@@ -270,11 +270,16 @@ get_header();
     </section>
     
     <!-- CTA Section -->
+    <?php 
+    // Get next event year from customizer or default to next calendar year
+    $event_date = get_theme_mod('nolaholi_event_date', '');
+    $next_event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
+    ?>
     <section class="cta-section" style="margin-bottom: 80px;">
         <div class="cta-content">
             <h2 style="margin-bottom: 20px; font-size: 2.5rem; color: white;">Join Our Sponsors</h2>
             <p style="font-size: 1.2rem; margin-bottom: 30px; color: white; opacity: 0.95;">
-                Interested in sponsoring NOLA Holi 2026? We'd love to partner with you!
+                Interested in sponsoring NOLA Holi <?php echo esc_html($next_event_year); ?>? We'd love to partner with you!
             </p>
             <div class="cta-buttons" style="display: flex; justify-content: center;">
                 <a href="<?php echo esc_url(home_url('/sponsorship-packet/')); ?>" class="btn btn-gold">
@@ -291,9 +296,27 @@ get_header();
     box-shadow: var(--shadow-lg);
 }
 
+.year-tab:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(94, 43, 122, 0.3);
+}
+
+.year-tab.active {
+    box-shadow: 0 4px 12px rgba(94, 43, 122, 0.3);
+}
+
 @media (max-width: 768px) {
     .sponsor-logos {
         grid-template-columns: 1fr !important;
+    }
+    
+    .sponsor-year-selector {
+        gap: 8px !important;
+    }
+    
+    .year-tab {
+        padding: 10px 18px !important;
+        font-size: 0.9rem;
     }
 }
 </style>

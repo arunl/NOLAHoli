@@ -5,7 +5,7 @@ A vibrant, custom WordPress theme designed for the NOLA Holi Festival celebratin
 ## Theme Information
 
 - **Theme Name:** NOLA Holi
-- **Version:** 1.1.0
+- **Version:** 1.4.1
 - **Author:** NOLA Holi Team
 - **License:** GPL v2 or later
 - **Description:** A modern, responsive WordPress theme featuring Mardi Gras colors (purple, green, gold) designed specifically for the NOLA Holi Festival website
@@ -18,16 +18,21 @@ A vibrant, custom WordPress theme designed for the NOLA Holi Festival celebratin
 - **Modern UI/UX**: Clean, vibrant, and user-friendly interface
 - **Custom Page Templates**: Specialized templates for different content types
 - **Hero Sections**: Eye-catching hero banners on major pages
+- **Dynamic Event Year**: Marketing text automatically updates based on event date
 
 ### Custom Post Types
-1. **Sponsors** - Manage festival sponsors with tiers and logos
+1. **Sponsors** - Manage festival sponsors with tiers, logos, and year
 2. **Vendors** - Food and artisan vendor management
 3. **Team Members** - Board of Directors and organizers
 4. **Gallery** - Photo and video gallery items
+5. **News** - Festival news and announcements with popup carousel
 
-### Custom Taxonomies
-- **Sponsor Tiers** - Event, Diamond, Platinum, Gold, Silver, Friends
-- **Gallery Years** - Organize gallery items by year
+### Sponsor Management
+- **Year-based organization** - Sponsors tagged by year for historical tracking
+- **Multi-year display** - Sponsors page shows year selector tabs
+- **Tier system** - Supports both 2025 (Diamond, Platinum) and 2026+ (Presenting, Parade, Entertainment, VIP) tier structures
+- **Admin columns** - Tier and Year visible in sponsor list
+- **Header "Presented By"** - Automatically shows current year's presenting sponsor
 
 ### Page Templates
 1. **Home** (front-page.php) - Festival overview with hero, info, and CTAs
@@ -35,23 +40,25 @@ A vibrant, custom WordPress theme designed for the NOLA Holi Festival celebratin
 3. **About NOLA Holi** - Local history and Michelle's story
 4. **Parade** - Parade details and route information
 5. **Festival** - Festival activities and details
-6. **Sponsors** - Sponsorship tiers and current sponsors
-7. **Vendors** - Vendor opportunities and policies
-8. **Volunteers** - Volunteer sign-up and opportunities
-9. **Organizers** - Board of Directors and team
-10. **Gallery** - Photo/video galleries by year
-11. **Contact** - Contact form and information
+6. **Sponsors** - Sponsors by year with tier grouping
+7. **Sponsorship Packet** - Marketing page for potential sponsors
+8. **Vendors** - Vendor opportunities and policies
+9. **Volunteers** - Volunteer sign-up and opportunities
+10. **Organizers** - Board of Directors and team
+11. **Performers** - Performance application information
+12. **Gallery** - Photo/video galleries by year (Google Photos integration)
+13. **Contact** - Contact form and FAQ
 
 ### Theme Customizer Options
-- Event Date
+- Event Date (drives dynamic year across site)
 - Rain Date
 - Event Time
 - Event Location
 - Social Media Links (Facebook, Instagram, Twitter)
-- Photo Gallery Settings (Display style, Album URLs for 2024-2026)
+- Photo Gallery Settings (Album URLs by year)
 
 ### JavaScript Features
-- Mobile menu toggle
+- Mobile menu toggle with dropdown support
 - Smooth scrolling for anchor links
 - Sticky header on scroll
 - Gallery year tabs
@@ -60,8 +67,9 @@ A vibrant, custom WordPress theme designed for the NOLA Holi Festival celebratin
 - Back to top button
 - Scroll animations
 - Active menu item highlighting
+- News popup carousel
 
-### Google Photos Integration (NEW in v1.1.0)
+### Google Photos Integration
 - **Automatic Photo Fetching** - Photos automatically fetched from Google Photos shared albums
 - **Multiple Display Modes** - Grid view or carousel slider
 - **Intelligent Caching** - 24-hour cache for optimal performance
@@ -69,10 +77,8 @@ A vibrant, custom WordPress theme designed for the NOLA Holi Festival celebratin
 - **Keyboard Navigation** - Arrow keys to navigate photos
 - **Download Support** - Users can download original photos
 - **Lazy Loading** - Images load as needed for better performance
-- **No API Key Required** - Works immediately with public share URLs
-- **Optional Advanced Setup** - Full Google Photos API integration available
 
-See [GOOGLE-PHOTOS-API-SETUP.md](GOOGLE-PHOTOS-API-SETUP.md) for detailed configuration instructions.
+See [docs/GOOGLE-PHOTOS-API-SETUP.md](docs/GOOGLE-PHOTOS-API-SETUP.md) for detailed configuration instructions.
 
 ## Installation
 
@@ -100,7 +106,6 @@ See [GOOGLE-PHOTOS-API-SETUP.md](GOOGLE-PHOTOS-API-SETUP.md) for detailed config
    - Go to Appearance → Menus
    - Create a new menu or edit existing
    - Assign to "Primary Menu" location
-   - Add pages: Home, About Holi, About NOLA Holi, Parade, Festival, Sponsors, Vendors, Volunteers, Gallery, Contact
 
 5. **Configure Theme Settings**
    - Go to Appearance → Customize
@@ -111,19 +116,6 @@ See [GOOGLE-PHOTOS-API-SETUP.md](GOOGLE-PHOTOS-API-SETUP.md) for detailed config
 6. **Create Pages**
    For each page template, create a new page and assign the corresponding template:
    - Create page → Assign template from "Page Attributes" → "Template" dropdown
-   
-   Required pages:
-   - Home (set as Front Page in Settings → Reading)
-   - About Holi (Template: About Holi)
-   - About NOLA Holi (Template: About NOLA Holi)
-   - Parade (Template: Parade)
-   - Festival (Template: Festival)
-   - Sponsors (Template: Sponsors)
-   - Vendors (Template: Vendors)
-   - Volunteers (Template: Volunteers)
-   - Organizers (Template: Organizers)
-   - Gallery (Template: Gallery)
-   - Contact (Template: Contact)
 
 ## Usage
 
@@ -133,19 +125,24 @@ See [GOOGLE-PHOTOS-API-SETUP.md](GOOGLE-PHOTOS-API-SETUP.md) for detailed config
 2. Click "Add New Sponsor"
 3. Enter sponsor name
 4. Upload logo as Featured Image
-5. Fill in sponsor details:
+5. In the **Sponsor Details** meta box (below content), fill in:
    - Website URL
-   - Sponsor Tier (Event, Diamond, Platinum, Gold, Silver, Friends)
-   - Year (2024, 2025, 2026, etc.)
+   - Sponsor Tier (select from 2026+ or 2025 Historical tiers)
+   - Year (2025, 2026, etc.)
+   - Display Order (optional, for ordering within tier)
 6. Publish
 
-### Adding Vendors
+**Note:** The Sponsors page automatically shows year tabs when sponsors exist for multiple years, defaulting to the most recent year.
 
-1. Go to **Vendors** in WordPress admin
-2. Click "Add New Vendor"
-3. Enter vendor information
-4. Upload vendor logo/photo as Featured Image
-5. Publish
+### Updating for a New Year
+
+When preparing for a new festival year:
+
+1. **Update Event Date** - Appearance → Customize → Event Information
+   - This automatically updates the year across all marketing pages
+2. **Add New Sponsors** - Create sponsor entries with the new year
+3. **Update Sponsorship Packet** - Edit `page-templates/template-sponsorship-packet.php` if tier structure changes
+4. **Update Google Photos** - Add new album URL in Customizer → Photo Gallery
 
 ### Adding Team Members
 
@@ -159,66 +156,56 @@ See [GOOGLE-PHOTOS-API-SETUP.md](GOOGLE-PHOTOS-API-SETUP.md) for detailed config
    - Bio (in content area)
 6. Publish
 
-### Adding Gallery Items
+### Adding News
 
-1. Go to **Gallery** in WordPress admin
-2. Click "Add New Gallery Item"
-3. Enter title
-4. Upload image as Featured Image
-5. Select Year taxonomy (2024, 2025, etc.)
+1. Go to **News** in WordPress admin
+2. Click "Add New"
+3. Enter headline and content
+4. Upload featured image
+5. Configure popup settings if desired
 6. Publish
-
-### Customizing Event Information
-
-1. Go to **Appearance → Customize**
-2. Find "Event Information" section
-3. Update:
-   - Event Date
-   - Rain Date
-   - Event Time
-   - Event Location
-4. Click "Publish"
-
-### Social Media Links
-
-1. Go to **Appearance → Customize**
-2. Find "Social Media" section
-3. Add URLs for:
-   - Facebook
-   - Instagram
-   - Twitter
-4. Click "Publish"
 
 ## File Structure
 
 ```
 nolaholi/
-├── style.css                         # Main stylesheet with theme info
-├── functions.php                     # Theme functions and features
-├── header.php                        # Site header template
-├── footer.php                        # Site footer template
-├── index.php                         # Default blog template
-├── front-page.php                    # Home page template
-├── page.php                          # Default page template
-├── single.php                        # Single post template
-├── inc/                              # Additional functionality
-│   └── google-photos-api.php        # Google Photos API integration
-├── page-templates/                   # Custom page templates
+├── style.css                    # Main stylesheet with theme info
+├── functions.php                # Theme functions and features
+├── header.php                   # Site header template
+├── footer.php                   # Site footer template
+├── index.php                    # Default blog template
+├── front-page.php               # Home page template
+├── page.php                     # Default page template
+├── single.php                   # Single post template
+├── single-news.php              # Single news post template
+├── archive-news.php             # News archive template
+├── screenshot.png               # Theme screenshot
+├── README.md                    # This file
+├── inc/                         # Additional functionality
+│   └── google-photos-api.php    # Google Photos API integration
+├── page-templates/              # Custom page templates
 │   ├── template-about-holi.php
 │   ├── template-about-nola-holi.php
 │   ├── template-parade.php
 │   ├── template-festival.php
 │   ├── template-sponsors.php
+│   ├── template-sponsorship-packet.php
 │   ├── template-vendors.php
 │   ├── template-volunteers.php
 │   ├── template-organizers.php
-│   ├── template-gallery.php         # Gallery with Google Photos integration
+│   ├── template-performers.php
+│   ├── template-gallery.php
 │   └── template-contact.php
 ├── js/
-│   └── main.js                       # JavaScript (incl. lightbox functionality)
-├── README.md                         # This file
-├── GOOGLE-PHOTOS-API-SETUP.md        # Google Photos setup guide
-└── DEVELOPMENT-LOG.md                # Development history and decisions
+│   └── main.js                  # JavaScript functionality
+├── images/                      # Theme images
+└── docs/                        # Documentation
+    ├── DEVELOPMENT-LOG.md
+    ├── GOOGLE-PHOTOS-API-SETUP.md
+    ├── GALLERY-SETUP.md
+    ├── NEWS-MANAGEMENT-GUIDE.md
+    ├── SPONSORSHIP-TIERS-GUIDE.md
+    └── ... (other docs)
 ```
 
 ## Customization
@@ -235,40 +222,23 @@ The theme uses CSS custom properties (variables) for easy color customization. E
 }
 ```
 
-### Fonts
+### Sponsor Tiers
 
-The theme uses system fonts by default. To use custom fonts, edit the Google Fonts link in `functions.php`:
+Tiers are defined in two places:
 
-```php
-wp_enqueue_style('nolaholi-fonts', 'https://fonts.googleapis.com/css2?family=Your+Font&display=swap', array(), null);
-```
+1. **Admin dropdown** - `functions.php` in `nolaholi_sponsor_meta_box()`
+2. **Display names** - `page-templates/template-sponsors.php` in `nolaholi_get_tier_name()`
 
-### Adding New Sections
-
-To add new sections to any page template:
-
-1. Open the desired template file in `page-templates/`
-2. Add a new section using the existing structure:
-
-```php
-<section class="content-section bg-white">
-    <div class="container">
-        <h2 class="section-title text-center">Your Title</h2>
-        <div class="section-divider"></div>
-        <!-- Your content here -->
-    </div>
-</section>
-```
+When adding new tier structures for future years, update both locations.
 
 ## Recommended Plugins
 
 While the theme works standalone, these plugins enhance functionality:
 
-1. **Contact Form 7** - For contact forms
-2. **Advanced Custom Fields (ACF)** - For additional custom fields
-3. **Yoast SEO** - For search engine optimization
-4. **Wordfence Security** - For site security
-5. **WP Super Cache** - For performance optimization
+1. **Contact Form 7** - For contact forms (auto-detected and styled)
+2. **Yoast SEO** - For search engine optimization
+3. **Wordfence Security** - For site security
+4. **WP Super Cache** - For performance optimization
 
 ## Browser Support
 
@@ -278,40 +248,11 @@ While the theme works standalone, these plugins enhance functionality:
 - Edge (latest)
 - Mobile browsers (iOS Safari, Chrome Mobile)
 
-## Performance
-
-The theme is optimized for performance with:
-- Minimal external dependencies
-- Efficient CSS and JavaScript
-- Image lazy loading support
-- Responsive images
-
-## Accessibility
-
-The theme follows WordPress accessibility standards:
-- Semantic HTML5
-- ARIA labels where appropriate
-- Keyboard navigation support
-- Screen reader friendly
-
-## Updates & Maintenance
-
-### Annual Updates
-
-Each year, update the following:
-
-1. **Event Dates**: Appearance → Customize → Event Information
-2. **Sponsors**: Add new sponsors with current year
-3. **Gallery**: Add new gallery items with current year
-4. **Team Members**: Update board members if changed
-
-### Content Updates
-
-- **Festival Schedule**: Update Parade and Festival pages
-- **Vendor Information**: Update vendor fees and policies
-- **Volunteer Opportunities**: Refresh volunteer page content
-
 ## Troubleshooting
+
+### Sponsors Not Showing for New Year
+- Ensure sponsors have the correct Year value in their Sponsor Details
+- The page defaults to the most recent year with sponsors
 
 ### Menu Not Showing
 - Check if menu is created and assigned to "Primary Menu" location
@@ -320,15 +261,6 @@ Each year, update the following:
 ### Custom Post Types Not Appearing
 - Go to Settings → Permalinks
 - Click "Save Changes" to flush rewrite rules
-
-### Images Not Displaying Correctly
-- Check image sizes: Appearance → Customize → Additional CSS
-- Regenerate thumbnails using a plugin like "Regenerate Thumbnails"
-
-### JavaScript Not Working
-- Check browser console for errors
-- Ensure jQuery is loaded
-- Clear browser and site cache
 
 ## Support
 
@@ -347,47 +279,8 @@ For questions or issues with this theme:
 
 This theme is licensed under the GPL v2 or later.
 
-```
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-```
-
-## Changelog
-
-### Version 1.1.0 (October 10, 2025)
-- ✅ **NEW**: Google Photos API integration for automatic photo fetching
-- ✅ **NEW**: Full-featured photo lightbox with keyboard navigation
-- ✅ **NEW**: Multiple gallery display modes (Grid/Carousel)
-- ✅ **NEW**: Intelligent caching system for performance optimization
-- ✅ **NEW**: Download original photos feature
-- ✅ **NEW**: Lazy loading for gallery images
-- ✅ **IMPROVED**: Gallery template completely redesigned
-- ✅ **ADDED**: Google Photos API settings page in WordPress admin
-- ✅ **ADDED**: Comprehensive Google Photos setup documentation
-- ✅ **FIXED**: Gallery page slug conflict with custom post type
-
-### Version 1.0.0
-- Initial release
-- Custom page templates for all major sections
-- Custom post types for Sponsors, Vendors, Team Members, Gallery
-- Mardi Gras color scheme (purple, green, gold)
-- Fully responsive design
-- Mobile menu
-- Gallery year tabs
-- Form validation
-- Smooth scrolling
-- Back to top button
-
 ---
 
 **Built with 💜💚💛 for NOLA Holi Festival**
 
 *In loving memory of Michelle Lakhotia*
-

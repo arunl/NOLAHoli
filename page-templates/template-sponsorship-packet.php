@@ -7,6 +7,10 @@
  */
 
 get_header();
+
+// Get event year from theme customizer
+$event_date = get_theme_mod('nolaholi_event_date', '');
+$event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
 ?>
 
 <main id="primary" class="site-main">
@@ -104,7 +108,7 @@ get_header();
             <h2 class="section-title text-center">Sponsorship Packages</h2>
             <div class="section-divider"></div>
             <p style="text-align: center; max-width: 700px; margin: 20px auto 40px; font-size: 1.1rem; color: var(--text-light);">
-                Join us in making NOLA Holi 2026 bigger and better! Choose a sponsorship level that works for you.
+                Join us in making NOLA Holi <?php echo esc_html($event_year); ?> bigger and better! Choose a sponsorship level that works for you.
             </p>
             
             <div class="tier-grid">
@@ -159,7 +163,7 @@ get_header();
                     <ul class="tier-benefits">
                         <li>Prominent Logo placement on stage side banners and program schedule</li>
                         <li>Verbal shoutout from emcee during headliner acts</li>
-                        <li>4 VIP passes + access to VIP tent</li>
+                        <li>8 VIP passes + access to VIP tent</li>
                         <li>Logo placement in all market materials – online and offline</li>
                         <li>Logo on event T-shirts</li>
                     </ul>
@@ -177,7 +181,7 @@ get_header();
                     </div>
                     <ul class="tier-benefits">
                         <li>Logo featured at VIP tent entrance and tables</li>
-                        <li>6 VIP passes</li>
+                        <li>6-8 VIP passes</li>
                         <li>Opportunity to include product or collateral in VIP tent area</li>
                         <li>Inclusion on website, signage, and select social posts</li>
                     </ul>
@@ -192,6 +196,7 @@ get_header();
                     </div>
                     <ul class="tier-benefits">
                         <li>Name on event T-shirts</li>
+                        <li>4 VIP passes</li>
                         <li>Recognition by DJ at Festival</li>
                         <li>Recognition on Social Media</li>
                         <li>Name on NOLA Holi Website</li>
@@ -206,6 +211,7 @@ get_header();
                         <div style="font-size: 0.9rem; color: var(--text-light); margin-top: 5px;">(No Limit)</div>
                     </div>
                     <ul class="tier-benefits">
+                        <li>2 VIP passes</li>
                         <li>Recognition on Social Media</li>
                         <li>Recognition on NOLA Holi Website</li>
                     </ul>
@@ -273,7 +279,7 @@ get_header();
                 <h2 class="section-title" style="color: white;">Ready to Partner With Us?</h2>
                 <div class="section-divider"></div>
                 <p style="font-size: 1.1rem; color: var(--off-white); line-height: 1.8; margin-bottom: 30px;">
-                    We'd love to discuss how your organization can be part of NOLA Holi 2026! Sponsorship packages can be 
+                    We'd love to discuss how your organization can be part of NOLA Holi <?php echo esc_html($event_year); ?>! Sponsorship packages can be 
                     customized to meet your organization's goals and budget.
                 </p>
                 <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
