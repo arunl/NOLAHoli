@@ -1431,31 +1431,48 @@ function nolaholi_open_graph_meta_tags() {
     $og_url = $site_url;
     $og_image = '';
     
-    // Get custom logo or use a default image
+    // For social sharing, prefer a celebration photo (better size: 1200x630 recommended)
+    // Logo is often too small for good social media previews
+    $celebration_photo = get_template_directory_uri() . '/images/celebration-photo-1.jpg';
+    $og_image = $celebration_photo;
+    
+    // Get custom logo as fallback for pages
     $custom_logo_id = get_theme_mod('custom_logo');
+    $logo_image_url = '';
     if ($custom_logo_id) {
         $logo_image = wp_get_attachment_image_src($custom_logo_id, 'full');
         if ($logo_image) {
-            $og_image = $logo_image[0];
+            $logo_image_url = $logo_image[0];
         }
     }
     
     // Get sponsor information for additional context (fetch early so we can use in descriptions)
     $event_sponsor = nolaholi_get_first_event_sponsor();
-    $sponsor_text = '';
-    if ($event_sponsor && !empty($event_sponsor['name'])) {
-        $sponsor_text = ' Presented by ' . $event_sponsor['name'] . '.';
-    }
+    $sponsor_name = ($event_sponsor && !empty($event_sponsor['name'])) ? $event_sponsor['name'] : '';
+    
+    // Format event date for title (shorter format)
+    $event_date_short = date('F j, Y', strtotime($event_date));
     
     // Customize based on page type
     if (is_front_page() || is_home()) {
-        $og_title = $og_site_name;
-        $og_description = sprintf(
-            'Join us for NOLA Holi on %s at %s.%s Experience the vibrant colors and joy of Holi in New Orleans!',
-            $event_date,
-            $location,
-            $sponsor_text
-        );
+        // Title: optimal 50-60 characters - "NOLA Holi Festival - March 8, 2026" = ~35 chars
+        $og_title = $og_site_name . ' - ' . $event_date_short;
+        
+        // Description: optimal 110-160 characters
+        // Build concise description with sponsor if available
+        if (!empty($sponsor_name)) {
+            $og_description = sprintf(
+                'Festival of Colors in New Orleans on %s. Presented by %s. Free family fun with music, food & colors!',
+                $event_date_short,
+                $sponsor_name
+            );
+        } else {
+            $og_description = sprintf(
+                'Festival of Colors in New Orleans on %s at %s. Free family fun with music, food & vibrant colors!',
+                $event_date_short,
+                $location
+            );
+        }
     } elseif (is_singular()) {
         global $post;
         $og_title = get_the_title();
@@ -1532,10 +1549,9 @@ function nolaholi_open_graph_meta_tags() {
         }
     }
     
-    // If no image found, use first image from images directory as fallback
+    // Fallback to celebration photo if no image was set (shouldn't happen with new logic, but just in case)
     if (empty($og_image)) {
-        $default_image = get_template_directory_uri() . '/images/celebration-photo-1.jpg';
-        $og_image = $default_image;
+        $og_image = get_template_directory_uri() . '/images/celebration-photo-1.jpg';
     }
     
     // Sanitize all values
