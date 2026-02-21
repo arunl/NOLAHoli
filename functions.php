@@ -1062,7 +1062,13 @@ function nolaholi_customize_register($wp_customize) {
 add_action('customize_register', 'nolaholi_customize_register');
 
 /**
- * Get first event sponsor for header display
+ * Get first event/presenting sponsor for header display
+ * 
+ * Looks for top-tier sponsors in order of priority:
+ * - 'event' (presenting sponsor - both 2025 and 2026+)
+ * - 'diamond' (was top tier in 2025)
+ * 
+ * Falls back to most recent year if current year has no presenting sponsor.
  * 
  * @return array|false Array with sponsor data or false if no sponsor found
  */
@@ -1073,44 +1079,54 @@ function nolaholi_get_first_event_sponsor() {
         return $cached_sponsor;
     }
     
+    // Top-tier keys to search for (in priority order)
+    $presenting_tiers = array('event', 'diamond');
+    
     // Get event year from theme customizer (extract year from date like "March 7, 2026")
     $event_date = get_theme_mod('nolaholi_event_date', '');
     $current_event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
     
-    // Query for event/presenting sponsors for the current event year
-    $args = array(
-        'post_type' => 'sponsor',
-        'posts_per_page' => -1,  // Get all to sort properly
-        'meta_query' => array(
-            'relation' => 'AND',
-            array(
-                'key' => '_sponsor_year',
-                'value' => $current_event_year,
-                'compare' => '='
-            ),
-            array(
-                'key' => '_sponsor_tier',
-                'value' => 'event',
-                'compare' => '='
+    // Try to find a presenting sponsor for current year first
+    $sponsors_query = null;
+    foreach ($presenting_tiers as $tier) {
+        $args = array(
+            'post_type' => 'sponsor',
+            'posts_per_page' => -1,
+            'meta_query' => array(
+                'relation' => 'AND',
+                array(
+                    'key' => '_sponsor_year',
+                    'value' => $current_event_year,
+                    'compare' => '='
+                ),
+                array(
+                    'key' => '_sponsor_tier',
+                    'value' => $tier,
+                    'compare' => '='
+                )
             )
-        )
-    );
+        );
+        
+        $sponsors_query = new WP_Query($args);
+        if ($sponsors_query->have_posts()) {
+            break; // Found sponsors with this tier
+        }
+        wp_reset_postdata();
+    }
     
-    $sponsors_query = new WP_Query($args);
-    
-    // If no sponsor for current year, fall back to most recent year with an event sponsor
-    if (!$sponsors_query->have_posts()) {
+    // If no sponsor for current year, fall back to most recent year with a presenting sponsor
+    if (!$sponsors_query || !$sponsors_query->have_posts()) {
         wp_reset_postdata();
         
-        // Query for any event sponsor, ordered by year descending
+        // Query for any presenting-tier sponsor
         $fallback_args = array(
             'post_type' => 'sponsor',
             'posts_per_page' => -1,
             'meta_query' => array(
                 array(
                     'key' => '_sponsor_tier',
-                    'value' => 'event',
-                    'compare' => '='
+                    'value' => $presenting_tiers,
+                    'compare' => 'IN'
                 )
             )
         );
@@ -1118,24 +1134,42 @@ function nolaholi_get_first_event_sponsor() {
         $sponsors_query = new WP_Query($fallback_args);
         
         if (!$sponsors_query->have_posts()) {
-            // Still no sponsor found, cache for 1 hour
+            // No presenting sponsor found at all, cache for 1 hour
             set_transient('nolaholi_first_event_sponsor', false, HOUR_IN_SECONDS);
             return false;
         }
         
-        // Find the most recent year among event sponsors
+        // Find the most recent year among presenting sponsors
         $most_recent_year = 0;
+        $most_recent_tier = '';
         while ($sponsors_query->have_posts()) {
             $sponsors_query->the_post();
             $sponsor_year = intval(get_post_meta(get_the_ID(), '_sponsor_year', true));
             if ($sponsor_year > $most_recent_year) {
                 $most_recent_year = $sponsor_year;
+                $most_recent_tier = get_post_meta(get_the_ID(), '_sponsor_tier', true);
             }
         }
         wp_reset_postdata();
         
-        // Re-query for sponsors from that most recent year
-        $args['meta_query'][0]['value'] = strval($most_recent_year);
+        // Re-query for sponsors from that most recent year and tier
+        $args = array(
+            'post_type' => 'sponsor',
+            'posts_per_page' => -1,
+            'meta_query' => array(
+                'relation' => 'AND',
+                array(
+                    'key' => '_sponsor_year',
+                    'value' => strval($most_recent_year),
+                    'compare' => '='
+                ),
+                array(
+                    'key' => '_sponsor_tier',
+                    'value' => $most_recent_tier,
+                    'compare' => '='
+                )
+            )
+        );
         $sponsors_query = new WP_Query($args);
         
         if (!$sponsors_query->have_posts()) {

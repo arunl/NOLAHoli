@@ -10,33 +10,35 @@ get_header();
 
 // Year-aware tier naming function
 // Maps tier keys to display names based on the year
-function nolaholi_get_tier_name($tier_key, $year) {
-    // 2025 tier names (original structure)
-    $tiers_2025 = array(
-        'event' => 'Event Sponsors',
-        'diamond' => 'Diamond Sponsors',
-        'platinum' => 'Platinum Sponsors',
-        'gold' => 'Gold Sponsors',
-        'silver' => 'Silver Sponsors',
-        'friends' => 'Friends of NOLA Holi'
-    );
-    
-    // 2026+ tier names (new structure)
-    $tiers_2026_plus = array(
-        'event' => 'Presenting Sponsors',
-        'parade' => 'Parade Sponsors',
-        'entertainment' => 'Entertainment Sponsors',
-        'vip' => 'VIP Experience Sponsors',
-        'gold' => 'Gold Sponsors',
-        'silver' => 'Silver Sponsors',
-        'friends' => 'Friends of NOLA Holi'
-    );
-    
-    // Select appropriate tier structure based on year
-    if ($year <= 2025) {
-        return isset($tiers_2025[$tier_key]) ? $tiers_2025[$tier_key] : ucfirst($tier_key) . ' Sponsors';
-    } else {
-        return isset($tiers_2026_plus[$tier_key]) ? $tiers_2026_plus[$tier_key] : ucfirst($tier_key) . ' Sponsors';
+if (!function_exists('nolaholi_get_tier_name')) {
+    function nolaholi_get_tier_name($tier_key, $year) {
+        // 2025 tier names (original structure)
+        $tiers_2025 = array(
+            'event' => 'Event Sponsors',
+            'diamond' => 'Diamond Sponsors',
+            'platinum' => 'Platinum Sponsors',
+            'gold' => 'Gold Sponsors',
+            'silver' => 'Silver Sponsors',
+            'friends' => 'Friends of NOLA Holi'
+        );
+        
+        // 2026+ tier names (new structure)
+        $tiers_2026_plus = array(
+            'event' => 'Presenting Sponsors',
+            'parade' => 'Parade Sponsors',
+            'entertainment' => 'Entertainment Sponsors',
+            'vip' => 'VIP Experience Sponsors',
+            'gold' => 'Gold Sponsors',
+            'silver' => 'Silver Sponsors',
+            'friends' => 'Friends of NOLA Holi'
+        );
+        
+        // Select appropriate tier structure based on year
+        if ($year <= 2025) {
+            return isset($tiers_2025[$tier_key]) ? $tiers_2025[$tier_key] : ucfirst($tier_key) . ' Sponsors';
+        } else {
+            return isset($tiers_2026_plus[$tier_key]) ? $tiers_2026_plus[$tier_key] : ucfirst($tier_key) . ' Sponsors';
+        }
     }
 }
 
