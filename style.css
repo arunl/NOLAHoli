@@ -2347,3 +2347,292 @@ details[open] .check-arrow {
     color: #155724;
     margin: 0;
 }
+
+/* ===========================
+   Event Day Page
+   =========================== */
+
+/* Two Column Grid */
+.event-day-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+    .event-day-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}
+
+/* Schedule Section */
+.event-schedule {
+    background: var(--white);
+}
+
+.schedule-header,
+.route-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.schedule-icon,
+.route-icon {
+    font-size: 2rem;
+}
+
+.schedule-header h2,
+.route-header h2 {
+    margin: 0;
+    color: var(--mardi-gras-purple);
+    font-size: 1.8rem;
+}
+
+.schedule-date {
+    margin-bottom: 30px;
+}
+
+.date-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--mardi-gras-purple) 0%, var(--mardi-gras-green) 100%);
+    color: white;
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+/* Timeline */
+.schedule-timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.schedule-timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    bottom: 30px;
+    width: 3px;
+    background: linear-gradient(180deg, var(--mardi-gras-purple), var(--mardi-gras-green), var(--mardi-gras-gold));
+    border-radius: 3px;
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 25px;
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 15px;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 8px;
+    width: 14px;
+    height: 14px;
+    background: var(--mardi-gras-purple);
+    border: 3px solid var(--white);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px var(--mardi-gras-purple);
+}
+
+.timeline-item.highlight::before {
+    background: var(--mardi-gras-gold);
+    box-shadow: 0 0 0 3px var(--mardi-gras-gold);
+    width: 18px;
+    height: 18px;
+    left: -28px;
+    top: 5px;
+}
+
+.timeline-item.last::before {
+    background: var(--mardi-gras-green);
+    box-shadow: 0 0 0 3px var(--mardi-gras-green);
+}
+
+.timeline-time {
+    font-weight: 700;
+    color: var(--mardi-gras-purple);
+    font-size: 0.95rem;
+    padding-top: 3px;
+}
+
+.timeline-content h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+}
+
+.timeline-content p {
+    margin: 0;
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.timeline-location {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+.location-icon {
+    flex-shrink: 0;
+}
+
+.address {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+/* Parade Route Section */
+.parade-route {
+    background: var(--white);
+}
+
+.route-map {
+    background: var(--off-white);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 25px;
+    border: 2px solid #e0e0e0;
+}
+
+.route-map img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.route-directions h3 {
+    color: var(--mardi-gras-purple);
+    font-size: 1.2rem;
+    margin: 0 0 15px 0;
+}
+
+.route-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.route-steps li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.route-steps li:last-child {
+    border-bottom: none;
+}
+
+.step-marker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 30px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+.step-marker.start {
+    background: var(--mardi-gras-green);
+    color: white;
+}
+
+.step-marker.turn {
+    background: var(--mardi-gras-purple);
+    color: white;
+    font-size: 1.2rem;
+}
+
+.step-marker.end {
+    background: var(--mardi-gras-gold);
+    color: var(--text-dark);
+}
+
+.step-text {
+    font-size: 1rem;
+    color: var(--text-dark);
+}
+
+.route-note {
+    background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+    border: 2px solid var(--mardi-gras-gold);
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-top: 25px;
+}
+
+.route-note p {
+    margin: 0;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+}
+
+/* Quick Info Section */
+.event-quick-info {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+@media (max-width: 800px) {
+    .event-quick-info {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 450px) {
+    .event-quick-info {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+}
+
+.quick-info-card {
+    text-align: center;
+    padding: 25px 15px;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s ease;
+}
+
+.quick-info-card:hover {
+    transform: translateY(-3px);
+}
+
+.quick-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.quick-info-card h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.1rem;
+    color: var(--mardi-gras-purple);
+}
+
+.quick-info-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
