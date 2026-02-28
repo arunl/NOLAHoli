@@ -250,30 +250,13 @@
                     ?>
                 </nav>
 
-                <?php
-                // Get first event sponsor for header display
-                $event_sponsor = nolaholi_get_first_event_sponsor();
-                if ($event_sponsor) :
-                ?>
-                    <div class="header-presenter">
-                        <div class="presented-by-text">Presented by</div>
-                        <?php if ($event_sponsor['website']) : ?>
-                            <a href="<?php echo esc_url($event_sponsor['website']); ?>" target="_blank" rel="noopener noreferrer" class="presenter-mark-link">
-                                <?php if ($event_sponsor['logo']) : ?>
-                                    <img src="<?php echo esc_url($event_sponsor['logo']); ?>" alt="<?php echo esc_attr($event_sponsor['name']); ?>" class="presenter-mark">
-                                <?php else : ?>
-                                    <div class="presenter-name"><?php echo esc_html($event_sponsor['name']); ?></div>
-                                <?php endif; ?>
-                            </a>
-                        <?php else : ?>
-                            <?php if ($event_sponsor['logo']) : ?>
-                                <img src="<?php echo esc_url($event_sponsor['logo']); ?>" alt="<?php echo esc_attr($event_sponsor['name']); ?>" class="presenter-mark">
-                            <?php else : ?>
-                                <div class="presenter-name"><?php echo esc_html($event_sponsor['name']); ?></div>
-                            <?php endif; ?>
-                        <?php endif; ?>
-                    </div>
-                <?php endif; ?>
+                <!-- Donate Button -->
+                <div class="header-donate">
+                    <a href="<?php echo esc_url(home_url('/donate/')); ?>" class="donate-btn">
+                        <span class="donate-icon">💜</span>
+                        <span class="donate-text">Donate</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

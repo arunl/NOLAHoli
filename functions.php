@@ -2008,4 +2008,361 @@ function nolaholi_render_news_admin_page() {
     <?php
 }
 
+/**
+ * ============================================================================
+ * DONATION SYSTEM
+ * ============================================================================
+ * 
+ * Custom donation tracking system that stores donor information in WordPress
+ * database using a custom table for donations.
+ */
+
+/**
+ * Create donations table on theme activation
+ */
+function nolaholi_create_donations_table() {
+    global $wpdb;
+    
+    $table_name = $wpdb->prefix . 'nolaholi_donations';
+    $charset_collate = $wpdb->get_charset_collate();
+    
+    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+        id mediumint(9) NOT NULL AUTO_INCREMENT,
+        donor_name varchar(255) NOT NULL,
+        donor_email varchar(255) NOT NULL,
+        donor_phone varchar(50),
+        donation_amount varchar(50) NOT NULL,
+        payment_method varchar(50) NOT NULL,
+        donor_message text,
+        is_anonymous tinyint(1) DEFAULT 0,
+        ip_address varchar(100),
+        created_at datetime DEFAULT CURRENT_TIMESTAMP,
+        status varchar(20) DEFAULT 'pending',
+        notes text,
+        PRIMARY KEY (id)
+    ) $charset_collate;";
+    
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($sql);
+    
+    // Store version for future migrations
+    add_option('nolaholi_donations_db_version', '1.0');
+}
+add_action('after_switch_theme', 'nolaholi_create_donations_table');
+
+// Also check on init in case table doesn't exist
+function nolaholi_check_donations_table() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'nolaholi_donations';
+    
+    if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+        nolaholi_create_donations_table();
+    }
+}
+add_action('init', 'nolaholi_check_donations_table');
+
+/**
+ * Handle donation form submission
+ */
+function nolaholi_handle_donation_form() {
+    // Security Check: Verify nonce
+    if (!isset($_POST['nolaholi_donation_nonce']) || 
+        !wp_verify_nonce($_POST['nolaholi_donation_nonce'], 'nolaholi_donation_form')) {
+        wp_die('Security check failed. Please try again.', 'Security Error', array('response' => 403));
+    }
+    
+    // Honeypot check
+    if (!empty($_POST['donation_website'])) {
+        wp_die('Spam detected.', 'Security Error', array('response' => 403));
+    }
+    
+    // Rate limiting
+    $ip_address = $_SERVER['REMOTE_ADDR'];
+    $rate_key = 'donation_rate_' . md5($ip_address);
+    $attempts = get_transient($rate_key);
+    
+    if ($attempts && $attempts >= 5) {
+        wp_die('Too many submissions. Please try again later.', 'Rate Limit', array('response' => 429));
+    }
+    
+    // Sanitize input
+    $donor_name = sanitize_text_field($_POST['donor_name']);
+    $donor_email = sanitize_email($_POST['donor_email']);
+    $donor_phone = sanitize_text_field($_POST['donor_phone']);
+    $donation_amount = sanitize_text_field($_POST['donation_amount']);
+    $payment_method = sanitize_text_field($_POST['payment_method']);
+    $donor_message = sanitize_textarea_field($_POST['donor_message']);
+    $is_anonymous = isset($_POST['donor_anonymous']) ? 1 : 0;
+    
+    // Validate required fields (only name and email are required now)
+    if (empty($donor_name) || empty($donor_email)) {
+        wp_die('Please fill in your name and email.', 'Missing Information', array('response' => 400));
+    }
+    
+    // Validate email
+    if (!is_email($donor_email)) {
+        wp_die('Invalid email address.', 'Invalid Email', array('response' => 400));
+    }
+    
+    // Insert into database
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'nolaholi_donations';
+    
+    $result = $wpdb->insert(
+        $table_name,
+        array(
+            'donor_name' => $donor_name,
+            'donor_email' => $donor_email,
+            'donor_phone' => $donor_phone,
+            'donation_amount' => $donation_amount,
+            'payment_method' => $payment_method,
+            'donor_message' => $donor_message,
+            'is_anonymous' => $is_anonymous,
+            'ip_address' => $ip_address,
+            'status' => 'pending'
+        ),
+        array('%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s')
+    );
+    
+    if ($result === false) {
+        wp_die('Error recording donation. Please try again.', 'Database Error', array('response' => 500));
+    }
+    
+    // Update rate limit
+    set_transient($rate_key, ($attempts ? $attempts + 1 : 1), 15 * MINUTE_IN_SECONDS);
+    
+    // Send notification email to admin
+    $admin_email = get_option('admin_email');
+    $email_subject = '[NOLA Holi] New Donation Recorded';
+    
+    $email_body = "A new donation has been recorded on NOLAHoli.org\n\n";
+    $email_body .= "Donor Name: $donor_name\n";
+    $email_body .= "Email: $donor_email\n";
+    $email_body .= "Phone: $donor_phone\n";
+    $email_body .= "Amount: $donation_amount\n";
+    $email_body .= "Payment Method: $payment_method\n";
+    $email_body .= "Anonymous: " . ($is_anonymous ? 'Yes' : 'No') . "\n";
+    if (!empty($donor_message)) {
+        $email_body .= "Message: $donor_message\n";
+    }
+    $email_body .= "\n---\n";
+    $email_body .= "Submitted: " . current_time('F j, Y g:i a') . "\n";
+    $email_body .= "View all donations in WordPress Admin: " . admin_url('admin.php?page=nolaholi-donations') . "\n";
+    
+    $headers = array(
+        'Content-Type: text/plain; charset=UTF-8',
+        'From: NOLA Holi <noreply@nolaholi.org>',
+        'Reply-To: ' . $donor_name . ' <' . $donor_email . '>'
+    );
+    
+    wp_mail($admin_email, $email_subject, $email_body, $headers);
+    
+    // Redirect back with success message
+    wp_redirect(add_query_arg('donation', 'recorded', home_url('/donate/')));
+    exit;
+}
+add_action('admin_post_nolaholi_record_donation', 'nolaholi_handle_donation_form');
+add_action('admin_post_nopriv_nolaholi_record_donation', 'nolaholi_handle_donation_form');
+
+/**
+ * Add Donations admin menu
+ */
+function nolaholi_add_donations_admin_menu() {
+    add_menu_page(
+        __('Donations', 'nolaholi'),
+        __('Donations', 'nolaholi'),
+        'manage_options',
+        'nolaholi-donations',
+        'nolaholi_render_donations_admin_page',
+        'dashicons-heart',
+        30
+    );
+}
+add_action('admin_menu', 'nolaholi_add_donations_admin_menu');
+
+/**
+ * Render Donations admin page
+ */
+function nolaholi_render_donations_admin_page() {
+    if (!current_user_can('manage_options')) {
+        wp_die(__('You do not have sufficient permissions to access this page.'));
+    }
+    
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'nolaholi_donations';
+    
+    // Handle status update
+    if (isset($_POST['update_donation_status']) && check_admin_referer('nolaholi_update_donation')) {
+        $donation_id = intval($_POST['donation_id']);
+        $new_status = sanitize_text_field($_POST['new_status']);
+        $notes = sanitize_textarea_field($_POST['admin_notes']);
+        
+        $wpdb->update(
+            $table_name,
+            array('status' => $new_status, 'notes' => $notes),
+            array('id' => $donation_id),
+            array('%s', '%s'),
+            array('%d')
+        );
+        
+        echo '<div class="notice notice-success"><p>Donation status updated.</p></div>';
+    }
+    
+    // Handle deletion
+    if (isset($_GET['delete_donation']) && check_admin_referer('delete_donation_' . $_GET['delete_donation'])) {
+        $donation_id = intval($_GET['delete_donation']);
+        $wpdb->delete($table_name, array('id' => $donation_id), array('%d'));
+        echo '<div class="notice notice-success"><p>Donation record deleted.</p></div>';
+    }
+    
+    // Get donations with filters
+    $status_filter = isset($_GET['status']) ? sanitize_text_field($_GET['status']) : '';
+    $where = '';
+    if (!empty($status_filter)) {
+        $where = $wpdb->prepare(" WHERE status = %s", $status_filter);
+    }
+    
+    $donations = $wpdb->get_results("SELECT * FROM $table_name $where ORDER BY created_at DESC");
+    
+    // Get counts
+    $total_count = $wpdb->get_var("SELECT COUNT(*) FROM $table_name");
+    $pending_count = $wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE status = 'pending'");
+    $confirmed_count = $wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE status = 'confirmed'");
+    
+    ?>
+    <div class="wrap">
+        <h1>💜 NOLA Holi Donations</h1>
+        
+        <div class="card" style="max-width: none; margin-top: 20px;">
+            <h2>Donation Statistics</h2>
+            <p>
+                <strong>Total Recorded:</strong> <?php echo $total_count; ?> | 
+                <strong>Pending:</strong> <?php echo $pending_count; ?> | 
+                <strong>Confirmed:</strong> <?php echo $confirmed_count; ?>
+            </p>
+        </div>
+        
+        <!-- Filter Tabs -->
+        <ul class="subsubsub" style="margin: 20px 0;">
+            <li><a href="<?php echo admin_url('admin.php?page=nolaholi-donations'); ?>" <?php echo empty($status_filter) ? 'class="current"' : ''; ?>>All (<?php echo $total_count; ?>)</a> |</li>
+            <li><a href="<?php echo admin_url('admin.php?page=nolaholi-donations&status=pending'); ?>" <?php echo $status_filter === 'pending' ? 'class="current"' : ''; ?>>Pending (<?php echo $pending_count; ?>)</a> |</li>
+            <li><a href="<?php echo admin_url('admin.php?page=nolaholi-donations&status=confirmed'); ?>" <?php echo $status_filter === 'confirmed' ? 'class="current"' : ''; ?>>Confirmed (<?php echo $confirmed_count; ?>)</a></li>
+        </ul>
+        
+        <?php if (!empty($donations)) : ?>
+            <table class="wp-list-table widefat fixed striped" style="margin-top: 20px;">
+                <thead>
+                    <tr>
+                        <th style="width: 5%;">ID</th>
+                        <th style="width: 15%;">Donor</th>
+                        <th style="width: 15%;">Contact</th>
+                        <th style="width: 10%;">Amount</th>
+                        <th style="width: 10%;">Method</th>
+                        <th style="width: 10%;">Status</th>
+                        <th style="width: 12%;">Date</th>
+                        <th style="width: 23%;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($donations as $donation) : ?>
+                        <tr>
+                            <td><?php echo esc_html($donation->id); ?></td>
+                            <td>
+                                <strong><?php echo esc_html($donation->donor_name); ?></strong>
+                                <?php if ($donation->is_anonymous) : ?>
+                                    <br><small style="color: #999;">(Anonymous)</small>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <a href="mailto:<?php echo esc_attr($donation->donor_email); ?>"><?php echo esc_html($donation->donor_email); ?></a>
+                                <?php if ($donation->donor_phone) : ?>
+                                    <br><small><?php echo esc_html($donation->donor_phone); ?></small>
+                                <?php endif; ?>
+                            </td>
+                            <td><strong><?php echo esc_html($donation->donation_amount); ?></strong></td>
+                            <td><?php echo esc_html(ucfirst(str_replace('_', ' ', $donation->payment_method))); ?></td>
+                            <td>
+                                <?php
+                                $status_colors = array(
+                                    'pending' => '#f0b849',
+                                    'confirmed' => '#46b450',
+                                    'cancelled' => '#dc3232'
+                                );
+                                $color = isset($status_colors[$donation->status]) ? $status_colors[$donation->status] : '#999';
+                                ?>
+                                <span style="color: <?php echo $color; ?>; font-weight: bold;">
+                                    <?php echo esc_html(ucfirst($donation->status)); ?>
+                                </span>
+                            </td>
+                            <td><?php echo esc_html(date('M j, Y', strtotime($donation->created_at))); ?></td>
+                            <td>
+                                <button type="button" class="button button-small" onclick="toggleDonationDetails(<?php echo $donation->id; ?>)">View/Edit</button>
+                                <a href="<?php echo wp_nonce_url(admin_url('admin.php?page=nolaholi-donations&delete_donation=' . $donation->id), 'delete_donation_' . $donation->id); ?>" class="button button-small" onclick="return confirm('Are you sure you want to delete this donation record?');" style="color: #dc3232;">Delete</a>
+                            </td>
+                        </tr>
+                        <tr id="donation-details-<?php echo $donation->id; ?>" style="display: none;">
+                            <td colspan="8" style="background: #f9f9f9; padding: 20px;">
+                                <h3>Donation Details #<?php echo $donation->id; ?></h3>
+                                
+                                <?php if ($donation->donor_message) : ?>
+                                    <div style="background: #fff; padding: 15px; border-left: 4px solid var(--mardi-gras-purple); margin-bottom: 20px;">
+                                        <strong>Message from donor:</strong><br>
+                                        <?php echo esc_html($donation->donor_message); ?>
+                                    </div>
+                                <?php endif; ?>
+                                
+                                <form method="post">
+                                    <?php wp_nonce_field('nolaholi_update_donation'); ?>
+                                    <input type="hidden" name="update_donation_status" value="1">
+                                    <input type="hidden" name="donation_id" value="<?php echo $donation->id; ?>">
+                                    
+                                    <table class="form-table">
+                                        <tr>
+                                            <th><label for="new_status_<?php echo $donation->id; ?>">Status:</label></th>
+                                            <td>
+                                                <select name="new_status" id="new_status_<?php echo $donation->id; ?>">
+                                                    <option value="pending" <?php selected($donation->status, 'pending'); ?>>Pending</option>
+                                                    <option value="confirmed" <?php selected($donation->status, 'confirmed'); ?>>Confirmed</option>
+                                                    <option value="cancelled" <?php selected($donation->status, 'cancelled'); ?>>Cancelled</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="admin_notes_<?php echo $donation->id; ?>">Admin Notes:</label></th>
+                                            <td>
+                                                <textarea name="admin_notes" id="admin_notes_<?php echo $donation->id; ?>" rows="3" style="width: 100%;"><?php echo esc_textarea($donation->notes); ?></textarea>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    
+                                    <p>
+                                        <button type="submit" class="button button-primary">Update Donation</button>
+                                        <button type="button" class="button" onclick="toggleDonationDetails(<?php echo $donation->id; ?>)">Cancel</button>
+                                    </p>
+                                </form>
+                                
+                                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #ddd; color: #666; font-size: 12px;">
+                                    <strong>Submitted:</strong> <?php echo esc_html($donation->created_at); ?> |
+                                    <strong>IP:</strong> <?php echo esc_html($donation->ip_address); ?>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else : ?>
+            <div class="notice notice-info" style="margin-top: 20px;">
+                <p>No donations recorded yet.</p>
+            </div>
+        <?php endif; ?>
+        
+        <script>
+        function toggleDonationDetails(id) {
+            var row = document.getElementById('donation-details-' + id);
+            row.style.display = row.style.display === 'none' ? 'table-row' : 'none';
+        }
+        </script>
+    </div>
+    <?php
+}
 
