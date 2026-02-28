@@ -2094,9 +2094,9 @@ function nolaholi_handle_donation_form() {
     $donor_message = sanitize_textarea_field($_POST['donor_message']);
     $is_anonymous = isset($_POST['donor_anonymous']) ? 1 : 0;
     
-    // Validate required fields
-    if (empty($donor_name) || empty($donor_email) || empty($donation_amount) || empty($payment_method)) {
-        wp_die('Please fill in all required fields.', 'Missing Information', array('response' => 400));
+    // Validate required fields (only name and email are required now)
+    if (empty($donor_name) || empty($donor_email)) {
+        wp_die('Please fill in your name and email.', 'Missing Information', array('response' => 400));
     }
     
     // Validate email
