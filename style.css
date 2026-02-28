@@ -2407,86 +2407,79 @@ details[open] .check-arrow {
     font-size: 1.1rem;
 }
 
-/* Timeline */
-.schedule-timeline {
-    position: relative;
-    padding-left: 30px;
+/* Schedule Cards */
+.schedule-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-.schedule-timeline::before {
-    content: '';
-    position: absolute;
-    left: 8px;
-    top: 8px;
-    bottom: 30px;
-    width: 3px;
-    background: linear-gradient(180deg, var(--mardi-gras-purple), var(--mardi-gras-green), var(--mardi-gras-gold));
-    border-radius: 3px;
+.schedule-card {
+    display: flex;
+    align-items: stretch;
+    background: var(--off-white);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.timeline-item {
-    position: relative;
-    padding-bottom: 25px;
-    display: grid;
-    grid-template-columns: 90px 1fr;
-    gap: 15px;
+.schedule-card:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow-sm);
 }
 
-.timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -26px;
-    top: 8px;
-    width: 14px;
-    height: 14px;
+.schedule-card.highlight {
+    background: linear-gradient(135deg, var(--mardi-gras-gold) 0%, #FFE082 100%);
+}
+
+.schedule-card.highlight .card-time {
     background: var(--mardi-gras-purple);
-    border: 3px solid var(--white);
-    border-radius: 50%;
-    box-shadow: 0 0 0 3px var(--mardi-gras-purple);
 }
 
-.timeline-item.highlight::before {
-    background: var(--mardi-gras-gold);
-    box-shadow: 0 0 0 3px var(--mardi-gras-gold);
-    width: 18px;
-    height: 18px;
-    left: -28px;
-    top: 5px;
+.schedule-card.last {
+    background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
 }
 
-.timeline-item.last::before {
+.schedule-card.last .card-time {
     background: var(--mardi-gras-green);
-    box-shadow: 0 0 0 3px var(--mardi-gras-green);
 }
 
-.timeline-time {
+.card-time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 90px;
+    padding: 15px 12px;
+    background: var(--mardi-gras-purple);
+    color: white;
     font-weight: 700;
-    color: var(--mardi-gras-purple);
-    font-size: 0.95rem;
-    padding-top: 3px;
+    font-size: 0.9rem;
+    text-align: center;
 }
 
-.timeline-content h3 {
-    margin: 0 0 5px 0;
-    font-size: 1.1rem;
+.card-details {
+    flex: 1;
+    padding: 12px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-details h3 {
+    margin: 0 0 3px 0;
+    font-size: 1.05rem;
     color: var(--text-dark);
 }
 
-.timeline-content p {
+.card-details p {
     margin: 0;
     color: var(--text-light);
-    font-size: 0.95rem;
-    line-height: 1.5;
+    font-size: 0.9rem;
+    line-height: 1.4;
 }
 
-.timeline-location {
-    display: flex;
-    align-items: flex-start;
-    gap: 5px;
-}
-
-.location-icon {
-    flex-shrink: 0;
+.card-location {
+    line-height: 1.5 !important;
 }
 
 .address {
@@ -2549,12 +2542,24 @@ details[open] .check-arrow {
     flex-shrink: 0;
 }
 
+.step-marker.assemble {
+    background: #E3F2FD;
+    color: var(--text-dark);
+    font-size: 1rem;
+}
+
 .step-marker.start {
     background: var(--mardi-gras-green);
     color: white;
 }
 
 .step-marker.turn {
+    background: var(--mardi-gras-purple);
+    color: white;
+    font-size: 1.2rem;
+}
+
+.step-marker.straight {
     background: var(--mardi-gras-purple);
     color: white;
     font-size: 1.2rem;

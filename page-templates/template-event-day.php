@@ -35,7 +35,7 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
                 <!-- Left Column: Schedule -->
                 <div class="event-schedule">
                     <div class="schedule-header">
-                        <span class="schedule-icon">📅</span>
+                        <span class="schedule-icon">🗓</span>
                         <h2>Event Schedule</h2>
                     </div>
                     
@@ -43,66 +43,64 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
                         <span class="date-badge">March 8, 2026</span>
                     </div>
                     
-                    <div class="schedule-timeline">
+                    <div class="schedule-cards">
                         
-                        <div class="timeline-item">
-                            <div class="timeline-time">10:00 AM</div>
-                            <div class="timeline-content">
+                        <div class="schedule-card">
+                            <div class="card-time">10:00 AM</div>
+                            <div class="card-details">
                                 <h3>Event Opens</h3>
-                                <p class="timeline-location">
-                                    <span class="location-icon">📍</span>
-                                    Washington Square Park<br>
+                                <p class="card-location">
+                                    📍 Washington Square Park<br>
                                     <span class="address">700 Elysian Fields Ave</span>
                                 </p>
                             </div>
                         </div>
                         
-                        <div class="timeline-item">
-                            <div class="timeline-time">11:00 AM</div>
-                            <div class="timeline-content">
+                        <div class="schedule-card">
+                            <div class="card-time">11:00 AM</div>
+                            <div class="card-details">
                                 <h3>Assemble for Parade</h3>
-                                <p class="timeline-location">
-                                    <span class="location-icon">📍</span>
-                                    Royal St at Touro Street<br>
+                                <p class="card-location">
+                                    📍 Royal St at Touro Street<br>
                                     <span class="address">1913 Royal St</span>
                                 </p>
                             </div>
                         </div>
                         
-                        <div class="timeline-item highlight">
-                            <div class="timeline-time">12:00 PM</div>
-                            <div class="timeline-content">
+                        <div class="schedule-card highlight">
+                            <div class="card-time">12:00 PM</div>
+                            <div class="card-details">
                                 <h3>🎉 Parade Starts!</h3>
                             </div>
                         </div>
                         
-                        <div class="timeline-item">
-                            <div class="timeline-time">1:00 PM</div>
-                            <div class="timeline-content">
+                        <div class="schedule-card">
+                            <div class="card-time">1:00 PM</div>
+                            <div class="card-details">
                                 <h3>Parade Returns</h3>
                                 <p>Back to Washington Square Park</p>
                             </div>
                         </div>
                         
-                        <div class="timeline-item">
-                            <div class="timeline-time">1:15 PM</div>
-                            <div class="timeline-content">
+                        <div class="schedule-card">
+                            <div class="card-time">1:15 PM</div>
+                            <div class="card-details">
                                 <h3>Cultural Performances</h3>
                                 <p>Live music, dance & entertainment</p>
                             </div>
                         </div>
                         
-                        <div class="timeline-item">
-                            <div class="timeline-time">2:30 PM</div>
-                            <div class="timeline-content">
+                        <div class="schedule-card">
+                            <div class="card-time">2:30 PM</div>
+                            <div class="card-details">
                                 <h3>DJ Set</h3>
                                 <p>Dance party at the park!</p>
                             </div>
                         </div>
                         
-                        <div class="timeline-item last">
-                            <div class="timeline-time">5:00 PM</div>
-                            <div class="timeline-content">
+                        <div class="schedule-card last">
+                            <div class="card-time">5:00 PM</div>
+                            <div class="card-details">
                                 <h3>Event Ends</h3>
                                 <p>See you next year! 🎨</p>
                             </div>
@@ -126,8 +124,12 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
                         <h3>Directions</h3>
                         <ol class="route-steps">
                             <li>
+                                <span class="step-marker assemble">📍</span>
+                                <span class="step-text">Assemble at Royal St at Touro</span>
+                            </li>
+                            <li>
                                 <span class="step-marker start">START</span>
-                                <span class="step-text">Royal St at Touro</span>
+                                <span class="step-text">Start down Royal St</span>
                             </li>
                             <li>
                                 <span class="step-marker turn">←</span>
@@ -138,8 +140,12 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
                                 <span class="step-text">Left on Chartres</span>
                             </li>
                             <li>
+                                <span class="step-marker straight">↑</span>
+                                <span class="step-text">Continue on Chartres</span>
+                            </li>
+                            <li>
                                 <span class="step-marker end">END</span>
-                                <span class="step-text">Chartres at Kerlerec</span>
+                                <span class="step-text">End at Chartres at Kerlerec</span>
                             </li>
                         </ol>
                     </div>
