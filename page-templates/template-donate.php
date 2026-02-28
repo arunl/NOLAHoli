@@ -56,12 +56,11 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
                     <div class="donate-card-body">
                         <h3>Zelle</h3>
                         <p class="donate-card-desc">Instant bank transfer</p>
-                        <div class="donate-card-info">
-                            <span class="info-label">Send to:</span>
-                            <span class="info-value">info@nolaholi.org</span>
+                        <div class="donate-card-action zelle-action">
+                            <span>info@nolaholi.org</span>
                         </div>
                         <p class="donate-card-instructions">
-                            Open your banking app → Send with Zelle → Scan QR or enter email
+                            Scan QR with your banking app
                         </p>
                     </div>
                 </div>
@@ -78,7 +77,7 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
                             <span>Tap to Pay with PayPal →</span>
                         </div>
                         <p class="donate-card-instructions">
-                            Or scan QR code with PayPal app
+                            Scan QR with PayPal app
                         </p>
                     </div>
                 </a>
@@ -95,7 +94,7 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
                             <span>Tap to Pay with Venmo →</span>
                         </div>
                         <p class="donate-card-instructions">
-                            Or scan QR code with Venmo app
+                            Scan QR with Venmo app
                         </p>
                     </div>
                 </a>
@@ -113,7 +112,7 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
                             <span>Tap to Pay by Card →</span>
                         </div>
                         <p class="donate-card-instructions">
-                            Secure checkout powered by Square
+                            Secure checkout via Square
                         </p>
                     </div>
                 </a>
