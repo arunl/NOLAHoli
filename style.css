@@ -1919,3 +1919,644 @@ body.modal-open {
         min-height: 1000px;
     }
 }
+
+/* ===========================
+   Header Donate Button
+   =========================== */
+.header-donate {
+    flex-shrink: 0;
+}
+
+.donate-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--mardi-gras-purple) 0%, #7B3F9E 100%);
+    color: var(--white);
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(94, 43, 122, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.donate-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.donate-btn:hover::before {
+    left: 100%;
+}
+
+.donate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(94, 43, 122, 0.4);
+    color: var(--white);
+    background: linear-gradient(135deg, #7B3F9E 0%, var(--mardi-gras-purple) 100%);
+}
+
+.donate-icon {
+    font-size: 1.2rem;
+    animation: pulse-heart 2s ease-in-out infinite;
+}
+
+@keyframes pulse-heart {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+.donate-text {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Mobile adjustments for donate button */
+@media (max-width: 768px) {
+    .donate-btn {
+        padding: 10px 18px;
+        font-size: 0.9rem;
+    }
+    
+    .donate-icon {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-donate {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 999;
+    }
+    
+    .donate-btn {
+        padding: 14px 20px;
+        border-radius: 50px;
+        box-shadow: 0 4px 20px rgba(94, 43, 122, 0.5);
+    }
+}
+
+/* ===========================
+   Donation Page Styles
+   =========================== */
+
+/* Donor Info Card */
+.donate-info-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: var(--shadow-md);
+    border: 2px solid var(--mardi-gras-purple);
+}
+
+.donate-success-message {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    border: 2px solid #28a745;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.donate-success-message h4 {
+    color: #155724;
+    margin: 0 0 10px 0;
+    font-size: 1.4rem;
+}
+
+.donate-success-message p {
+    color: #155724;
+    margin: 0;
+}
+
+/* Donation Form Styles */
+.donate-form .form-group {
+    margin-bottom: 20px;
+}
+
+.donate-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-dark);
+}
+
+.donate-form input[type="text"],
+.donate-form input[type="email"],
+.donate-form input[type="tel"],
+.donate-form select,
+.donate-form textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.donate-form input:focus,
+.donate-form select:focus,
+.donate-form textarea:focus {
+    outline: none;
+    border-color: var(--mardi-gras-purple);
+    box-shadow: 0 0 0 3px rgba(94, 43, 122, 0.1);
+}
+
+.donate-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 600px) {
+    .donate-form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .donate-info-card {
+        padding: 25px;
+    }
+}
+
+/* Payment Tabs */
+.donate-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.donate-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 35px;
+    background: var(--off-white);
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.donate-tab:hover {
+    border-color: var(--mardi-gras-purple);
+    background: var(--white);
+}
+
+.donate-tab.active {
+    background: var(--mardi-gras-purple);
+    border-color: var(--mardi-gras-purple);
+    color: var(--white);
+}
+
+.tab-icon {
+    font-size: 2rem;
+}
+
+.tab-text {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* Tab Content */
+.donate-tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.donate-tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile Payment Grid */
+.donate-mobile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+@media (max-width: 900px) {
+    .donate-mobile-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
+
+/* Payment Card */
+.donate-payment-card {
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.donate-payment-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.payment-card-header {
+    padding: 20px;
+    text-align: center;
+    color: var(--white);
+}
+
+.payment-card-header h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.5rem;
+}
+
+.payment-badge {
+    font-size: 0.75rem;
+    background: rgba(255,255,255,0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+/* Payment method specific headers */
+.zelle-header {
+    background: linear-gradient(135deg, #6D1ED4 0%, #9B4DFF 100%);
+}
+
+.paypal-header {
+    background: linear-gradient(135deg, #003087 0%, #009CDE 100%);
+}
+
+.venmo-header {
+    background: linear-gradient(135deg, #008CFF 0%, #3396FF 100%);
+}
+
+.payment-card-body {
+    padding: 25px;
+}
+
+/* QR Code Container */
+.qr-code-container {
+    width: 200px;
+    margin: 0 auto 20px;
+    background: var(--white);
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.qr-code-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+/* QR Code Placeholder (fallback) */
+.qr-placeholder {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 20px;
+    background: var(--off-white);
+    border: 3px dashed #ccc;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qr-loading {
+    text-align: center;
+    color: var(--text-light);
+}
+
+.qr-loading p {
+    margin: 0;
+    font-weight: 600;
+}
+
+.qr-loading small {
+    font-size: 0.8rem;
+}
+
+/* Payment Instructions */
+.payment-instructions {
+    text-align: center;
+}
+
+.payment-instructions p {
+    margin: 0 0 10px 0;
+}
+
+.payment-email,
+.payment-handle,
+.payment-link a {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--mardi-gras-purple);
+    margin-bottom: 15px;
+    word-break: break-all;
+}
+
+.payment-link a:hover {
+    color: var(--mardi-gras-green);
+}
+
+.payment-instructions ol {
+    text-align: left;
+    padding-left: 20px;
+    margin: 0;
+}
+
+.payment-instructions li {
+    margin-bottom: 8px;
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+/* Donate Note */
+.donate-note {
+    background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+    border: 2px solid var(--mardi-gras-gold);
+    border-radius: 12px;
+    padding: 20px 25px;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.donate-note p {
+    margin: 0;
+    color: var(--text-dark);
+}
+
+.donate-note a {
+    color: var(--mardi-gras-purple);
+    font-weight: 600;
+}
+
+/* Credit Card Section */
+.donate-credit-card-section {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.credit-card-info {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 50px 40px;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    border: 2px solid #e0e0e0;
+}
+
+.credit-card-info h3 {
+    color: var(--mardi-gras-purple);
+    margin: 20px 0 15px;
+}
+
+.credit-card-info p {
+    color: var(--text-light);
+    line-height: 1.8;
+}
+
+.card-types {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+}
+
+.card-types span {
+    background: var(--off-white);
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.btn-large {
+    padding: 18px 45px;
+    font-size: 1.15rem;
+}
+
+.secure-note {
+    margin-top: 20px !important;
+    font-size: 0.9rem;
+    color: var(--text-light) !important;
+}
+
+/* Square QR Section */
+.square-qr-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.square-qr-wrapper {
+    display: inline-block;
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.square-brand-header {
+    background: #000000;
+    color: #FFFFFF;
+    padding: 12px 20px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.square-logo-icon {
+    display: inline-block;
+    font-size: 1.1rem;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.square-qr {
+    width: 180px;
+    margin: 0 auto;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.square-qr-wrapper .square-qr {
+    padding: 15px;
+}
+
+.scan-text {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin: 0;
+}
+
+.square-divider {
+    display: flex;
+    align-items: center;
+    margin: 25px 0;
+}
+
+.square-divider::before,
+.square-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e0e0e0;
+}
+
+.square-divider span {
+    padding: 0 20px;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Check Section */
+.donate-check-section {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.check-info-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 50px 40px;
+    box-shadow: var(--shadow-md);
+    border: 2px solid #e0e0e0;
+}
+
+.check-info-card h3 {
+    color: var(--mardi-gras-purple);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.check-details {
+    background: var(--off-white);
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    margin: 30px 0;
+}
+
+.payable-to {
+    font-size: 1.4rem;
+    color: var(--mardi-gras-purple);
+    margin-bottom: 20px !important;
+}
+
+.mailing-address {
+    line-height: 1.8;
+    color: var(--text-dark);
+}
+
+.check-memo {
+    background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    margin: 30px 0;
+}
+
+.memo-text {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--mardi-gras-green);
+    font-style: italic;
+}
+
+.check-photo-tip {
+    background: #E3F2FD;
+    padding: 25px;
+    border-radius: 12px;
+    border-left: 4px solid #1976D2;
+}
+
+.check-photo-tip h4 {
+    color: #1565C0;
+    margin: 0 0 10px 0;
+}
+
+.check-photo-tip p {
+    margin: 0;
+    color: var(--text-dark);
+}
+
+/* Impact Section */
+.bg-purple {
+    background: linear-gradient(135deg, var(--mardi-gras-purple) 0%, var(--dark-purple) 100%);
+}
+
+.text-white {
+    color: var(--white);
+}
+
+.donate-impact-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    margin-top: 40px;
+}
+
+@media (max-width: 900px) {
+    .donate-impact-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .donate-impact-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.impact-card {
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 16px;
+    padding: 30px 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.impact-card:hover {
+    background: rgba(255,255,255,0.15);
+    transform: translateY(-5px);
+}
+
+.impact-amount {
+    display: block;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--mardi-gras-gold);
+    margin-bottom: 15px;
+}
+
+.impact-card p {
+    color: rgba(255,255,255,0.9);
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+}
