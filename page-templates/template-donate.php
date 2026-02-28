@@ -57,7 +57,7 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
                         <h3>Zelle</h3>
                         <p class="donate-card-desc">Instant bank transfer</p>
                         <div class="donate-card-action zelle-action">
-                            <span>info@nolaholi.org</span>
+                            <span>NOLAHoliFestival@gmail.com</span>
                         </div>
                         <p class="donate-card-instructions">
                             Scan QR with your banking app
