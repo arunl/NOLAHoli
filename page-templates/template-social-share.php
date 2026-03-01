@@ -1,13 +1,23 @@
 <?php
 /**
  * Template Name: Social Share
- * A page optimized for social media screenshots
+ * A page optimized for social media screenshots (no header/footer for clean screenshots)
  * 
  * @package NOLAHoli
  */
 
-get_header();
+// Minimal HTML head without site header
+?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+    <meta charset="<?php bloginfo('charset'); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?php wp_head(); ?>
+</head>
+<body <?php body_class('social-share-page'); ?>>
 
+<?php
 // Get event info from theme customizer
 $event_date = get_theme_mod('nolaholi_event_date', 'March 8, 2026');
 $event_time = get_theme_mod('nolaholi_event_time', '10:00am - 5:00pm');
@@ -47,30 +57,37 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
                 <div class="social-column-content">
                     <div class="schedule-item">
                         <span class="time">10:00 AM</span>
+                        <span class="dotted-line"></span>
                         <span class="activity">Event Opens</span>
                     </div>
-                    <div class="schedule-item">
+                    <div class="schedule-item highlight">
                         <span class="time">11:00 AM</span>
+                        <span class="dotted-line"></span>
                         <span class="activity">Parade Assembly</span>
                     </div>
-                    <div class="schedule-item highlight">
+                    <div class="schedule-item">
                         <span class="time">12:00 PM</span>
+                        <span class="dotted-line"></span>
                         <span class="activity">🎉 Parade Starts!</span>
                     </div>
                     <div class="schedule-item">
                         <span class="time">1:00 PM</span>
+                        <span class="dotted-line"></span>
                         <span class="activity">Parade Returns</span>
                     </div>
                     <div class="schedule-item">
                         <span class="time">1:15 PM</span>
+                        <span class="dotted-line"></span>
                         <span class="activity">Performances</span>
                     </div>
                     <div class="schedule-item">
                         <span class="time">2:30 PM</span>
+                        <span class="dotted-line"></span>
                         <span class="activity">DJ Set</span>
                     </div>
                     <div class="schedule-item">
                         <span class="time">5:00 PM</span>
+                        <span class="dotted-line"></span>
                         <span class="activity">Event Ends</span>
                     </div>
                 </div>
@@ -111,15 +128,12 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
                         <span class="route-text">Left on Chartres</span>
                     </div>
                     <div class="route-item">
-                        <span class="route-marker straight">↑</span>
+                        <span class="route-marker straight">↓</span>
                         <span class="route-text">Continue on Chartres</span>
                     </div>
                     <div class="route-item">
                         <span class="route-marker end">⬤</span>
                         <span class="route-text">End at Chartres & Kerlerec</span>
-                    </div>
-                    <div class="route-note-social">
-                        <strong>💡 Tip:</strong> Arrive by 11 AM to join the parade!
                     </div>
                 </div>
             </div>
@@ -134,6 +148,6 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
     </section>
 </main>
 
-<?php
-get_footer();
-?>
+<?php wp_footer(); ?>
+</body>
+</html>

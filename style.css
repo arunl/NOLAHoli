@@ -2907,17 +2907,17 @@ details[open] .check-arrow {
 
 /* Details Section */
 .social-details-section {
-    padding: 40px 20px;
+    padding: 20px 20px 30px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 .social-section-title {
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: var(--mardi-gras-purple);
-    margin: 0 0 30px 0;
-    padding-bottom: 15px;
+    margin: 0 0 20px 0;
+    padding-bottom: 10px;
     border-bottom: 3px solid var(--mardi-gras-purple);
 }
 
@@ -2976,16 +2976,15 @@ details[open] .check-arrow {
 }
 
 .social-column-content {
-    padding: 20px;
+    padding: 15px;
 }
 
 /* Schedule Items */
 .schedule-item {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
 }
 
 .schedule-item:last-child {
@@ -2993,22 +2992,38 @@ details[open] .check-arrow {
 }
 
 .schedule-item.highlight {
-    background: linear-gradient(90deg, rgba(255, 215, 0, 0.2) 0%, transparent 100%);
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.25) 0%, rgba(255, 215, 0, 0.1) 100%);
     margin: 0 -20px;
-    padding: 10px 20px;
+    padding: 8px 20px;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.3);
 }
 
 .schedule-item .time {
     font-weight: 700;
     color: var(--mardi-gras-purple);
-    font-size: 0.95rem;
-    min-width: 80px;
+    font-size: 0.9rem;
+    min-width: 70px;
+    flex-shrink: 0;
+}
+
+.dotted-line {
+    flex: 1;
+    height: 1px;
+    background: repeating-linear-gradient(
+        90deg,
+        #ccc,
+        #ccc 3px,
+        transparent 3px,
+        transparent 8px
+    );
+    margin: 0 10px;
 }
 
 .schedule-item .activity {
     color: var(--text-dark);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     text-align: right;
+    flex-shrink: 0;
 }
 
 /* Map Content */
@@ -3026,8 +3041,8 @@ details[open] .check-arrow {
 .route-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 8px 0;
+    gap: 10px;
+    padding: 6px 0;
 }
 
 .route-marker {
@@ -3067,36 +3082,27 @@ details[open] .check-arrow {
 }
 
 .route-text {
-    font-size: 0.95rem;
-    color: var(--text-dark);
-}
-
-.route-note-social {
-    margin-top: 15px;
-    padding: 12px;
-    background: #FFF8E1;
-    border-radius: 8px;
     font-size: 0.9rem;
-    border-left: 4px solid var(--mardi-gras-gold);
+    color: var(--text-dark);
 }
 
 /* Social Footer */
 .social-footer {
     background: linear-gradient(135deg, #1a0533 0%, #0d0d2b 100%);
-    padding: 30px 20px;
+    padding: 20px 20px;
     text-align: center;
 }
 
 .website-url {
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: var(--mardi-gras-gold);
     font-weight: 700;
-    margin: 0 0 10px 0;
+    margin: 0 0 5px 0;
     letter-spacing: 2px;
 }
 
 .social-footer .tagline {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: rgba(255, 255, 255, 0.8);
     margin: 0;
 }
