@@ -108,8 +108,8 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
                 <!-- Middle Column: Parade Route Map -->
                 <div class="parade-route-map">
                     <div class="route-header">
-                        <span class="route-icon">🚶</span>
-                        <h2>Parade Route</h2>
+                        <span class="route-icon">🗺️</span>
+                        <h2>Parade Map</h2>
                     </div>
                     
                     <div class="route-map">
@@ -121,7 +121,7 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
                 <div class="parade-route-directions">
                     <div class="route-header">
                         <span class="route-icon">🧭</span>
-                        <h2>Directions</h2>
+                        <h2>Parade Route</h2>
                     </div>
                     
                     <ol class="route-steps">
