@@ -170,18 +170,26 @@
             font-size: 0.9rem;
         }
         
-        /* Instagram footer grid adjustments */
-        .instagram-page .social-footer-grid {
-            padding: 12px 15px;
+        /* Instagram specific adjustments */
+        .instagram-page .vendors-header h3 {
+            font-size: 1.2rem;
         }
         
-        .instagram-page .footer-col-title {
-            font-size: 1.3rem;
+        .instagram-page .vendor-logo-new {
+            height: 40px;
         }
         
-        .instagram-page .footer-vendor-logo {
-            height: 35px;
-            max-width: 70px;
+        .instagram-page .vendor-name {
+            font-size: 0.8rem;
+        }
+        
+        .instagram-page .social-info-bar {
+            font-size: 1rem;
+            padding: 8px 15px;
+        }
+        
+        .instagram-page .social-dark-strip {
+            padding: 10px 15px;
         }
         
         /* Hide guides panel when taking screenshot */
@@ -342,24 +350,39 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
         </div>
     </section>
     
-    <!-- Footer - Three Column Layout -->
-    <section class="social-footer-grid">
-        <div class="footer-col">
-            <p class="footer-col-title">NOLAHoli.org</p>
-            <p class="footer-col-subtitle">Free Admission</p>
+    <!-- Food Vendors Section -->
+    <section class="social-vendors-new">
+        <div class="vendors-header">
+            <h3>Authentic Indian Cuisine</h3>
         </div>
-        <div class="footer-col">
-            <p class="footer-col-label">Food Vendors</p>
-            <div class="footer-vendor-logos">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/Indian Delight logo.png" alt="Indian Delight" class="footer-vendor-logo">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/Aroma Logo.png" alt="Aroma Indian Cuisine" class="footer-vendor-logo">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/Destination India Logo.PNG" alt="Destination India" class="footer-vendor-logo">
+        <div class="vendors-grid">
+            <div class="vendor-item">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/Indian Delight logo.png" alt="Indian Delight" class="vendor-logo-new">
+                <p class="vendor-name">Indian Delight, MS</p>
+            </div>
+            <div class="vendor-item">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/Aroma Logo.png" alt="Aroma Indian Cuisine" class="vendor-logo-new">
+                <p class="vendor-name">Aroma, NOLA</p>
+            </div>
+            <div class="vendor-item">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/Destination India Logo.PNG" alt="Destination India" class="vendor-logo-new">
+                <p class="vendor-name">Destination India, Lafayette</p>
             </div>
         </div>
-        <div class="footer-col">
-            <p class="footer-col-tagline">Family Friendly</p>
-            <p class="footer-col-tagline">All Are Welcome</p>
-        </div>
+    </section>
+    
+    <!-- Info Bar -->
+    <section class="social-info-bar">
+        <span>Free Entrance</span>
+        <span class="bullet">•</span>
+        <span>Family Friendly</span>
+        <span class="bullet">•</span>
+        <span>All Are Welcome</span>
+    </section>
+    
+    <!-- Dark Footer Strip -->
+    <section class="social-dark-strip">
+        <p>Visit: <strong>NOLAHoli.org</strong></p>
     </section>
 </main>
 </div>

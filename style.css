@@ -2888,17 +2888,21 @@ details[open] .check-arrow {
     min-height: 220px;
 }
 
+.social-hero .presented-by {
+    font-size: 1.1rem;
+}
+
 .social-hero .sponsor-name {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     margin-bottom: 8px;
 }
 
 .social-hero .hero-title-large {
-    font-size: 3rem;
+    font-size: 3.5rem;
 }
 
 .hero-event-info {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     color: white;
     margin: 12px 0 0 0;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -3116,65 +3120,92 @@ details[open] .check-arrow {
     margin: 0;
 }
 
-/* Social Footer - Three Column Grid */
-.social-footer-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    background: linear-gradient(135deg, #1a0533 0%, #0d0d2b 100%);
-    padding: 15px 20px;
+/* Social Vendors Section - New Design */
+.social-vendors-new {
+    background: var(--white);
+    padding: 0;
+    border-top: 3px solid var(--mardi-gras-purple);
 }
 
-.footer-col {
+.vendors-header {
+    text-align: center;
+    padding: 10px 20px;
+    border-bottom: 2px solid var(--mardi-gras-purple);
+}
+
+.vendors-header h3 {
+    font-size: 1.4rem;
+    color: var(--mardi-gras-purple);
+    margin: 0;
+    font-weight: 700;
+}
+
+.vendors-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: 2px solid var(--mardi-gras-purple);
+}
+
+.vendor-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 12px 10px;
     text-align: center;
-    padding: 5px 10px;
 }
 
-.footer-col-title {
-    font-size: 1.5rem;
-    color: var(--mardi-gras-gold);
-    font-weight: 700;
-    margin: 0 0 3px 0;
+.vendor-item:not(:last-child) {
+    border-right: 1px solid #e0e0e0;
 }
 
-.footer-col-subtitle {
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.85);
-    margin: 0;
-}
-
-.footer-col-label {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.6);
-    margin: 0 0 6px 0;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.footer-vendor-logos {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-}
-
-.footer-vendor-logo {
-    height: 40px;
+.vendor-logo-new {
+    height: 50px;
     width: auto;
-    max-width: 80px;
+    max-width: 100px;
     object-fit: contain;
-    background: white;
-    padding: 4px 6px;
-    border-radius: 4px;
+    margin-bottom: 6px;
 }
 
-.footer-col-tagline {
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.85);
-    margin: 2px 0;
+.vendor-name {
+    font-size: 0.85rem;
+    color: #333;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Info Bar */
+.social-info-bar {
+    background: var(--white);
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--mardi-gras-purple);
+    font-weight: 600;
+    border-bottom: 2px solid var(--mardi-gras-purple);
+}
+
+.social-info-bar .bullet {
+    margin: 0 15px;
+    color: var(--mardi-gras-gold);
+}
+
+/* Dark Footer Strip */
+.social-dark-strip {
+    background: linear-gradient(135deg, #1a0533 0%, #0d0d2b 100%);
+    padding: 12px 20px;
+    text-align: center;
+}
+
+.social-dark-strip p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.social-dark-strip strong {
+    color: var(--mardi-gras-gold);
+    font-size: 1.2rem;
 }
 
 @media (max-width: 768px) {
