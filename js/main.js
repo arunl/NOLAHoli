@@ -112,17 +112,16 @@
                 e.preventDefault();
                 e.stopPropagation();
                 
-                // Prevent double-firing on devices that support both touch and click
-                if (e.type === 'touchend') {
-                    $a.data('touched', true);
-                    handleMobileToggle($a);
-                } else if (e.type === 'click') {
-                    if ($a.data('touched')) {
-                        $a.data('touched', false);
-                        return false;
-                    }
-                    handleMobileToggle($a);
+                // Debounce: prevent double-firing within 300ms (handles touch + click overlap)
+                var lastToggle = $a.data('lastToggle') || 0;
+                var now = Date.now();
+                
+                if (now - lastToggle < 300) {
+                    return false; // Too soon after last toggle, ignore
                 }
+                
+                $a.data('lastToggle', now);
+                handleMobileToggle($a);
             } else {
                 // Desktop with touch: first tap opens submenu, second tap follows link
                 if (isTouchDevice && (href !== '#' && !href.toLowerCase().startsWith('javascript'))) {
