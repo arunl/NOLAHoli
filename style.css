@@ -2352,19 +2352,34 @@ details[open] .check-arrow {
    Event Day Page
    =========================== */
 
-/* Two Column Grid */
+/* Three Column Grid */
 .event-day-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 50px;
-    max-width: 1100px;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 35px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
+    .event-day-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+    
+    .parade-route-directions {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 700px) {
     .event-day-grid {
         grid-template-columns: 1fr;
         gap: 40px;
+    }
+    
+    .parade-route-directions {
+        grid-column: span 1;
     }
 }
 
@@ -2514,8 +2529,9 @@ details[open] .check-arrow {
     color: #888;
 }
 
-/* Parade Route Section */
-.parade-route {
+/* Parade Route Sections */
+.parade-route-map,
+.parade-route-directions {
     background: var(--white);
 }
 
@@ -2533,10 +2549,8 @@ details[open] .check-arrow {
     display: block;
 }
 
-.route-directions h3 {
-    color: var(--mardi-gras-purple);
-    font-size: 1.2rem;
-    margin: 0 0 15px 0;
+.parade-route-directions .route-steps {
+    margin-top: 0;
 }
 
 .route-steps {

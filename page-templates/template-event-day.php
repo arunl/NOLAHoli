@@ -111,8 +111,8 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
                     </div>
                 </div>
                 
-                <!-- Right Column: Parade Route -->
-                <div class="parade-route">
+                <!-- Middle Column: Parade Route Map -->
+                <div class="parade-route-map">
                     <div class="route-header">
                         <span class="route-icon">🚶</span>
                         <h2>Parade Route</h2>
@@ -121,36 +121,41 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
                     <div class="route-map">
                         <img src="<?php echo get_template_directory_uri(); ?>/images/2026-parade-route.png" alt="NOLA Holi 2026 Parade Route Map">
                     </div>
-                    
-                    <div class="route-directions">
-                        <h3>Directions</h3>
-                        <ol class="route-steps">
-                            <li>
-                                <span class="step-marker assemble"><span class="pin-icon"></span></span>
-                                <span class="step-text">Assemble at Royal St at Touro</span>
-                            </li>
-                            <li>
-                                <span class="step-marker start">START</span>
-                                <span class="step-text">Start down Royal St</span>
-                            </li>
-                            <li>
-                                <span class="step-marker turn">←</span>
-                                <span class="step-text">Left on St Philip</span>
-                            </li>
-                            <li>
-                                <span class="step-marker turn">←</span>
-                                <span class="step-text">Left on Chartres</span>
-                            </li>
-                            <li>
-                                <span class="step-marker straight">↑</span>
-                                <span class="step-text">Continue on Chartres</span>
-                            </li>
-                            <li>
-                                <span class="step-marker end">END</span>
-                                <span class="step-text">End at Chartres at Kerlerec</span>
-                            </li>
-                        </ol>
+                </div>
+                
+                <!-- Right Column: Route Directions -->
+                <div class="parade-route-directions">
+                    <div class="route-header">
+                        <span class="route-icon">🧭</span>
+                        <h2>Directions</h2>
                     </div>
+                    
+                    <ol class="route-steps">
+                        <li>
+                            <span class="step-marker assemble"><span class="pin-icon"></span></span>
+                            <span class="step-text">Assemble at Royal St at Touro</span>
+                        </li>
+                        <li>
+                            <span class="step-marker start">START</span>
+                            <span class="step-text">Start down Royal St</span>
+                        </li>
+                        <li>
+                            <span class="step-marker turn">←</span>
+                            <span class="step-text">Left on St Philip</span>
+                        </li>
+                        <li>
+                            <span class="step-marker turn">←</span>
+                            <span class="step-text">Left on Chartres</span>
+                        </li>
+                        <li>
+                            <span class="step-marker straight">↑</span>
+                            <span class="step-text">Continue on Chartres</span>
+                        </li>
+                        <li>
+                            <span class="step-marker end">END</span>
+                            <span class="step-text">End at Chartres at Kerlerec</span>
+                        </li>
+                    </ol>
                     
                     <div class="route-note">
                         <p>💡 <strong>Tip:</strong> Arrive at the parade assembly point by 11:00 AM to join the march!</p>
