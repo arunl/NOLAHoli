@@ -70,7 +70,8 @@
             $(this).toggleClass('active', nowOpen)
                    .attr('aria-expanded', String(nowOpen));
             $menu.toggleClass('active', nowOpen);
-            if (!nowOpen) closeAllSubmenus();
+            // Always close all submenus when toggling menu (open or close)
+            closeAllSubmenus();
         });
 
         // Detect touch device
