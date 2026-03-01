@@ -31,7 +31,6 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
             <div class="gold-ribbon">
                 <span>IN NEW ORLEANS</span>
             </div>
-            <p class="hero-date"><?php echo esc_html($event_date); ?> • Washington Square Park</p>
         </div>
     </section>
     
@@ -41,8 +40,8 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
             
             <!-- Section Header -->
             <div class="event-day-section-header">
-                <h2>Event Day Schedule <?php echo esc_html($event_year); ?></h2>
-                <p><?php echo esc_html($event_date); ?></p>
+                <h2>Event Details</h2>
+                <p><?php echo esc_html($event_date); ?> • Washington Square Park</p>
             </div>
             
             <div class="event-day-grid">
