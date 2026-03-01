@@ -149,15 +149,12 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
         <div class="vendors-grid">
             <div class="vendor-item">
                 <img src="<?php echo get_template_directory_uri(); ?>/images/Indian Delight logo.png" alt="Indian Delight" class="vendor-logo-new">
-                <p class="vendor-name">Indian Delight, MS</p>
             </div>
             <div class="vendor-item">
                 <img src="<?php echo get_template_directory_uri(); ?>/images/Aroma Logo.png" alt="Aroma Indian Cuisine" class="vendor-logo-new">
-                <p class="vendor-name">Aroma, NOLA</p>
             </div>
             <div class="vendor-item">
                 <img src="<?php echo get_template_directory_uri(); ?>/images/Destination India Logo.PNG" alt="Destination India" class="vendor-logo-new">
-                <p class="vendor-name">Destination India, Lafayette</p>
             </div>
         </div>
     </section>
