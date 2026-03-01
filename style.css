@@ -3001,8 +3001,8 @@ details[open] .check-arrow {
 .schedule-item .time {
     font-weight: 700;
     color: var(--mardi-gras-purple);
-    font-size: 1rem;
-    min-width: 75px;
+    font-size: 1.1rem;
+    min-width: 80px;
     flex-shrink: 0;
 }
 
@@ -3011,8 +3011,8 @@ details[open] .check-arrow {
     height: 1px;
     background: repeating-linear-gradient(
         90deg,
-        #aaa,
-        #aaa 3px,
+        #999,
+        #999 3px,
         transparent 3px,
         transparent 8px
     );
@@ -3020,8 +3020,8 @@ details[open] .check-arrow {
 }
 
 .schedule-item .activity {
-    color: #222;
-    font-size: 1rem;
+    color: #111;
+    font-size: 1.1rem;
     font-weight: 600;
     text-align: right;
     flex-shrink: 0;
@@ -3090,8 +3090,8 @@ details[open] .check-arrow {
 }
 
 .route-text {
-    font-size: 1rem;
-    color: #222;
+    font-size: 1.1rem;
+    color: #111;
     font-weight: 600;
 }
 
@@ -3116,33 +3116,65 @@ details[open] .check-arrow {
     margin: 0;
 }
 
-/* Social Share Vendors Section */
-.social-vendors-section {
-    background: #f5f5f5;
-    padding: 12px 20px;
-    text-align: center;
+/* Social Footer - Three Column Grid */
+.social-footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background: linear-gradient(135deg, #1a0533 0%, #0d0d2b 100%);
+    padding: 15px 20px;
 }
 
-.social-vendors-section .vendors-label {
-    font-size: 0.8rem;
-    color: #666;
-    margin: 0 0 8px 0;
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5px 10px;
+}
+
+.footer-col-title {
+    font-size: 1.5rem;
+    color: var(--mardi-gras-gold);
+    font-weight: 700;
+    margin: 0 0 3px 0;
+}
+
+.footer-col-subtitle {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+}
+
+.footer-col-label {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0 0 6px 0;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-.social-vendors-section .vendors-logos {
+.footer-vendor-logos {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 35px;
+    gap: 12px;
 }
 
-.social-vendors-section .vendor-logo-small {
-    height: 45px;
+.footer-vendor-logo {
+    height: 40px;
     width: auto;
-    max-width: 110px;
+    max-width: 80px;
     object-fit: contain;
+    background: white;
+    padding: 4px 6px;
+    border-radius: 4px;
+}
+
+.footer-col-tagline {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 2px 0;
 }
 
 @media (max-width: 768px) {

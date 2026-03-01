@@ -170,39 +170,18 @@
             font-size: 0.9rem;
         }
         
-        /* Food Vendors Section */
-        .insta-vendors-section {
-            background: #f8f8f8;
-            padding: 15px 20px;
-            text-align: center;
+        /* Instagram footer grid adjustments */
+        .instagram-page .social-footer-grid {
+            padding: 12px 15px;
         }
         
-        .vendors-label {
-            font-size: 0.85rem;
-            color: #666;
-            margin: 0 0 10px 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .instagram-page .footer-col-title {
+            font-size: 1.3rem;
         }
         
-        .vendors-logos {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-        }
-        
-        .vendor-logo-small {
-            height: 50px;
-            width: auto;
-            max-width: 120px;
-            object-fit: contain;
-            filter: grayscale(0%);
-            transition: transform 0.2s ease;
-        }
-        
-        .vendor-logo-small:hover {
-            transform: scale(1.05);
+        .instagram-page .footer-vendor-logo {
+            height: 35px;
+            max-width: 70px;
         }
         
         /* Hide guides panel when taking screenshot */
@@ -363,25 +342,23 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
         </div>
     </section>
     
-    <!-- Footer with Website -->
-    <section class="social-footer insta-footer">
-        <p class="website-url">NOLAHoli.org</p>
-        <p class="tagline">Free Admission • Family Friendly • All Are Welcome</p>
-    </section>
-    
-    <!-- Food Vendors - Logos Only -->
-    <section class="insta-vendors-section">
-        <p class="vendors-label">Food Vendors</p>
-        <div class="vendors-logos">
-            <a href="https://www.indiandelightms.com/" target="_blank" rel="noopener noreferrer">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/Indian Delight logo.png" alt="Indian Delight" class="vendor-logo-small">
-            </a>
-            <a href="https://aromanolaindiancuisine.com/" target="_blank" rel="noopener noreferrer">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/Aroma Logo.png" alt="Aroma Indian Cuisine" class="vendor-logo-small">
-            </a>
-            <a href="https://destinationindiala.com/" target="_blank" rel="noopener noreferrer">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/Destination India Logo.PNG" alt="Destination India" class="vendor-logo-small">
-            </a>
+    <!-- Footer - Three Column Layout -->
+    <section class="social-footer-grid">
+        <div class="footer-col">
+            <p class="footer-col-title">NOLAHoli.org</p>
+            <p class="footer-col-subtitle">Free Admission</p>
+        </div>
+        <div class="footer-col">
+            <p class="footer-col-label">Food Vendors</p>
+            <div class="footer-vendor-logos">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/Indian Delight logo.png" alt="Indian Delight" class="footer-vendor-logo">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/Aroma Logo.png" alt="Aroma Indian Cuisine" class="footer-vendor-logo">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/Destination India Logo.PNG" alt="Destination India" class="footer-vendor-logo">
+            </div>
+        </div>
+        <div class="footer-col">
+            <p class="footer-col-tagline">Family Friendly</p>
+            <p class="footer-col-tagline">All Are Welcome</p>
         </div>
     </section>
 </main>
