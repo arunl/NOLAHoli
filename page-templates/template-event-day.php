@@ -14,22 +14,30 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
 ?>
 
 <main id="primary" class="site-main">
-    <!-- Hero Section -->
-    <section class="hero-section" style="<?php 
-        $style = nolaholi_get_hero_background_style('linear-gradient(135deg, var(--mardi-gras-purple) 0%, var(--mardi-gras-green) 50%, var(--mardi-gras-gold) 100%)');
-        $style = str_replace('min-height: 400px;', 'min-height: 300px;', $style);
-        echo $style;
-    ?>">
+    <!-- Hero Section - Aurora/Holi Style -->
+    <section class="hero-section event-day-hero">
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1 class="hero-title">Event Day Schedule <?php echo esc_html($event_year); ?></h1>
-            <p class="hero-subtitle"><?php echo esc_html($event_date); ?> • Washington Square Park</p>
+            <p class="presented-by">Presented by</p>
+            <h2 class="sponsor-name">Mike Motwani and Family</h2>
+            <h1 class="hero-title-large">The Biggest<br><span class="cursive-text">Festival of Colors</span></h1>
+            <div class="gold-ribbon">
+                <span>IN NEW ORLEANS</span>
+            </div>
+            <p class="hero-date"><?php echo esc_html($event_date); ?> • Washington Square Park</p>
         </div>
     </section>
     
     <!-- Main Content: Schedule + Parade Route -->
     <section class="content-section bg-white">
         <div class="container">
+            
+            <!-- Section Header -->
+            <div class="event-day-section-header">
+                <h2>Event Day Schedule <?php echo esc_html($event_year); ?></h2>
+                <p><?php echo esc_html($event_date); ?></p>
+            </div>
+            
             <div class="event-day-grid">
                 
                 <!-- Left Column: Schedule -->
