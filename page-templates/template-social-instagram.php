@@ -171,13 +171,8 @@
         }
         
         /* Instagram specific adjustments */
-        .instagram-page .vendors-header h3 {
-            font-size: 1.2rem;
-        }
-        
-        .instagram-page .vendor-logo-new {
-            height: 55px;
-            max-width: 140px;
+        .instagram-page .vendors-names {
+            font-size: 1.1rem;
         }
         
         .instagram-page .social-info-bar {
@@ -348,21 +343,15 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
     </section>
     
     <!-- Food Vendors Section -->
-    <section class="social-vendors-new">
-        <div class="vendors-header">
-            <h3>Authentic Indian Cuisine</h3>
-        </div>
-        <div class="vendors-grid">
-            <div class="vendor-item">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/Indian Delight logo.png" alt="Indian Delight" class="vendor-logo-new">
-            </div>
-            <div class="vendor-item">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/Aroma Logo.png" alt="Aroma Indian Cuisine" class="vendor-logo-new">
-            </div>
-            <div class="vendor-item">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/Destination India Logo.PNG" alt="Destination India" class="vendor-logo-new">
-            </div>
-        </div>
+    <section class="social-vendors-text">
+        <p class="vendors-title">Authentic Indian Cuisine by</p>
+        <p class="vendors-names">
+            <span>Indian Delight</span>
+            <span class="separator">•</span>
+            <span>Aroma Indian Cuisine</span>
+            <span class="separator">•</span>
+            <span>Destination India</span>
+        </p>
     </section>
     
     <!-- Info Bar -->

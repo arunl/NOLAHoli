@@ -3120,50 +3120,32 @@ details[open] .check-arrow {
     margin: 0;
 }
 
-/* Social Vendors Section - New Design */
-.social-vendors-new {
+/* Social Vendors Section - Text Only */
+.social-vendors-text {
     background: var(--white);
-    padding: 0;
-    border-top: 3px solid var(--mardi-gras-purple);
-}
-
-.vendors-header {
+    padding: 12px 20px;
     text-align: center;
-    padding: 10px 20px;
+    border-top: 3px solid var(--mardi-gras-purple);
     border-bottom: 2px solid var(--mardi-gras-purple);
 }
 
-.vendors-header h3 {
-    font-size: 1.4rem;
+.vendors-title {
+    font-size: 1rem;
+    color: #666;
+    margin: 0 0 6px 0;
+    font-style: italic;
+}
+
+.vendors-names {
+    font-size: 1.3rem;
     color: var(--mardi-gras-purple);
     margin: 0;
-    font-weight: 700;
+    font-weight: 600;
 }
 
-.vendors-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    border-bottom: 2px solid var(--mardi-gras-purple);
-}
-
-.vendor-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 15px;
-    text-align: center;
-}
-
-.vendor-item:not(:last-child) {
-    border-right: 1px solid #e0e0e0;
-}
-
-.vendor-logo-new {
-    height: 70px;
-    width: auto;
-    max-width: 180px;
-    object-fit: contain;
+.vendors-names .separator {
+    margin: 0 12px;
+    color: var(--mardi-gras-gold);
 }
 
 /* Info Bar */
