@@ -2876,6 +2876,268 @@ details[open] .check-arrow {
     line-height: 1.5;
 }
 
+/* ===========================
+   Social Share Page
+   =========================== */
+
+.social-share-page {
+    background: var(--white);
+}
+
+.social-hero {
+    min-height: 350px;
+}
+
+/* Event Title Section */
+.social-event-title {
+    background: linear-gradient(135deg, var(--mardi-gras-purple) 0%, #4a148c 100%);
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.nola-holi-title {
+    font-size: 2.8rem;
+    color: white;
+    margin: 0 0 20px 0;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.event-datetime {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.event-date-large,
+.event-time-large {
+    font-size: 1.8rem;
+    color: var(--mardi-gras-gold);
+    font-weight: 700;
+}
+
+.event-location-large {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+}
+
+/* Details Section */
+.social-details-section {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.social-section-title {
+    text-align: center;
+    font-size: 2rem;
+    color: var(--mardi-gras-purple);
+    margin: 0 0 30px 0;
+    padding-bottom: 15px;
+    border-bottom: 3px solid var(--mardi-gras-purple);
+}
+
+.social-three-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+@media (max-width: 900px) {
+    .social-three-columns {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
+
+.social-column {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.social-column-header {
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.social-column-header h3 {
+    margin: 0;
+    color: white;
+    font-size: 1.3rem;
+}
+
+.column-icon {
+    font-size: 1.5rem;
+}
+
+.schedule-header-bg {
+    background: linear-gradient(135deg, var(--mardi-gras-purple) 0%, #7b1fa2 100%);
+}
+
+.map-header-bg {
+    background: linear-gradient(135deg, var(--mardi-gras-green) 0%, #2e7d32 100%);
+}
+
+.route-header-bg {
+    background: linear-gradient(135deg, var(--mardi-gras-gold) 0%, #f9a825 100%);
+}
+
+.route-header-bg h3 {
+    color: var(--text-dark);
+}
+
+.social-column-content {
+    padding: 20px;
+}
+
+/* Schedule Items */
+.schedule-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.schedule-item:last-child {
+    border-bottom: none;
+}
+
+.schedule-item.highlight {
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.2) 0%, transparent 100%);
+    margin: 0 -20px;
+    padding: 10px 20px;
+}
+
+.schedule-item .time {
+    font-weight: 700;
+    color: var(--mardi-gras-purple);
+    font-size: 0.95rem;
+    min-width: 80px;
+}
+
+.schedule-item .activity {
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    text-align: right;
+}
+
+/* Map Content */
+.map-content {
+    padding: 10px;
+}
+
+.social-map-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Route Items */
+.route-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+}
+
+.route-marker {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.route-marker.assemble {
+    background: #E3F2FD;
+}
+
+.route-marker.start {
+    background: var(--mardi-gras-green);
+    color: white;
+}
+
+.route-marker.turn {
+    background: var(--mardi-gras-purple);
+    color: white;
+}
+
+.route-marker.straight {
+    background: var(--mardi-gras-purple);
+    color: white;
+}
+
+.route-marker.end {
+    background: var(--mardi-gras-gold);
+    color: var(--text-dark);
+}
+
+.route-text {
+    font-size: 0.95rem;
+    color: var(--text-dark);
+}
+
+.route-note-social {
+    margin-top: 15px;
+    padding: 12px;
+    background: #FFF8E1;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    border-left: 4px solid var(--mardi-gras-gold);
+}
+
+/* Social Footer */
+.social-footer {
+    background: linear-gradient(135deg, #1a0533 0%, #0d0d2b 100%);
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.website-url {
+    font-size: 2rem;
+    color: var(--mardi-gras-gold);
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    letter-spacing: 2px;
+}
+
+.social-footer .tagline {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .nola-holi-title {
+        font-size: 2rem;
+        letter-spacing: 1px;
+    }
+    
+    .event-date-large,
+    .event-time-large {
+        font-size: 1.4rem;
+    }
+    
+    .event-datetime {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
 .quick-info-card.featured {
     background: linear-gradient(135deg, var(--mardi-gras-green) 0%, #4CAF50 100%);
     color: white;
