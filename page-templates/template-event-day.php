@@ -22,7 +22,7 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
     ?>">
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1 class="hero-title">Event Day <?php echo esc_html($event_year); ?></h1>
+            <h1 class="hero-title">Event Day Schedule <?php echo esc_html($event_year); ?></h1>
             <p class="hero-subtitle"><?php echo esc_html($event_date); ?> • Washington Square Park</p>
         </div>
     </section>
@@ -30,12 +30,6 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
     <!-- Main Content: Schedule + Parade Route -->
     <section class="content-section bg-white">
         <div class="container">
-            
-            <!-- Centered Date Badge -->
-            <div class="event-date-header">
-                <span class="date-badge">March 8, 2026</span>
-            </div>
-            
             <div class="event-day-grid">
                 
                 <!-- Left Column: Schedule -->
