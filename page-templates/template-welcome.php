@@ -1,31 +1,14 @@
 <?php
 /**
- * Template Name: Front Page
- * The home page template
+ * Template Name: Welcome
+ * The original home/welcome page template with festival overview
  * 
- * This template handles the WordPress front page. It checks if the page set as
- * front page has a custom template assigned, and loads that template instead.
- * This allows the site admin to set any page (like Event Day) as the home page.
+ * Use this template to access the original home page content when
+ * a different page (like Event Day) is set as the site's front page.
  * 
  * @package NOLAHoli
  */
 
-// Check if a static front page is set and has a custom template
-$front_page_id = get_option('page_on_front');
-if ($front_page_id) {
-    $page_template = get_page_template_slug($front_page_id);
-    
-    // If the front page has a custom template assigned (not this one), load it
-    if ($page_template && $page_template !== 'front-page.php') {
-        $template_path = get_template_directory() . '/' . $page_template;
-        if (file_exists($template_path)) {
-            include($template_path);
-            return; // Stop processing this file
-        }
-    }
-}
-
-// Default front page content below
 get_header();
 
 // Get event year from theme customizer
@@ -261,4 +244,3 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
 <?php
 get_footer();
 ?>
-
