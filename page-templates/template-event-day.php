@@ -202,7 +202,7 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
     <section class="content-section bg-white">
         <div class="container">
             <h2 class="section-title" style="text-align: center; margin-bottom: 10px;">Food Vendors</h2>
-            <p style="text-align: center; color: var(--text-light); margin-bottom: 30px;">Authentic Indian cuisine from Louisiana's finest</p>
+            <p style="text-align: center; color: var(--text-light); margin-bottom: 30px;">Authentic Indian cuisine from the Gulf South</p>
             
             <div class="food-vendors-grid">
                 <a href="https://www.indiandelightms.com/" target="_blank" rel="noopener noreferrer" class="vendor-card">
