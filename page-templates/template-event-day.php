@@ -11,6 +11,10 @@ get_header();
 // Get event info from theme customizer
 $event_date = get_theme_mod('nolaholi_event_date', 'March 8, 2026');
 $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
+
+// Get presenting sponsor from database
+$presenting_sponsor = nolaholi_get_first_event_sponsor();
+$sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
 ?>
 
 <main id="primary" class="site-main">
@@ -18,9 +22,12 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
     <section class="hero-section event-day-hero">
         <div class="hero-overlay"></div>
         <div class="hero-content">
+            <?php if ($sponsor_name) : ?>
             <p class="presented-by">Presented by</p>
-            <h2 class="sponsor-name">Mike Motwani and Family</h2>
-            <h1 class="hero-title-large">The Biggest<br><span class="cursive-text">Festival of Colors</span></h1>
+            <h2 class="sponsor-name"><?php echo esc_html($sponsor_name); ?></h2>
+            <?php endif; ?>
+            <p class="hero-tagline">The Biggest</p>
+            <h1 class="hero-title-large"><span class="cursive-text">Festival of Colors</span></h1>
             <div class="gold-ribbon">
                 <span>IN NEW ORLEANS</span>
             </div>
