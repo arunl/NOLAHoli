@@ -3001,8 +3001,8 @@ details[open] .check-arrow {
 .schedule-item .time {
     font-weight: 700;
     color: var(--mardi-gras-purple);
-    font-size: 0.9rem;
-    min-width: 70px;
+    font-size: 1rem;
+    min-width: 75px;
     flex-shrink: 0;
 }
 
@@ -3011,8 +3011,8 @@ details[open] .check-arrow {
     height: 1px;
     background: repeating-linear-gradient(
         90deg,
-        #ccc,
-        #ccc 3px,
+        #aaa,
+        #aaa 3px,
         transparent 3px,
         transparent 8px
     );
@@ -3020,8 +3020,9 @@ details[open] .check-arrow {
 }
 
 .schedule-item .activity {
-    color: var(--text-dark);
-    font-size: 0.9rem;
+    color: #222;
+    font-size: 1rem;
+    font-weight: 600;
     text-align: right;
     flex-shrink: 0;
 }
@@ -3042,17 +3043,24 @@ details[open] .check-arrow {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 6px 0;
+    padding: 8px 0;
+}
+
+.route-item.highlight {
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.25) 0%, rgba(255, 215, 0, 0.1) 100%);
+    margin: 0 -15px;
+    padding: 8px 15px;
+    border-radius: 6px;
 }
 
 .route-marker {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 6px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 700;
     flex-shrink: 0;
 }
@@ -3082,8 +3090,9 @@ details[open] .check-arrow {
 }
 
 .route-text {
-    font-size: 0.9rem;
-    color: var(--text-dark);
+    font-size: 1rem;
+    color: #222;
+    font-weight: 600;
 }
 
 /* Social Footer */

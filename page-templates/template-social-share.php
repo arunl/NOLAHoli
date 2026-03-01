@@ -111,7 +111,7 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
                     <h3>Parade Route</h3>
                 </div>
                 <div class="social-column-content">
-                    <div class="route-item">
+                    <div class="route-item highlight">
                         <span class="route-marker assemble">📍</span>
                         <span class="route-text">Assemble at Royal & Touro</span>
                     </div>
