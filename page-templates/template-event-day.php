@@ -176,8 +176,7 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
                     <h3>Colors</h3>
                     <p>
                         1 packet — $3<br>
-                        4 packets — $10<br>
-                        <span class="price-note">Cash only</span>
+                        4 packets — $10
                     </p>
                 </div>
                 <div class="quick-info-card">
