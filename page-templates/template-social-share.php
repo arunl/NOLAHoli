@@ -146,6 +146,22 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
         <p class="website-url">NOLAHoli.org</p>
         <p class="tagline">Free Admission • Family Friendly • All Are Welcome</p>
     </section>
+    
+    <!-- Food Vendors - Logos Only -->
+    <section class="social-vendors-section">
+        <p class="vendors-label">Food Vendors</p>
+        <div class="vendors-logos">
+            <a href="https://www.indiandelightms.com/" target="_blank" rel="noopener noreferrer">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/Indian Delight logo.png" alt="Indian Delight" class="vendor-logo-small">
+            </a>
+            <a href="https://aromanolaindiancuisine.com/" target="_blank" rel="noopener noreferrer">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/Aroma Logo.png" alt="Aroma Indian Cuisine" class="vendor-logo-small">
+            </a>
+            <a href="https://destinationindiala.com/" target="_blank" rel="noopener noreferrer">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/Destination India Logo.PNG" alt="Destination India" class="vendor-logo-small">
+            </a>
+        </div>
+    </section>
 </main>
 
 <?php wp_footer(); ?>
