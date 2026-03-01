@@ -2347,3 +2347,432 @@ details[open] .check-arrow {
     color: #155724;
     margin: 0;
 }
+
+/* ===========================
+   Event Day Page
+   =========================== */
+
+/* Three Column Grid */
+.event-day-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 35px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@media (max-width: 1000px) {
+    .event-day-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+    
+    .parade-route-directions {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 700px) {
+    .event-day-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .parade-route-directions {
+        grid-column: span 1;
+    }
+}
+
+/* Schedule Section */
+.event-schedule {
+    background: var(--white);
+}
+
+.schedule-header,
+.route-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.schedule-icon,
+.route-icon {
+    font-size: 2rem;
+}
+
+.schedule-header h2,
+.route-header h2 {
+    margin: 0;
+    color: var(--mardi-gras-purple);
+    font-size: 1.8rem;
+}
+
+/* Centered Date Header */
+.event-date-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.date-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--mardi-gras-purple) 0%, var(--mardi-gras-green) 100%);
+    color: white;
+    padding: 12px 35px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.3rem;
+    box-shadow: var(--shadow-md);
+}
+
+/* Green Pin Icon (like the map) */
+.pin-icon {
+    display: inline-block;
+    width: 16px;
+    height: 20px;
+    background: #2ECC40;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    position: relative;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+.pin-icon::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Schedule Cards */
+.schedule-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.schedule-card {
+    display: flex;
+    align-items: stretch;
+    background: var(--off-white);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.schedule-card:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow-sm);
+}
+
+.schedule-card.highlight {
+    background: linear-gradient(135deg, var(--mardi-gras-gold) 0%, #FFE082 100%);
+}
+
+.schedule-card.highlight .card-time {
+    background: var(--mardi-gras-purple);
+}
+
+.schedule-card.last {
+    background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+}
+
+.schedule-card.last .card-time {
+    background: var(--mardi-gras-green);
+}
+
+.card-time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 90px;
+    padding: 15px 12px;
+    background: var(--mardi-gras-purple);
+    color: white;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.card-details {
+    flex: 1;
+    padding: 12px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-details h3 {
+    margin: 0 0 3px 0;
+    font-size: 1.05rem;
+    color: var(--text-dark);
+}
+
+.card-details p {
+    margin: 0;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.card-location {
+    line-height: 1.5 !important;
+}
+
+.address {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+/* Parade Route Sections */
+.parade-route-map,
+.parade-route-directions {
+    background: var(--white);
+}
+
+.route-map {
+    background: var(--off-white);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 25px;
+    border: 2px solid #e0e0e0;
+}
+
+.route-map img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.parade-route-directions .route-steps {
+    margin-top: 0;
+}
+
+.route-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.route-steps li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.route-steps li:last-child {
+    border-bottom: none;
+}
+
+.step-marker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 30px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+.step-marker.assemble {
+    background: #E8F5E9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.step-marker.assemble .pin-icon {
+    margin: 0;
+    width: 14px;
+    height: 18px;
+}
+
+.step-marker.assemble .pin-icon::after {
+    width: 5px;
+    height: 5px;
+    top: 4px;
+}
+
+.step-marker.start {
+    background: var(--mardi-gras-green);
+    color: white;
+}
+
+.step-marker.turn {
+    background: var(--mardi-gras-purple);
+    color: white;
+    font-size: 1.2rem;
+}
+
+.step-marker.straight {
+    background: var(--mardi-gras-purple);
+    color: white;
+    font-size: 1.2rem;
+}
+
+.step-marker.end {
+    background: var(--mardi-gras-gold);
+    color: var(--text-dark);
+}
+
+.step-text {
+    font-size: 1rem;
+    color: var(--text-dark);
+}
+
+.route-note {
+    background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+    border: 2px solid var(--mardi-gras-gold);
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-top: 25px;
+}
+
+.route-note p {
+    margin: 0;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+}
+
+/* Quick Info Section */
+.event-quick-info {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+@media (max-width: 800px) {
+    .event-quick-info {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 450px) {
+    .event-quick-info {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+}
+
+.quick-info-card {
+    text-align: center;
+    padding: 25px 15px;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s ease;
+}
+
+.quick-info-card:hover {
+    transform: translateY(-3px);
+}
+
+.quick-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.quick-info-card h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.1rem;
+    color: var(--mardi-gras-purple);
+}
+
+.quick-info-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.5;
+}
+
+.quick-info-card.featured {
+    background: linear-gradient(135deg, var(--mardi-gras-green) 0%, #4CAF50 100%);
+    color: white;
+}
+
+.quick-info-card.featured h3,
+.quick-info-card.featured p {
+    color: white;
+}
+
+.price-note {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+/* Food Vendors Section */
+.food-vendors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+@media (max-width: 800px) {
+    .food-vendors-grid {
+        grid-template-columns: 1fr;
+        max-width: 350px;
+    }
+}
+
+.vendor-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 25px 20px;
+    background: var(--off-white);
+    border-radius: 12px;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.vendor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--mardi-gras-purple);
+}
+
+.vendor-logo {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    background: white;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.vendor-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.vendor-info h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.1rem;
+    color: var(--mardi-gras-purple);
+}
+
+.vendor-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
