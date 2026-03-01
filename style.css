@@ -2393,18 +2393,45 @@ details[open] .check-arrow {
     font-size: 1.8rem;
 }
 
-.schedule-date {
-    margin-bottom: 30px;
+/* Centered Date Header */
+.event-date-header {
+    text-align: center;
+    margin-bottom: 40px;
 }
 
 .date-badge {
     display: inline-block;
     background: linear-gradient(135deg, var(--mardi-gras-purple) 0%, var(--mardi-gras-green) 100%);
     color: white;
-    padding: 10px 25px;
+    padding: 12px 35px;
     border-radius: 50px;
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
+    box-shadow: var(--shadow-md);
+}
+
+/* Green Pin Icon (like the map) */
+.pin-icon {
+    display: inline-block;
+    width: 16px;
+    height: 20px;
+    background: #2ECC40;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    position: relative;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+.pin-icon::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 /* Schedule Cards */
@@ -2543,9 +2570,22 @@ details[open] .check-arrow {
 }
 
 .step-marker.assemble {
-    background: #E3F2FD;
-    color: var(--text-dark);
-    font-size: 1rem;
+    background: #E8F5E9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.step-marker.assemble .pin-icon {
+    margin: 0;
+    width: 14px;
+    height: 18px;
+}
+
+.step-marker.assemble .pin-icon::after {
+    width: 5px;
+    height: 5px;
+    top: 4px;
 }
 
 .step-marker.start {
@@ -2637,6 +2677,87 @@ details[open] .check-arrow {
 }
 
 .quick-info-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.5;
+}
+
+.quick-info-card.featured {
+    background: linear-gradient(135deg, var(--mardi-gras-green) 0%, #4CAF50 100%);
+    color: white;
+}
+
+.quick-info-card.featured h3,
+.quick-info-card.featured p {
+    color: white;
+}
+
+.price-note {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+/* Food Vendors Section */
+.food-vendors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+@media (max-width: 800px) {
+    .food-vendors-grid {
+        grid-template-columns: 1fr;
+        max-width: 350px;
+    }
+}
+
+.vendor-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 25px 20px;
+    background: var(--off-white);
+    border-radius: 12px;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.vendor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--mardi-gras-purple);
+}
+
+.vendor-logo {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    background: white;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.vendor-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.vendor-info h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.1rem;
+    color: var(--mardi-gras-purple);
+}
+
+.vendor-info p {
     margin: 0;
     font-size: 0.9rem;
     color: var(--text-light);

@@ -30,6 +30,12 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
     <!-- Main Content: Schedule + Parade Route -->
     <section class="content-section bg-white">
         <div class="container">
+            
+            <!-- Centered Date Badge -->
+            <div class="event-date-header">
+                <span class="date-badge">March 8, 2026</span>
+            </div>
+            
             <div class="event-day-grid">
                 
                 <!-- Left Column: Schedule -->
@@ -39,10 +45,6 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
                         <h2>Event Schedule</h2>
                     </div>
                     
-                    <div class="schedule-date">
-                        <span class="date-badge">March 8, 2026</span>
-                    </div>
-                    
                     <div class="schedule-cards">
                         
                         <div class="schedule-card">
@@ -50,7 +52,7 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
                             <div class="card-details">
                                 <h3>Event Opens</h3>
                                 <p class="card-location">
-                                    📍 Washington Square Park<br>
+                                    <span class="pin-icon"></span> Washington Square Park<br>
                                     <span class="address">700 Elysian Fields Ave</span>
                                 </p>
                             </div>
@@ -61,7 +63,7 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
                             <div class="card-details">
                                 <h3>Assemble for Parade</h3>
                                 <p class="card-location">
-                                    📍 Royal St at Touro Street<br>
+                                    <span class="pin-icon"></span> Royal St at Touro Street<br>
                                     <span class="address">1913 Royal St</span>
                                 </p>
                             </div>
@@ -124,7 +126,7 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
                         <h3>Directions</h3>
                         <ol class="route-steps">
                             <li>
-                                <span class="step-marker assemble">📍</span>
+                                <span class="step-marker assemble"><span class="pin-icon"></span></span>
                                 <span class="step-text">Assemble at Royal St at Touro</span>
                             </li>
                             <li>
@@ -159,30 +161,75 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
         </div>
     </section>
     
-    <!-- Quick Info Section -->
+    <!-- General Info Section -->
     <section class="content-section bg-light">
         <div class="container">
+            <h2 class="section-title" style="text-align: center; margin-bottom: 30px;">Event Information</h2>
             <div class="event-quick-info">
+                <div class="quick-info-card featured">
+                    <span class="quick-icon">🎟️</span>
+                    <h3>Free Entrance</h3>
+                    <p>Open to everyone!</p>
+                </div>
                 <div class="quick-info-card">
                     <span class="quick-icon">🎨</span>
                     <h3>Colors</h3>
-                    <p>Eco-friendly colors available at the park</p>
+                    <p>
+                        1 packet = 3 tickets<br>
+                        4 packets = 10 tickets<br>
+                        <span class="price-note">(1 ticket = $1)</span>
+                    </p>
+                </div>
+                <div class="quick-info-card">
+                    <span class="quick-icon">👕</span>
+                    <h3>T-Shirts</h3>
+                    <p>NOLA Holi T-Shirt<br><strong>$20</strong></p>
                 </div>
                 <div class="quick-info-card">
                     <span class="quick-icon">🍛</span>
-                    <h3>Food</h3>
-                    <p>Food vendors on-site</p>
+                    <h3>Food & Drinks</h3>
+                    <p>Food, Drinks, Beer & Liquor available from vendors</p>
                 </div>
-                <div class="quick-info-card">
-                    <span class="quick-icon">🚗</span>
-                    <h3>Parking</h3>
-                    <p>Street parking available nearby</p>
-                </div>
-                <div class="quick-info-card">
-                    <span class="quick-icon">👨‍👩‍👧‍👦</span>
-                    <h3>Family Friendly</h3>
-                    <p>All ages welcome!</p>
-                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Food Vendors Section -->
+    <section class="content-section bg-white">
+        <div class="container">
+            <h2 class="section-title" style="text-align: center; margin-bottom: 10px;">Food Vendors</h2>
+            <p style="text-align: center; color: var(--text-light); margin-bottom: 30px;">Authentic Indian cuisine from Louisiana's finest</p>
+            
+            <div class="food-vendors-grid">
+                <a href="https://www.indiandelightms.com/" target="_blank" rel="noopener noreferrer" class="vendor-card">
+                    <div class="vendor-logo">
+                        <img src="<?php echo get_template_directory_uri(); ?>/images/Indian Delight logo.png" alt="Indian Delight Logo">
+                    </div>
+                    <div class="vendor-info">
+                        <h3>Indian Delight</h3>
+                        <p>Hattiesburg, MS</p>
+                    </div>
+                </a>
+                
+                <a href="https://aromanolaindiancuisine.com/" target="_blank" rel="noopener noreferrer" class="vendor-card">
+                    <div class="vendor-logo">
+                        <img src="<?php echo get_template_directory_uri(); ?>/images/Aroma Logo.png" alt="Aroma Indian Cuisine Logo">
+                    </div>
+                    <div class="vendor-info">
+                        <h3>Aroma Indian Cuisine</h3>
+                        <p>New Orleans, LA</p>
+                    </div>
+                </a>
+                
+                <a href="https://destinationindiala.com/" target="_blank" rel="noopener noreferrer" class="vendor-card">
+                    <div class="vendor-logo">
+                        <img src="<?php echo get_template_directory_uri(); ?>/images/Destination India Logo.PNG" alt="Destination India Logo">
+                    </div>
+                    <div class="vendor-info">
+                        <h3>Destination India</h3>
+                        <p>Lafayette, LA</p>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
