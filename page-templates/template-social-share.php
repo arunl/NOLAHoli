@@ -27,22 +27,9 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
             <p class="presented-by">Presented by</p>
             <h2 class="sponsor-name"><?php echo esc_html($sponsor_name); ?></h2>
             <?php endif; ?>
-            <p class="hero-tagline">The Biggest</p>
-            <h1 class="hero-title-large"><span class="cursive-text">Festival of Colors</span></h1>
-            <div class="gold-ribbon">
-                <span>IN NEW ORLEANS</span>
-            </div>
+            <h1 class="hero-title-large"><span class="cursive-text">NOLA Holi Festival <?php echo esc_html($event_year); ?></span></h1>
+            <p class="hero-event-info"><?php echo esc_html($event_date); ?> @ Washington Square Park</p>
         </div>
-    </section>
-    
-    <!-- Event Title Section -->
-    <section class="social-event-title">
-        <h1 class="nola-holi-title">NOLA Holi Festival <?php echo esc_html($event_year); ?></h1>
-        <div class="event-datetime">
-            <span class="event-date-large"><?php echo esc_html($event_date); ?></span>
-            <span class="event-time-large"><?php echo esc_html($event_time); ?></span>
-        </div>
-        <p class="event-location-large">Washington Square Park, New Orleans</p>
     </section>
     
     <!-- Event Details Section -->

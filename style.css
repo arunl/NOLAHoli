@@ -2885,44 +2885,24 @@ details[open] .check-arrow {
 }
 
 .social-hero {
-    min-height: 350px;
+    min-height: 280px;
 }
 
-/* Event Title Section */
-.social-event-title {
-    background: linear-gradient(135deg, var(--mardi-gras-purple) 0%, #4a148c 100%);
-    padding: 40px 20px;
-    text-align: center;
-}
-
-.nola-holi-title {
-    font-size: 2.8rem;
-    color: white;
-    margin: 0 0 20px 0;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.event-datetime {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
+.social-hero .sponsor-name {
+    font-size: 1.8rem;
     margin-bottom: 15px;
 }
 
-.event-date-large,
-.event-time-large {
-    font-size: 1.8rem;
-    color: var(--mardi-gras-gold);
-    font-weight: 700;
+.social-hero .hero-title-large {
+    font-size: 3rem;
 }
 
-.event-location-large {
-    font-size: 1.3rem;
-    color: rgba(255, 255, 255, 0.9);
-    margin: 0;
+.hero-event-info {
+    font-size: 1.4rem;
+    color: white;
+    margin: 20px 0 0 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-weight: 500;
 }
 
 /* Details Section */
@@ -3122,19 +3102,12 @@ details[open] .check-arrow {
 }
 
 @media (max-width: 768px) {
-    .nola-holi-title {
-        font-size: 2rem;
-        letter-spacing: 1px;
+    .social-hero .hero-title-large {
+        font-size: 2.2rem;
     }
     
-    .event-date-large,
-    .event-time-large {
-        font-size: 1.4rem;
-    }
-    
-    .event-datetime {
-        flex-direction: column;
-        gap: 10px;
+    .hero-event-info {
+        font-size: 1.1rem;
     }
 }
 
