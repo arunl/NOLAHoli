@@ -69,6 +69,7 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
                                 <span class="sub">Dance with colors</span>
                             </div>
                             <div class="parade-col">
+                                <strong>&nbsp;</strong><br>
                                 <span class="sub">Load up colors, head to Royal & Touro</span>
                             </div>
                         </div>
@@ -144,8 +145,13 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
                         <img src="<?php echo get_template_directory_uri(); ?>/images/2026-parade-route.png" alt="NOLA Holi 2026 Parade Route Map">
                     </div>
                     
-                    <div class="route-text">
-                        <strong>Route:</strong> Royal & Touro → St Philip → Chartres → Kerlerec
+                    <div class="route-steps-compact">
+                        <p class="route-label">Route:</p>
+                        <p class="route-step">📍 Start at Royal & Touro</p>
+                        <p class="route-step">↓ to Esplanade</p>
+                        <p class="route-step">← Left on St Philip</p>
+                        <p class="route-step">← Left on Chartres</p>
+                        <p class="route-step">⬤ End at Chartres & Kerlerec</p>
                     </div>
                 </div>
                 

@@ -66,7 +66,7 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
                         <div class="schedule-row-social">
                             <div class="time-col">10:00</div>
                             <div class="park-col"><strong>🎧 DJ Starts Spinning</strong><br><span class="sub">Dance with colors</span></div>
-                            <div class="parade-col"><span class="sub">Load up colors, head to Royal & Touro</span></div>
+                            <div class="parade-col"><strong>&nbsp;</strong><br><span class="sub">Load up colors, head to Royal & Touro</span></div>
                         </div>
                         
                         <div class="schedule-row-social">
