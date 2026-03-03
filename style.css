@@ -2646,15 +2646,31 @@ details[open] .check-arrow {
 
 .park-col strong,
 .parade-col strong {
-    color: var(--text-dark);
+    color: var(--mardi-gras-purple);
     display: block;
+    font-weight: 700;
 }
 
 .park-col .sub,
 .parade-col .sub {
-    color: #666;
+    color: #333;
     font-size: 0.8rem;
-    font-style: italic;
+    font-weight: 600;
+}
+
+/* Lineup time embedded in 11:00 row */
+.lineup-time {
+    display: block;
+    margin-top: 5px;
+    color: var(--mardi-gras-purple);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+/* Parade returns in purple */
+.parade-return {
+    color: var(--mardi-gras-purple);
+    font-weight: 700;
 }
 
 .park-col.empty,
@@ -3169,6 +3185,21 @@ details[open] .check-arrow {
 .schedule-row-social .park-col.empty,
 .schedule-row-social .parade-col.empty {
     background: #f9f9f9;
+}
+
+/* Lineup time embedded in 11:00 row */
+.schedule-row-social .lineup-time {
+    display: block;
+    margin-top: 4px;
+    color: var(--mardi-gras-purple);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+/* Parade returns in purple */
+.schedule-row-social .parade-return {
+    color: var(--mardi-gras-purple);
+    font-weight: 700;
 }
 
 /* Route text inline below map */

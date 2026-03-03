@@ -68,7 +68,9 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
                                 <strong>🎧 DJ Starts Spinning</strong><br>
                                 <span class="sub">Dance with colors</span>
                             </div>
-                            <div class="parade-col empty"></div>
+                            <div class="parade-col">
+                                <span class="sub">Load up colors, head to Royal & Touro</span>
+                            </div>
                         </div>
                         
                         <!-- 11:00 AM -->
@@ -79,18 +81,9 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
                                 <span class="sub">Stay & splash colors</span>
                             </div>
                             <div class="parade-col">
-                                <strong>🎧 Parade DJ Starts Spinning</strong><br>
-                                <span class="sub">Dance with colors at Royal & Touro</span>
-                            </div>
-                        </div>
-                        
-                        <!-- 11:45 AM -->
-                        <div class="schedule-row">
-                            <div class="time-col">11:45 AM</div>
-                            <div class="park-col empty"></div>
-                            <div class="parade-col">
-                                <strong>📣 Parade Lineup</strong><br>
-                                <span class="sub">Load up your colors</span>
+                                <strong>🎧 Parade DJ Cranks Up</strong><br>
+                                <span class="sub">Pre-parade party with colors</span><br>
+                                <strong class="lineup-time">11:45 Parade Lineup</strong>
                             </div>
                         </div>
                         
@@ -98,8 +91,8 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
                         <div class="schedule-row highlight">
                             <div class="time-col">12:00 PM</div>
                             <div class="park-col">
-                                <strong>🔊 DJ Ramps it Up</strong><br>
-                                <span class="sub">Continue the party</span>
+                                <strong>🔊 DJ Jams it Up</strong><br>
+                                <span class="sub">Party continues in the park</span>
                             </div>
                             <div class="parade-col">
                                 <strong>🎉 Parade Starts!</strong><br>
@@ -111,28 +104,20 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
                         <div class="schedule-row reunite">
                             <div class="time-col">1:00 PM</div>
                             <div class="park-col">
-                                <strong>🎊 Everyone Reunites!</strong>
+                                <strong>🎊 Everyone Reunites!</strong><br>
+                                <span class="sub">Enjoy Cultural Performances</span>
                             </div>
                             <div class="parade-col">
-                                <span class="sub">Parade returns to Park</span>
+                                <strong class="parade-return">Parade Returns</strong>
                             </div>
-                        </div>
-                        
-                        <!-- 1:15 PM -->
-                        <div class="schedule-row">
-                            <div class="time-col">1:15 PM</div>
-                            <div class="park-col">
-                                <strong>🎭 Cultural Performances</strong>
-                            </div>
-                            <div class="parade-col empty"></div>
                         </div>
                         
                         <!-- 2:30 PM -->
                         <div class="schedule-row">
                             <div class="time-col">2:30 PM</div>
                             <div class="park-col">
-                                <strong>💃 Let's Dance!</strong><br>
-                                <span class="sub">DJ cranks it up</span>
+                                <strong>💃 DJ Cranks It Up</strong><br>
+                                <span class="sub">Dance your heart out</span>
                             </div>
                             <div class="parade-col empty"></div>
                         </div>
@@ -141,7 +126,7 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
                         <div class="schedule-row last">
                             <div class="time-col">5:00 PM</div>
                             <div class="park-col">
-                                <strong>🎨 Event Ends</strong>
+                                <strong>🎨 See You Next Year!</strong>
                             </div>
                             <div class="parade-col empty"></div>
                         </div>

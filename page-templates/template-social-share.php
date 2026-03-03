@@ -66,48 +66,36 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
                         <div class="schedule-row-social">
                             <div class="time-col">10:00</div>
                             <div class="park-col"><strong>🎧 DJ Starts Spinning</strong><br><span class="sub">Dance with colors</span></div>
-                            <div class="parade-col empty"></div>
+                            <div class="parade-col"><span class="sub">Load up colors, head to Royal & Touro</span></div>
                         </div>
                         
                         <div class="schedule-row-social">
                             <div class="time-col">11:00</div>
                             <div class="park-col"><strong>🎵 DJ Keeps Spinning</strong><br><span class="sub">Stay & splash colors</span></div>
-                            <div class="parade-col"><strong>🎧 Parade DJ Spinning</strong><br><span class="sub">Colors at Royal & Touro</span></div>
-                        </div>
-                        
-                        <div class="schedule-row-social">
-                            <div class="time-col">11:45</div>
-                            <div class="park-col empty"></div>
-                            <div class="parade-col"><strong>📣 Parade Lineup</strong><br><span class="sub">Load up your colors</span></div>
+                            <div class="parade-col"><strong>🎧 Parade DJ Cranks Up</strong><br><span class="sub">Pre-parade party with colors</span><br><strong class="lineup-time">11:45 Parade Lineup</strong></div>
                         </div>
                         
                         <div class="schedule-row-social highlight">
                             <div class="time-col">12:00</div>
-                            <div class="park-col"><strong>🔊 DJ Ramps it Up</strong><br><span class="sub">Continue the party</span></div>
+                            <div class="park-col"><strong>🔊 DJ Jams it Up</strong><br><span class="sub">Party continues in the park</span></div>
                             <div class="parade-col"><strong>🎉 Parade Starts!</strong><br><span class="sub">Color throw on route!</span></div>
                         </div>
                         
                         <div class="schedule-row-social reunite">
                             <div class="time-col">1:00</div>
-                            <div class="park-col"><strong>🎊 Everyone Reunites!</strong></div>
-                            <div class="parade-col"><span class="sub">Parade returns</span></div>
-                        </div>
-                        
-                        <div class="schedule-row-social">
-                            <div class="time-col">1:15</div>
-                            <div class="park-col"><strong>🎭 Cultural Performances</strong></div>
-                            <div class="parade-col empty"></div>
+                            <div class="park-col"><strong>🎊 Everyone Reunites!</strong><br><span class="sub">Enjoy Cultural Performances</span></div>
+                            <div class="parade-col"><strong class="parade-return">Parade Returns</strong></div>
                         </div>
                         
                         <div class="schedule-row-social">
                             <div class="time-col">2:30</div>
-                            <div class="park-col"><strong>💃 Let's Dance!</strong><br><span class="sub">DJ cranks it up</span></div>
+                            <div class="park-col"><strong>💃 DJ Cranks It Up</strong><br><span class="sub">Dance your heart out</span></div>
                             <div class="parade-col empty"></div>
                         </div>
                         
                         <div class="schedule-row-social">
                             <div class="time-col">5:00</div>
-                            <div class="park-col"><strong>🎨 Event Ends</strong></div>
+                            <div class="park-col"><strong>🎨 See You Next Year!</strong></div>
                             <div class="parade-col empty"></div>
                         </div>
                     </div>
