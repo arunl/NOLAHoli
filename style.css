@@ -3145,15 +3145,17 @@ details[open] .check-arrow {
 
 .schedule-row-social .park-col strong,
 .schedule-row-social .parade-col strong {
-    color: #111;
+    color: var(--mardi-gras-purple);
     display: block;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+    font-weight: 700;
 }
 
 .schedule-row-social .sub {
-    color: #555;
-    font-size: 0.75rem;
-    font-style: italic;
+    color: #111;
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-style: normal;
 }
 
 .schedule-row-social.highlight {
@@ -3178,6 +3180,29 @@ details[open] .check-arrow {
     font-size: 0.85rem;
     color: #333;
     text-align: center;
+}
+
+/* Compact route steps below map */
+.route-steps-compact {
+    margin-top: 10px;
+    padding: 12px;
+    background: #f8f8f8;
+    border-radius: 8px;
+}
+
+.route-steps-compact .route-label {
+    font-weight: 700;
+    color: var(--mardi-gras-purple);
+    font-size: 0.9rem;
+    margin: 0 0 6px 0;
+}
+
+.route-steps-compact .route-step {
+    margin: 3px 0;
+    padding-left: 5px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #222;
 }
 
 .social-column {

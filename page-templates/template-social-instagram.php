@@ -323,7 +323,14 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
                 </div>
                 <div class="social-column-content map-content">
                     <img src="<?php echo get_template_directory_uri(); ?>/images/2026-parade-route.png" alt="Parade Route Map" class="social-map-image">
-                    <p class="route-text-inline"><strong>Route:</strong> Royal & Touro → St Philip → Chartres → Kerlerec</p>
+                    <div class="route-steps-compact">
+                        <p class="route-label">Route:</p>
+                        <p class="route-step">📍 Start at Royal & Touro</p>
+                        <p class="route-step">↓ to Esplanade</p>
+                        <p class="route-step">← Left on St Philip</p>
+                        <p class="route-step">← Left on Chartres</p>
+                        <p class="route-step">⬤ End at Chartres & Kerlerec</p>
+                    </div>
                 </div>
             </div>
             
