@@ -2987,6 +2987,7 @@ details[open] .check-arrow {
 .schedule-item {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     padding: 8px 0;
     border-bottom: 1px solid #f0f0f0;
 }
@@ -3029,6 +3030,15 @@ details[open] .check-arrow {
     font-weight: 600;
     text-align: right;
     flex-shrink: 0;
+}
+
+.schedule-item .event-subtext {
+    width: 100%;
+    font-size: 0.85rem;
+    color: #666;
+    font-style: italic;
+    text-align: right;
+    padding-top: 2px;
 }
 
 /* Map Content */

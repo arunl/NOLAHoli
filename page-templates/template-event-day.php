@@ -59,6 +59,7 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
                             <div class="card-time">10:00 AM</div>
                             <div class="card-details">
                                 <h3>Event Opens</h3>
+                                <p class="event-desc">DJ music, colors, food & drinks!</p>
                                 <p class="card-location">
                                     <span class="pin-icon"></span> Washington Square Park<br>
                                     <span class="address">700 Elysian Fields Ave</span>

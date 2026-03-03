@@ -59,6 +59,7 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
                         <span class="time">10:00 AM</span>
                         <span class="dotted-line"></span>
                         <span class="activity">Event Opens</span>
+                        <span class="event-subtext">DJ music, colors, food & drinks!</span>
                     </div>
                     <div class="schedule-item highlight">
                         <span class="time">11:00 AM</span>
