@@ -44,83 +44,111 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
                 <p><?php echo esc_html($event_date); ?> • Washington Square Park</p>
             </div>
             
-            <div class="event-day-grid">
+            <div class="event-day-grid-new">
                 
-                <!-- Left Column: Schedule -->
-                <div class="event-schedule">
+                <!-- Left Column: Two-Track Schedule -->
+                <div class="event-schedule-dual">
                     <div class="schedule-header">
                         <span class="schedule-icon">🗓</span>
                         <h2>Event Schedule</h2>
                     </div>
                     
-                    <div class="schedule-cards">
+                    <div class="dual-schedule">
+                        <!-- Column Headers -->
+                        <div class="schedule-row header-row">
+                            <div class="time-col"></div>
+                            <div class="park-col"><span class="col-icon">🏞️</span> At the Park</div>
+                            <div class="parade-col"><span class="col-icon">🎭</span> Parade</div>
+                        </div>
                         
-                        <div class="schedule-card">
-                            <div class="card-time">10:00 AM</div>
-                            <div class="card-details">
-                                <h3>Event Opens</h3>
-                                <p class="event-desc">DJ music, colors, food & drinks!</p>
-                                <p class="card-location">
-                                    <span class="pin-icon"></span> Washington Square Park<br>
-                                    <span class="address">700 Elysian Fields Ave</span>
-                                </p>
+                        <!-- 10:00 AM -->
+                        <div class="schedule-row">
+                            <div class="time-col">10:00 AM</div>
+                            <div class="park-col">
+                                <strong>🎧 DJ Starts Spinning</strong><br>
+                                <span class="sub">Dance with colors</span>
+                            </div>
+                            <div class="parade-col empty"></div>
+                        </div>
+                        
+                        <!-- 11:00 AM -->
+                        <div class="schedule-row">
+                            <div class="time-col">11:00 AM</div>
+                            <div class="park-col">
+                                <strong>🎵 DJ Keeps Spinning</strong><br>
+                                <span class="sub">Stay & splash colors</span>
+                            </div>
+                            <div class="parade-col">
+                                <strong>🎧 Parade DJ Starts Spinning</strong><br>
+                                <span class="sub">Dance with colors at Royal & Touro</span>
                             </div>
                         </div>
                         
-                        <div class="schedule-card">
-                            <div class="card-time">11:00 AM</div>
-                            <div class="card-details">
-                                <h3>Assemble for Parade</h3>
-                                <p class="card-location">
-                                    <span class="pin-icon"></span> Royal St at Touro Street<br>
-                                    <span class="address">1913 Royal St</span>
-                                </p>
+                        <!-- 11:45 AM -->
+                        <div class="schedule-row">
+                            <div class="time-col">11:45 AM</div>
+                            <div class="park-col empty"></div>
+                            <div class="parade-col">
+                                <strong>📣 Parade Lineup</strong><br>
+                                <span class="sub">Load up your colors</span>
                             </div>
                         </div>
                         
-                        <div class="schedule-card highlight">
-                            <div class="card-time">12:00 PM</div>
-                            <div class="card-details">
-                                <h3>🎉 Parade Starts!</h3>
+                        <!-- 12:00 PM -->
+                        <div class="schedule-row highlight">
+                            <div class="time-col">12:00 PM</div>
+                            <div class="park-col">
+                                <strong>🔊 DJ Ramps it Up</strong><br>
+                                <span class="sub">Continue the party</span>
+                            </div>
+                            <div class="parade-col">
+                                <strong>🎉 Parade Starts!</strong><br>
+                                <span class="sub">Color throw on the route!</span>
                             </div>
                         </div>
                         
-                        <div class="schedule-card">
-                            <div class="card-time">1:00 PM</div>
-                            <div class="card-details">
-                                <h3>Parade Returns</h3>
-                                <p>Back to Washington Square Park</p>
+                        <!-- 1:00 PM -->
+                        <div class="schedule-row reunite">
+                            <div class="time-col">1:00 PM</div>
+                            <div class="park-col">
+                                <strong>🎊 Everyone Reunites!</strong>
+                            </div>
+                            <div class="parade-col">
+                                <span class="sub">Parade returns to Park</span>
                             </div>
                         </div>
                         
-                        <div class="schedule-card">
-                            <div class="card-time">1:15 PM</div>
-                            <div class="card-details">
-                                <h3>Cultural Performances</h3>
-                                <p>Live music, dance & entertainment</p>
+                        <!-- 1:15 PM -->
+                        <div class="schedule-row">
+                            <div class="time-col">1:15 PM</div>
+                            <div class="park-col">
+                                <strong>🎭 Cultural Performances</strong>
                             </div>
+                            <div class="parade-col empty"></div>
                         </div>
                         
-                        <div class="schedule-card">
-                            <div class="card-time">2:30 PM</div>
-                            <div class="card-details">
-                                <h3>DJ Set</h3>
-                                <p>Dance party at the park!</p>
+                        <!-- 2:30 PM -->
+                        <div class="schedule-row">
+                            <div class="time-col">2:30 PM</div>
+                            <div class="park-col">
+                                <strong>💃 Let's Dance!</strong><br>
+                                <span class="sub">DJ cranks it up</span>
                             </div>
+                            <div class="parade-col empty"></div>
                         </div>
                         
-                        <div class="schedule-card last">
-                            <div class="card-time">5:00 PM</div>
-                            <div class="card-details">
-                                <h3>Event Ends</h3>
-                                <p>See you next year! 🎨</p>
+                        <!-- 5:00 PM -->
+                        <div class="schedule-row last">
+                            <div class="time-col">5:00 PM</div>
+                            <div class="park-col">
+                                <strong>🎨 Event Ends</strong>
                             </div>
+                            <div class="parade-col empty"></div>
                         </div>
-                        
                     </div>
                 </div>
                 
-                <!-- Middle Column: Parade Route Map -->
+                <!-- Right Column: Parade Route Map -->
                 <div class="parade-route-map">
                     <div class="route-header">
                         <span class="route-icon">🗺️</span>
@@ -130,44 +158,9 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
                     <div class="route-map">
                         <img src="<?php echo get_template_directory_uri(); ?>/images/2026-parade-route.png" alt="NOLA Holi 2026 Parade Route Map">
                     </div>
-                </div>
-                
-                <!-- Right Column: Route Directions -->
-                <div class="parade-route-directions">
-                    <div class="route-header">
-                        <span class="route-icon">🧭</span>
-                        <h2>Parade Route</h2>
-                    </div>
                     
-                    <ol class="route-steps">
-                        <li>
-                            <span class="step-marker assemble"><span class="pin-icon"></span></span>
-                            <span class="step-text">Assemble at Royal St at Touro</span>
-                        </li>
-                        <li>
-                            <span class="step-marker start">START</span>
-                            <span class="step-text">Start down Royal St</span>
-                        </li>
-                        <li>
-                            <span class="step-marker turn">←</span>
-                            <span class="step-text">Left on St Philip</span>
-                        </li>
-                        <li>
-                            <span class="step-marker turn">←</span>
-                            <span class="step-text">Left on Chartres</span>
-                        </li>
-                        <li>
-                            <span class="step-marker straight">↑</span>
-                            <span class="step-text">Continue on Chartres</span>
-                        </li>
-                        <li>
-                            <span class="step-marker end">END</span>
-                            <span class="step-text">End at Chartres at Kerlerec</span>
-                        </li>
-                    </ol>
-                    
-                    <div class="route-note">
-                        <p>💡 <strong>Tip:</strong> Arrive at the parade assembly point by 11:00 AM to join the march!</p>
+                    <div class="route-text">
+                        <strong>Route:</strong> Royal & Touro → St Philip → Chartres → Kerlerec
                     </div>
                 </div>
                 

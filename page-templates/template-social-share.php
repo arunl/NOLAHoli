@@ -46,50 +46,70 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
     <section class="social-details-section">
         <h2 class="social-section-title">Event Details</h2>
         
-        <div class="social-three-columns">
+        <div class="social-two-columns">
             
-            <!-- Schedule Column -->
-            <div class="social-column">
+            <!-- Schedule Column (Two-Track) -->
+            <div class="social-column wide">
                 <div class="social-column-header schedule-header-bg">
                     <span class="column-icon">🗓</span>
                     <h3>Schedule</h3>
                 </div>
                 <div class="social-column-content">
-                    <div class="schedule-item">
-                        <span class="time">10:00 AM</span>
-                        <span class="dotted-line"></span>
-                        <span class="activity">Event Opens</span>
-                        <span class="event-subtext">DJ music, colors, food & drinks!</span>
-                    </div>
-                    <div class="schedule-item highlight">
-                        <span class="time">11:00 AM</span>
-                        <span class="dotted-line"></span>
-                        <span class="activity">Parade Assembly</span>
-                    </div>
-                    <div class="schedule-item">
-                        <span class="time">12:00 PM</span>
-                        <span class="dotted-line"></span>
-                        <span class="activity">🎉 Parade Starts!</span>
-                    </div>
-                    <div class="schedule-item">
-                        <span class="time">1:00 PM</span>
-                        <span class="dotted-line"></span>
-                        <span class="activity">Parade Returns</span>
-                    </div>
-                    <div class="schedule-item">
-                        <span class="time">1:15 PM</span>
-                        <span class="dotted-line"></span>
-                        <span class="activity">Performances</span>
-                    </div>
-                    <div class="schedule-item">
-                        <span class="time">2:30 PM</span>
-                        <span class="dotted-line"></span>
-                        <span class="activity">DJ Set</span>
-                    </div>
-                    <div class="schedule-item">
-                        <span class="time">5:00 PM</span>
-                        <span class="dotted-line"></span>
-                        <span class="activity">Event Ends</span>
+                    <div class="dual-schedule-social">
+                        <!-- Column Headers -->
+                        <div class="schedule-row-social header-row">
+                            <div class="time-col"></div>
+                            <div class="park-col">🏞️ At the Park</div>
+                            <div class="parade-col">🎭 Parade</div>
+                        </div>
+                        
+                        <div class="schedule-row-social">
+                            <div class="time-col">10:00</div>
+                            <div class="park-col"><strong>🎧 DJ Starts Spinning</strong><br><span class="sub">Dance with colors</span></div>
+                            <div class="parade-col empty"></div>
+                        </div>
+                        
+                        <div class="schedule-row-social">
+                            <div class="time-col">11:00</div>
+                            <div class="park-col"><strong>🎵 DJ Keeps Spinning</strong><br><span class="sub">Stay & splash colors</span></div>
+                            <div class="parade-col"><strong>🎧 Parade DJ Spinning</strong><br><span class="sub">Colors at Royal & Touro</span></div>
+                        </div>
+                        
+                        <div class="schedule-row-social">
+                            <div class="time-col">11:45</div>
+                            <div class="park-col empty"></div>
+                            <div class="parade-col"><strong>📣 Parade Lineup</strong><br><span class="sub">Load up your colors</span></div>
+                        </div>
+                        
+                        <div class="schedule-row-social highlight">
+                            <div class="time-col">12:00</div>
+                            <div class="park-col"><strong>🔊 DJ Ramps it Up</strong><br><span class="sub">Continue the party</span></div>
+                            <div class="parade-col"><strong>🎉 Parade Starts!</strong><br><span class="sub">Color throw on route!</span></div>
+                        </div>
+                        
+                        <div class="schedule-row-social reunite">
+                            <div class="time-col">1:00</div>
+                            <div class="park-col"><strong>🎊 Everyone Reunites!</strong></div>
+                            <div class="parade-col"><span class="sub">Parade returns</span></div>
+                        </div>
+                        
+                        <div class="schedule-row-social">
+                            <div class="time-col">1:15</div>
+                            <div class="park-col"><strong>🎭 Cultural Performances</strong></div>
+                            <div class="parade-col empty"></div>
+                        </div>
+                        
+                        <div class="schedule-row-social">
+                            <div class="time-col">2:30</div>
+                            <div class="park-col"><strong>💃 Let's Dance!</strong><br><span class="sub">DJ cranks it up</span></div>
+                            <div class="parade-col empty"></div>
+                        </div>
+                        
+                        <div class="schedule-row-social">
+                            <div class="time-col">5:00</div>
+                            <div class="park-col"><strong>🎨 Event Ends</strong></div>
+                            <div class="parade-col empty"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -102,40 +122,7 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
                 </div>
                 <div class="social-column-content map-content">
                     <img src="<?php echo get_template_directory_uri(); ?>/images/2026-parade-route.png" alt="Parade Route Map" class="social-map-image">
-                </div>
-            </div>
-            
-            <!-- Parade Route Column -->
-            <div class="social-column">
-                <div class="social-column-header route-header-bg">
-                    <span class="column-icon">🧭</span>
-                    <h3>Parade Route</h3>
-                </div>
-                <div class="social-column-content">
-                    <div class="route-item highlight">
-                        <span class="route-marker assemble">📍</span>
-                        <span class="route-text">Assemble at Royal & Touro</span>
-                    </div>
-                    <div class="route-item">
-                        <span class="route-marker start">▶</span>
-                        <span class="route-text">Start down Royal St</span>
-                    </div>
-                    <div class="route-item">
-                        <span class="route-marker turn">←</span>
-                        <span class="route-text">Left on St Philip</span>
-                    </div>
-                    <div class="route-item">
-                        <span class="route-marker turn">←</span>
-                        <span class="route-text">Left on Chartres</span>
-                    </div>
-                    <div class="route-item">
-                        <span class="route-marker straight">↓</span>
-                        <span class="route-text">Continue on Chartres</span>
-                    </div>
-                    <div class="route-item">
-                        <span class="route-marker end">⬤</span>
-                        <span class="route-text">End at Chartres & Kerlerec</span>
-                    </div>
+                    <p class="route-text-inline"><strong>Route:</strong> Royal & Touro → St Philip → Chartres → Kerlerec</p>
                 </div>
             </div>
             
