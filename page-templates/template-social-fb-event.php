@@ -32,22 +32,24 @@
             overflow: hidden;
         }
         
-        /* Left Column - Hero (35%) */
+        /* Left Column - Hero (35%) - Same as social-hero */
         .banner-hero {
             width: 35%;
-            background: linear-gradient(135deg, 
-                #FF6B6B 0%, 
-                #FF8E53 15%, 
-                #FFCD56 30%, 
-                #4ECDC4 50%, 
-                #45B7D1 65%, 
-                #96C93D 80%, 
-                #DDA0DD 95%);
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(255, 0, 128, 0.6) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(255, 165, 0, 0.6) 0%, transparent 50%),
+                radial-gradient(ellipse at 40% 40%, rgba(138, 43, 226, 0.7) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 70%, rgba(0, 191, 255, 0.5) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(255, 215, 0, 0.5) 0%, transparent 40%),
+                radial-gradient(ellipse at 10% 30%, rgba(50, 205, 50, 0.4) 0%, transparent 40%),
+                linear-gradient(135deg, #1a0533 0%, #0d0d2b 50%, #1a0533 100%);
             position: relative;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 25px;
+            align-items: center;
+            padding: 30px 25px;
+            text-align: center;
         }
         
         .banner-hero::before {
@@ -58,9 +60,8 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(ellipse at 20% 20%, rgba(255, 107, 107, 0.4) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 30%, rgba(78, 205, 196, 0.4) 0%, transparent 50%),
-                radial-gradient(ellipse at 40% 80%, rgba(150, 201, 61, 0.4) 0%, transparent 50%);
+                radial-gradient(circle at 30% 50%, rgba(255, 105, 180, 0.3) 0%, transparent 30%),
+                radial-gradient(circle at 70% 30%, rgba(255, 223, 0, 0.25) 0%, transparent 25%);
             pointer-events: none;
         }
         
@@ -70,36 +71,36 @@
         }
         
         .presented-by {
-            font-size: 0.7rem;
+            font-size: 0.9rem;
             color: rgba(255,255,255,0.9);
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 3px;
+            letter-spacing: 3px;
+            margin-bottom: 5px;
         }
         
         .sponsor-name {
-            font-size: 1.3rem;
+            font-size: 1.6rem;
             color: #FFD700;
             font-weight: 700;
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
         
         .festival-title {
             font-family: 'Dancing Script', 'Brush Script MT', cursive;
-            font-size: 2.8rem;
+            font-size: 3rem;
             color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
             line-height: 1.1;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         
         .event-date-location {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #FFD700;
-            font-weight: 700;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
-            line-height: 1.4;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            line-height: 1.5;
         }
         
         /* Right Column - Content (65%) */
@@ -130,22 +131,22 @@
         .schedule-header {
             background: linear-gradient(135deg, #5a2d82 0%, #7b3fa0 100%);
             color: white;
-            padding: 8px 12px;
-            font-size: 0.85rem;
+            padding: 10px 15px;
+            font-size: 1rem;
             font-weight: 700;
         }
         
         .schedule-header span {
-            margin-right: 6px;
+            margin-right: 8px;
         }
         
         .dual-schedule-fb {
-            font-size: 0.7rem;
+            font-size: 0.85rem;
         }
         
         .schedule-row-fb {
             display: grid;
-            grid-template-columns: 40px 1fr 1fr;
+            grid-template-columns: 50px 1fr 1fr;
             border-bottom: 1px solid #eee;
         }
         
@@ -157,15 +158,15 @@
             background: linear-gradient(135deg, #5a2d82 0%, #6b3590 100%);
             color: white;
             font-weight: 700;
-            font-size: 0.65rem;
+            font-size: 0.8rem;
         }
         
         .schedule-row-fb .time-col {
             background: #5a2d82;
             color: white;
             font-weight: 700;
-            font-size: 0.65rem;
-            padding: 5px 4px;
+            font-size: 0.8rem;
+            padding: 6px 5px;
             text-align: center;
             display: flex;
             align-items: center;
@@ -178,13 +179,13 @@
         
         .schedule-row-fb .park-col,
         .schedule-row-fb .parade-col {
-            padding: 5px 6px;
+            padding: 6px 8px;
             border-left: 1px solid #eee;
         }
         
         .schedule-row-fb.header-row .park-col,
         .schedule-row-fb.header-row .parade-col {
-            padding: 6px;
+            padding: 8px;
             border-left: 1px solid rgba(255,255,255,0.2);
         }
         
@@ -192,13 +193,13 @@
         .schedule-row-fb .parade-col strong {
             color: #5a2d82;
             font-weight: 700;
-            font-size: 0.68rem;
+            font-size: 0.8rem;
             display: block;
         }
         
         .schedule-row-fb .sub {
             color: #333;
-            font-size: 0.6rem;
+            font-size: 0.7rem;
             font-weight: 600;
         }
         
@@ -217,7 +218,7 @@
         
         .schedule-row-fb .lineup-time {
             color: #5a2d82;
-            font-size: 0.6rem;
+            font-size: 0.7rem;
             font-weight: 700;
             display: block;
             margin-top: 2px;
@@ -235,101 +236,88 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
         }
         
         .map-header {
             background: linear-gradient(135deg, #2ECC40 0%, #27ae60 100%);
             color: white;
-            padding: 8px 12px;
-            font-size: 0.85rem;
+            padding: 10px 15px;
+            font-size: 1rem;
             font-weight: 700;
         }
         
         .map-header span {
-            margin-right: 6px;
+            margin-right: 8px;
         }
         
         .map-content {
             padding: 8px;
+            flex: 1;
         }
         
         .map-content img {
             width: 100%;
-            height: 120px;
+            height: 140px;
             object-fit: cover;
             border-radius: 4px;
         }
         
         .route-steps-fb {
-            padding: 8px;
+            padding: 10px 12px;
             background: #f5f5f5;
-            font-size: 0.6rem;
         }
         
         .route-steps-fb .route-label {
             font-weight: 700;
             color: #5a2d82;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
+            font-size: 0.85rem;
         }
         
         .route-steps-fb .route-step {
-            margin: 1px 0;
-            color: #333;
+            margin: 2px 0;
+            color: #222;
             font-weight: 600;
+            font-size: 0.75rem;
         }
         
         /* Bottom Section */
         .content-bottom {
             background: white;
-            border-top: 2px solid #5a2d82;
+            border-top: 3px solid #5a2d82;
         }
         
-        /* Vendors + Info Row */
-        .info-row {
-            display: flex;
-            padding: 8px 15px;
-            gap: 20px;
-            align-items: center;
+        /* Vendors Row */
+        .vendors-row {
+            padding: 10px 20px;
+            text-align: center;
             border-bottom: 1px solid #eee;
         }
         
-        .vendors-info {
-            flex: 1;
-        }
-        
         .vendors-label {
-            font-size: 0.65rem;
+            font-size: 0.75rem;
             color: #666;
             font-style: italic;
+            margin-bottom: 3px;
         }
         
         .vendors-names {
-            font-size: 0.8rem;
+            font-size: 0.95rem;
             color: #5a2d82;
             font-weight: 700;
         }
         
         .vendors-names .sep {
             color: #FFD700;
-            margin: 0 8px;
-        }
-        
-        .event-info {
-            display: flex;
-            gap: 15px;
-            font-size: 0.75rem;
-            color: #333;
-            font-weight: 600;
-        }
-        
-        .event-info span {
-            color: #FFD700;
+            margin: 0 10px;
         }
         
         /* Dark Strip */
         .dark-strip {
             background: #2d1b4e;
-            padding: 8px 15px;
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -337,18 +325,18 @@
         
         .tagline {
             color: white;
-            font-size: 0.8rem;
+            font-size: 0.95rem;
         }
         
         .tagline span {
             color: #FFD700;
-            margin: 0 8px;
+            margin: 0 10px;
         }
         
         .website {
             color: #FFD700;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 1.1rem;
         }
         
         /* Size guide */
@@ -382,7 +370,7 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
 ?>
 
 <div class="fb-event-banner">
-    <!-- Left: Hero -->
+    <!-- Left: Hero (same style as social-hero) -->
     <div class="banner-hero">
         <div class="hero-content">
             <?php if ($sponsor_name) : ?>
@@ -457,19 +445,12 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
             </div>
         </div>
         
-        <!-- Bottom: Info -->
+        <!-- Bottom: Vendors + Strip -->
         <div class="content-bottom">
-            <div class="info-row">
-                <div class="vendors-info">
-                    <span class="vendors-label">Authentic Indian Cuisine by</span>
-                    <div class="vendors-names">
-                        Indian Delight<span class="sep">•</span>Aroma Indian Cuisine<span class="sep">•</span>Destination India
-                    </div>
-                </div>
-                <div class="event-info">
-                    <div>🎟️ Free Entrance</div>
-                    <div>🎨 Colors Available</div>
-                    <div>👨‍👩‍👧‍👦 Family Friendly</div>
+            <div class="vendors-row">
+                <div class="vendors-label">Authentic Indian Cuisine by</div>
+                <div class="vendors-names">
+                    Indian Delight<span class="sep">•</span>Aroma Indian Cuisine<span class="sep">•</span>Destination India
                 </div>
             </div>
             <div class="dark-strip">
