@@ -2562,6 +2562,158 @@ details[open] .check-arrow {
     }
 }
 
+/* New Two-Column Event Day Grid (Schedule + Map) */
+.event-day-grid-new {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 35px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+    .event-day-grid-new {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+/* Dual Schedule (Park + Parade columns) */
+.dual-schedule {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.schedule-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.schedule-row:last-child {
+    border-bottom: none;
+}
+
+.schedule-row.header-row {
+    background: linear-gradient(135deg, var(--mardi-gras-purple) 0%, #5a2d82 100%);
+    color: white;
+    font-weight: 700;
+}
+
+.schedule-row.header-row .time-col {
+    background: transparent;
+}
+
+.schedule-row.header-row .park-col,
+.schedule-row.header-row .parade-col {
+    padding: 10px 12px;
+    font-size: 0.95rem;
+}
+
+.schedule-row.highlight {
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 215, 0, 0.1) 100%);
+}
+
+.schedule-row.reunite {
+    background: linear-gradient(90deg, rgba(46, 204, 64, 0.15) 0%, rgba(46, 204, 64, 0.05) 100%);
+}
+
+.schedule-row.last {
+    background: linear-gradient(90deg, rgba(46, 204, 64, 0.2) 0%, rgba(46, 204, 64, 0.1) 100%);
+}
+
+.time-col {
+    background: var(--mardi-gras-purple);
+    color: white;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 12px 8px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.park-col,
+.parade-col {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    border-left: 1px solid #f0f0f0;
+}
+
+.park-col strong,
+.parade-col strong {
+    color: var(--mardi-gras-purple);
+    display: block;
+    font-weight: 700;
+}
+
+.park-col .sub,
+.parade-col .sub {
+    color: #333;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Lineup time embedded in 11:00 row */
+.lineup-time {
+    display: block;
+    margin-top: 5px;
+    color: var(--mardi-gras-purple);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+/* Parade returns in purple */
+.parade-return {
+    color: var(--mardi-gras-purple);
+    font-weight: 700;
+}
+
+.park-col.empty,
+.parade-col.empty {
+    background: #fafafa;
+}
+
+.col-icon {
+    margin-right: 5px;
+}
+
+/* Route text below map */
+.route-text {
+    padding: 15px;
+    background: var(--off-white);
+    border-top: 1px solid #eee;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .schedule-row {
+        grid-template-columns: 60px 1fr 1fr;
+    }
+    
+    .time-col {
+        font-size: 0.75rem;
+        padding: 10px 5px;
+    }
+    
+    .park-col,
+    .parade-col {
+        font-size: 0.8rem;
+        padding: 8px 10px;
+    }
+    
+    .park-col .sub,
+    .parade-col .sub {
+        font-size: 0.7rem;
+    }
+}
+
 /* Schedule Section */
 .event-schedule {
     background: var(--white);
@@ -2874,6 +3026,477 @@ details[open] .check-arrow {
     font-size: 0.9rem;
     color: var(--text-light);
     line-height: 1.5;
+}
+
+/* ===========================
+   Social Share Page
+   =========================== */
+
+.social-share-page {
+    background: var(--white);
+}
+
+.social-hero {
+    min-height: 220px;
+}
+
+.social-hero .presented-by {
+    font-size: 1.2rem;
+}
+
+.social-hero .sponsor-name {
+    font-size: 2.4rem;
+    margin-bottom: 10px;
+}
+
+.social-hero .hero-title-large {
+    font-size: 4rem;
+}
+
+.hero-event-info {
+    font-size: 1.7rem;
+    color: var(--mardi-gras-gold);
+    margin: 15px 0 0 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-weight: 600;
+}
+
+/* Details Section */
+.social-details-section {
+    padding: 15px 20px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.social-section-title {
+    text-align: center;
+    font-size: 1.8rem;
+    color: var(--mardi-gras-purple);
+    margin: 0 0 15px 0;
+    padding-bottom: 8px;
+    border-bottom: 3px solid var(--mardi-gras-purple);
+}
+
+.social-three-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+@media (max-width: 900px) {
+    .social-three-columns {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
+
+/* Social Two-Column Layout (Schedule + Map) */
+.social-two-columns {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 800px) {
+    .social-two-columns {
+        grid-template-columns: 1fr;
+    }
+}
+
+.social-column.wide {
+    min-width: 0;
+}
+
+/* Social Dual Schedule */
+.dual-schedule-social {
+    background: var(--white);
+}
+
+.schedule-row-social {
+    display: grid;
+    grid-template-columns: 55px 1fr 1fr;
+    border-bottom: 1px solid #eee;
+}
+
+.schedule-row-social:last-child {
+    border-bottom: none;
+}
+
+.schedule-row-social.header-row {
+    background: linear-gradient(135deg, var(--mardi-gras-purple) 0%, #5a2d82 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.schedule-row-social.header-row .time-col {
+    background: transparent;
+}
+
+.schedule-row-social.header-row .park-col,
+.schedule-row-social.header-row .parade-col {
+    padding: 8px 10px;
+}
+
+.schedule-row-social .time-col {
+    background: var(--mardi-gras-purple);
+    color: white;
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 8px 5px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.schedule-row-social .park-col,
+.schedule-row-social .parade-col {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+    line-height: 1.3;
+    border-left: 1px solid #eee;
+}
+
+.schedule-row-social .park-col strong,
+.schedule-row-social .parade-col strong {
+    color: var(--mardi-gras-purple);
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.schedule-row-social .sub {
+    color: #111;
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.schedule-row-social.highlight {
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.25) 0%, rgba(255, 215, 0, 0.1) 100%);
+}
+
+.schedule-row-social.reunite {
+    background: linear-gradient(90deg, rgba(46, 204, 64, 0.2) 0%, rgba(46, 204, 64, 0.05) 100%);
+}
+
+.schedule-row-social .park-col.empty,
+.schedule-row-social .parade-col.empty {
+    background: #f9f9f9;
+}
+
+/* Lineup time embedded in 11:00 row */
+.schedule-row-social .lineup-time {
+    display: block;
+    margin-top: 4px;
+    color: var(--mardi-gras-purple);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+/* Parade returns in purple */
+.schedule-row-social .parade-return {
+    color: var(--mardi-gras-purple);
+    font-weight: 700;
+}
+
+/* Route text inline below map */
+.route-text-inline {
+    margin: 10px 0 0 0;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #333;
+    text-align: center;
+}
+
+/* Compact route steps below map */
+.route-steps-compact {
+    margin-top: 10px;
+    padding: 12px;
+    background: #f8f8f8;
+    border-radius: 8px;
+}
+
+.route-steps-compact .route-label {
+    font-weight: 700;
+    color: var(--mardi-gras-purple);
+    font-size: 0.9rem;
+    margin: 0 0 6px 0;
+}
+
+.route-steps-compact .route-step {
+    margin: 3px 0;
+    padding-left: 5px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #222;
+}
+
+.social-column {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.social-column-header {
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.social-column-header h3 {
+    margin: 0;
+    color: white;
+    font-size: 1.3rem;
+}
+
+.column-icon {
+    font-size: 1.5rem;
+}
+
+.schedule-header-bg {
+    background: linear-gradient(135deg, var(--mardi-gras-purple) 0%, #7b1fa2 100%);
+}
+
+.map-header-bg {
+    background: linear-gradient(135deg, var(--mardi-gras-green) 0%, #2e7d32 100%);
+}
+
+.route-header-bg {
+    background: linear-gradient(135deg, var(--mardi-gras-gold) 0%, #f9a825 100%);
+}
+
+.route-header-bg h3 {
+    color: var(--text-dark);
+}
+
+.social-column-content {
+    padding: 15px;
+}
+
+/* Schedule Items */
+.schedule-item {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.schedule-item:last-child {
+    border-bottom: none;
+}
+
+.schedule-item.highlight {
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.25) 0%, rgba(255, 215, 0, 0.1) 100%);
+    margin: 0 -20px;
+    padding: 8px 20px;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.schedule-item .time {
+    font-weight: 700;
+    color: var(--mardi-gras-purple);
+    font-size: 1.1rem;
+    min-width: 80px;
+    flex-shrink: 0;
+}
+
+.dotted-line {
+    flex: 1;
+    height: 1px;
+    background: repeating-linear-gradient(
+        90deg,
+        #999,
+        #999 3px,
+        transparent 3px,
+        transparent 8px
+    );
+    margin: 0 10px;
+}
+
+.schedule-item .activity {
+    color: #111;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.schedule-item .event-subtext {
+    width: 100%;
+    font-size: 0.85rem;
+    color: #666;
+    font-style: italic;
+    text-align: right;
+    padding-top: 2px;
+}
+
+/* Map Content */
+.map-content {
+    padding: 10px;
+}
+
+.social-map-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Route Items */
+.route-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+}
+
+.route-item.highlight {
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.25) 0%, rgba(255, 215, 0, 0.1) 100%);
+    margin: 0 -15px;
+    padding: 8px 15px;
+    border-radius: 6px;
+}
+
+.route-marker {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.route-marker.assemble {
+    background: #E3F2FD;
+}
+
+.route-marker.start {
+    background: var(--mardi-gras-green);
+    color: white;
+}
+
+.route-marker.turn {
+    background: var(--mardi-gras-purple);
+    color: white;
+}
+
+.route-marker.straight {
+    background: var(--mardi-gras-purple);
+    color: white;
+}
+
+.route-marker.end {
+    background: var(--mardi-gras-gold);
+    color: var(--text-dark);
+}
+
+.route-text {
+    font-size: 1.1rem;
+    color: #111;
+    font-weight: 600;
+}
+
+/* Social Footer */
+.social-footer {
+    background: linear-gradient(135deg, #1a0533 0%, #0d0d2b 100%);
+    padding: 15px 20px;
+    text-align: center;
+}
+
+.website-url {
+    font-size: 1.8rem;
+    color: var(--mardi-gras-gold);
+    font-weight: 700;
+    margin: 0 0 5px 0;
+    letter-spacing: 2px;
+}
+
+.social-footer .tagline {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+}
+
+/* Social Vendors Section - Text Only */
+.social-vendors-text {
+    background: var(--white);
+    padding: 12px 20px;
+    text-align: center;
+    border-top: 3px solid var(--mardi-gras-purple);
+    border-bottom: 2px solid var(--mardi-gras-purple);
+}
+
+.vendors-title {
+    font-size: 1rem;
+    color: #666;
+    margin: 0 0 6px 0;
+    font-style: italic;
+}
+
+.vendors-names {
+    font-size: 1.3rem;
+    color: var(--mardi-gras-purple);
+    margin: 0;
+    font-weight: 600;
+}
+
+.vendors-names .separator {
+    margin: 0 12px;
+    color: var(--mardi-gras-gold);
+}
+
+/* Info Bar */
+.social-info-bar {
+    background: var(--white);
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--mardi-gras-purple);
+    font-weight: 600;
+    border-bottom: 2px solid var(--mardi-gras-purple);
+}
+
+.social-info-bar .bullet {
+    margin: 0 15px;
+    color: var(--mardi-gras-gold);
+}
+
+/* Dark Footer Strip */
+.social-dark-strip {
+    background: linear-gradient(135deg, #1a0533 0%, #0d0d2b 100%);
+    padding: 12px 20px;
+    text-align: center;
+}
+
+.social-dark-strip p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.social-dark-strip strong {
+    color: var(--mardi-gras-gold);
+    font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    .social-hero .hero-title-large {
+        font-size: 2.2rem;
+    }
+    
+    .hero-event-info {
+        font-size: 1.1rem;
+    }
 }
 
 .quick-info-card.featured {
