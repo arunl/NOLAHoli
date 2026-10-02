@@ -7,6 +7,8 @@
  */
 
 get_header();
+$event_location = get_theme_mod('nolaholi_location', 'Location TBD');
+
 ?>
 
 <main id="primary" class="site-main">
@@ -15,7 +17,7 @@ get_header();
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1 class="hero-title">Holi Festival</h1>
-            <p class="hero-subtitle">A Day of Music, Food, and Color at Washington Square Park</p>
+            <p class="hero-subtitle">A Day of Music, Food, and Color in French Quarter, New Orleans</p>
         </div>
     </section>
     
@@ -28,7 +30,7 @@ get_header();
                 
                 <p style="font-size: 1.2rem; line-height: 2; color: var(--text-light); margin-bottom: 30px;">
                     After the parade, the celebration continues at <strong style="color: var(--mardi-gras-green);">
-                    Washington Square Park</strong> with live performances, delicious food, community activities, and 
+		   <?php echo $event_location; ?> </strong> with live performances, delicious food, community activities, and 
                     the spectacular main color throw that makes Holi unforgettable!
                 </p>
                 
@@ -51,7 +53,7 @@ get_header();
                         <div>
                             <div style="font-size: 2.5rem; margin-bottom: 10px;">📍</div>
                             <div style="font-weight: 600; opacity: 0.9;">LOCATION</div>
-                            <div style="font-size: 1.2rem; font-weight: 700;">Washington Square Park</div>
+                            <div style="font-size: 1.2rem; font-weight: 700;"> <?php echo $event_location; ?> </div>
                         </div>
                     </div>
                 </div>
@@ -276,10 +278,9 @@ get_header();
             
             <div style="max-width: 800px; margin: 40px auto 0;">
                 <div style="text-align: center; margin-bottom: 40px;">
-                    <h3 class="text-green" style="font-size: 1.8rem; margin-bottom: 15px;">Washington Square Park</h3>
+		<h3 class="text-green" style="font-size: 1.8rem; margin-bottom: 15px;"> <?php echo $event_location; ?></h3>
                     <p style="font-size: 1.1rem; color: var(--text-light); line-height: 1.8;">
-                        <strong>Address:</strong> 700 Elysian Fields Ave, New Orleans, LA 70117<br>
-                        Located in the Marigny neighborhood, adjacent to the French Quarter
+                        Located along the riverside in the French Quarter
                     </p>
                 </div>
                 
@@ -290,7 +291,7 @@ get_header();
                     <ul style="color: var(--text-light); line-height: 2; font-size: 1.05rem;">
                         <li><strong>Walk/Bike:</strong> If you're in the French Quarter or Marigny, walking or biking is easiest</li>
                         <li><strong>Streetcar:</strong> Take the Rampart-St. Claude Streetcar line</li>
-                        <li><strong>Rideshare:</strong> Uber/Lyft drop-off at Washington Square Park</li>
+			<li><strong>Rideshare:</strong> Uber/Lyft drop-off at <?php echo $event_location; ?></li>
                         <li><strong>Parking:</strong> Limited street parking available; arrive early or use nearby paid lots</li>
                         <li><strong>Public Transit:</strong> RTA bus lines serve the area</li>
                     </ul>
@@ -306,7 +307,7 @@ get_header();
                 <h2 class="section-title">Join Us at the Festival!</h2>
                 <div class="section-divider"></div>
                 <p style="font-size: 1.1rem; color: var(--text-light); line-height: 1.8; margin-bottom: 30px;">
-                    Whether you join the parade or come straight to the festival, Washington Square Park is where 
+		Whether you join the parade or come straight to the festival, <?php echo $event_location; ?>is where 
                     the magic happens. Bring your friends, family, and your spirit of celebration!
                 </p>
                 <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">

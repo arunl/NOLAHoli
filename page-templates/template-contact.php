@@ -10,6 +10,7 @@ get_header();
 
 // Get event year from theme customizer
 $event_date = get_theme_mod('nolaholi_event_date', '');
+$event_location= get_theme_mod('nolaholi_location', 'TBD');
 $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
 ?>
 
@@ -214,8 +215,7 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
                         <div class="contact-info-item">
                             <h3>📍 Festival Location</h3>
                             <p>
-                                <strong>Washington Square Park</strong><br>
-                                700 Elysian Fields Ave<br>
+			    <strong><?php echo $event_location; ?></strong><br>
                                 New Orleans, LA 70117
                             </p>
                         </div>

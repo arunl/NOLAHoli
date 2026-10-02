@@ -7,6 +7,7 @@
  */
 
 get_header();
+$event_location = get_theme_mod('nolaholi_location', 'Location TBD');
 ?>
 
 <main id="primary" class="site-main">
@@ -133,7 +134,7 @@ get_header();
                 <div style="background: var(--off-white); padding: 40px; border-radius: 15px; text-align: center;">
                     <p style="font-size: 1.2rem; color: var(--text-light); line-height: 1.8; margin-bottom: 20px;">
                         The parade route through the French Quarter is announced each year closer to the event date. 
-                        We wind through the historic streets, ending at Washington Square Park where the festival continues!
+			We wind through the historic streets, ending at <?php echo $event_location; ?> where the festival continues!
                     </p>
                     <p style="font-size: 1rem; color: var(--text-dark); font-weight: 600;">
                         Route details will be posted here and on our social media as soon as they're finalized.
@@ -145,7 +146,7 @@ get_header();
                         Parade Ends at the Festival
                     </h3>
                     <p style="color: var(--text-light); line-height: 1.8; margin-bottom: 20px;">
-                        The parade culminates at Washington Square Park, where the Holi Festival continues with 
+		    The parade culminates at <?php echo $event_location; ?>, where the Holi Festival continues with 
                         live performances, food vendors, activities, and the main color throw celebration!
                     </p>
                     <a href="<?php echo esc_url(home_url('/festival/')); ?>" class="btn btn-secondary">
