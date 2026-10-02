@@ -41,7 +41,7 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
             
             <!-- Section Header -->
             <div class="event-day-section-header">
-                <h2>Event Details</h2>
+                <h2>Event Details (Tentative)</h2>
 		<p><?php echo esc_html($event_date); ?> • <?php echo $event_location; ?></p>
             </div>
             
@@ -143,9 +143,10 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
                     </div>
                     
                     <div class="route-map">
-                        <img src="<?php echo get_template_directory_uri(); ?>/images/2026-parade-route.png" alt="NOLA Holi 2026 Parade Route Map">
+                        <p>TBD</p>
+                        <!-- <img src="<?php echo get_template_directory_uri(); ?>/images/2026-parade-route.png" alt="NOLA Holi 2026 Parade Route Map"> -->
                     </div>
-                    
+                    <!--
                     <div class="route-steps-compact">
                         <p class="route-label">Route:</p>
                         <p class="route-step">📍 Start at Royal & Touro</p>
@@ -154,6 +155,7 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
                         <p class="route-step">← Left on Chartres</p>
                         <p class="route-step">⬤ End at Chartres & Kerlerec</p>
                     </div>
+            -->
                 </div>
                 
             </div>
