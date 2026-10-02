@@ -209,7 +209,7 @@
     <?php endif; ?>
     
     <div class="header-top">
-        <p>🎨 <?php echo esc_html($event_date); ?> | <?php echo esc_html($event_time); ?> | <?phm echo $event_location ?>🎉</p>
+        <p>🎨 <?php echo esc_html($event_date); ?> | <?php echo esc_html($event_time); ?> | <?php echo $event_location; ?>🎉</p>
     </div>
     
     <div class="header-main">
