@@ -932,7 +932,7 @@ function nolaholi_customize_register($wp_customize) {
     
     // Location
     $wp_customize->add_setting('nolaholi_location', array(
-        'default'           => 'Washington Square Park, New Orleans',
+        'default'           => 'Location TBD',
         'sanitize_callback' => 'sanitize_text_field',
     ));
     
@@ -1422,7 +1422,7 @@ function nolaholi_open_graph_meta_tags() {
     // Get event information
     $event_date = get_theme_mod('nolaholi_event_date', 'March 7, 2026');
     $event_time = get_theme_mod('nolaholi_event_time', 'TBD');
-    $location = get_theme_mod('nolaholi_location', 'Washington Square Park, New Orleans');
+    $location = get_theme_mod('nolaholi_location', 'Location TBD');
     
     // Default values
     $og_title = $og_site_name;

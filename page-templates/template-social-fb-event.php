@@ -364,6 +364,7 @@
 
 <?php
 $event_date = get_theme_mod('nolaholi_event_date', 'March 8, 2026');
+$event_location = get_theme_mod('nolaholi_location', 'Location TBD');
 $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
 $presenting_sponsor = nolaholi_get_first_event_sponsor();
 $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
@@ -378,7 +379,7 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
             <h2 class="sponsor-name"><?php echo esc_html($sponsor_name); ?></h2>
             <?php endif; ?>
             <h1 class="festival-title">NOLA Holi<br>Festival <?php echo esc_html($event_year); ?></h1>
-            <p class="event-date-location"><?php echo esc_html($event_date); ?><br>@ Washington Square Park</p>
+            <p class="event-date-location"><?php echo esc_html($event_date); ?><br>@ <?php echo $event_location; ?></p>
         </div>
     </div>
     

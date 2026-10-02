@@ -20,6 +20,7 @@
 <?php
 // Get event info from theme customizer
 $event_date = get_theme_mod('nolaholi_event_date', 'March 8, 2026');
+$event_location = get_theme_mod('nolaholi_location', 'Location TBD');
 $event_time = get_theme_mod('nolaholi_event_time', '10:00am - 5:00pm');
 $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
 

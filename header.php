@@ -12,6 +12,7 @@
 <header class="site-header">
     <?php
     $event_date = get_theme_mod('nolaholi_event_date', 'March 7, 2026');
+    $event_location = get_theme_mod('nolaholi_location', 'Location TBD');
     $event_time = get_theme_mod('nolaholi_event_time', 'TBD');
     ?>
     
@@ -208,7 +209,7 @@
     <?php endif; ?>
     
     <div class="header-top">
-        <p>🎨 <?php echo esc_html($event_date); ?> | <?php echo esc_html($event_time); ?> | Washington Square Park, NOLA 🎉</p>
+        <p>🎨 <?php echo esc_html($event_date); ?> | <?php echo esc_html($event_time); ?> | <?phm echo $event_location ?>🎉</p>
     </div>
     
     <div class="header-main">
@@ -268,7 +269,7 @@ $show_sticky = get_theme_mod('nolaholi_show_save_date_sticky', true);
 
 if ($show_sticky) :
     $event_date_sticky = get_theme_mod('nolaholi_event_date', 'March 7, 2026');
-    $event_location_sticky = get_theme_mod('nolaholi_location', 'Washington Square Park, New Orleans');
+    $event_location_sticky = get_theme_mod('nolaholi_location', 'Location TBD');
     // Extract year from event date for dynamic display
     $event_year = '';
     if (preg_match('/\b(20\d{2})\b/', $event_date_sticky, $matches)) {
