@@ -10,6 +10,7 @@ get_header();
 
 // Get event info from theme customizer
 $event_date = get_theme_mod('nolaholi_event_date', 'March 8, 2026');
+$event_location = get_theme_mod('nolaholi_location', 'Location TBD');
 $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
 
 // Get presenting sponsor from database
@@ -41,7 +42,7 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
             <!-- Section Header -->
             <div class="event-day-section-header">
                 <h2>Event Details</h2>
-                <p><?php echo esc_html($event_date); ?> • Washington Square Park</p>
+		<p><?php echo esc_html($event_date); ?> • <?php echo $event_location; ?></p>
             </div>
             
             <div class="event-day-grid-new">
