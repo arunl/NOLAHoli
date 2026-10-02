@@ -30,6 +30,7 @@ get_header();
 
 // Get event year from theme customizer
 $event_date = get_theme_mod('nolaholi_event_date', '');
+$event_location = get_theme_mod('nolaholi_location', 'Location TBD');
 $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
 ?>
 
@@ -58,7 +59,7 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
         <div class="info-item">
             <div class="info-icon">📍</div>
             <div class="info-label">Location</div>
-            <div class="info-value">Washington Square Park</div>
+            <div class="info-value"><?php echo $event_location; ?></div>
         </div>
         <div class="info-item">
             <div class="info-icon">🌧️</div>
@@ -126,8 +127,7 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
             </p>
             <p style="font-size: 1.2rem; line-height: 1.8; color: var(--off-white); margin-top: 20px;">
                 What began as a tribute has grown into an annual tradition, bringing the ancient festival of colors 
-                to the heart of New Orleans with a colorful parade through the French Quarter and a vibrant festival 
-                in Washington Square Park.
+                to the heart of New Orleans with a colorful parade through the French Quarter and a vibrant festival.
             </p>
             <div class="mt-3">
                 <a href="<?php echo esc_url(home_url('/about-nola-holi/')); ?>" class="btn btn-gold">Read Our Full Story</a>
@@ -159,7 +159,7 @@ $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
                 <div class="feature-icon">🎪</div>
                 <h3 class="feature-title">Holi Festival</h3>
                 <p class="feature-description">
-                    Celebrate at Washington Square Park with live performances, authentic Indian food, local vendors, 
+                    Celebrate at <?php echo $event_location; ?> with live performances, authentic Indian food, local vendors, 
                     and massive color throws! Fun for the whole family with music, dance, and culture.
                 </p>
                 <a href="<?php echo esc_url(home_url('/festival/')); ?>" class="btn btn-secondary mt-2">Festival Details</a>

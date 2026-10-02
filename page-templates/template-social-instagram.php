@@ -220,6 +220,7 @@
 <?php
 // Get event info from theme customizer
 $event_date = get_theme_mod('nolaholi_event_date', 'March 8, 2026');
+$event_location = get_theme_mod('nolaholi_location', 'Location TBD');
 $event_time = get_theme_mod('nolaholi_event_time', '10:00am - 5:00pm');
 $event_year = $event_date ? date('Y', strtotime($event_date)) : date('Y');
 
@@ -239,7 +240,7 @@ $sponsor_name = $presenting_sponsor ? $presenting_sponsor['name'] : '';
             <h2 class="sponsor-name"><?php echo esc_html($sponsor_name); ?></h2>
             <?php endif; ?>
             <h1 class="hero-title-large"><span class="cursive-text">NOLA Holi Festival <?php echo esc_html($event_year); ?></span></h1>
-            <p class="hero-event-info"><?php echo esc_html($event_date); ?> @ Washington Square Park</p>
+            <p class="hero-event-info"><?php echo esc_html($event_date); ?> @ <?php echo $event_location; ?></p>
         </div>
     </section>
     
